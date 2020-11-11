@@ -331,8 +331,8 @@ def enumerate_runs(
                                 validation_interval,
                                 snapshot_interval,
                                 keep_best_validation,
-                                bsub_flags,
-                                batch,
+                                bsub_flags=bsub_flags,
+                                batch=batch,
                             )
                         )
     return runs
@@ -351,7 +351,6 @@ def run_local(run):
 
 
 def run_remote(run):
-    flags = run.flags
 
     funlib.run.run(
         command=f"dacapo run-one "
@@ -367,7 +366,7 @@ def run_remote(run):
         num_gpus=1,
         queue="gpu_any",
         execute=True,
-        flags=flags,
+        flags=run.flags,
         batch=run.batch,
         log_file=f"runs/{run.hash}/log.out",
         error_file=f"runs/{run.hash}/log.err",
