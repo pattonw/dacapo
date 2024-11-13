@@ -1,0 +1,78 @@
+dacapo.experiments.tasks.losses.affinities_loss
+===============================================
+
+.. py:module:: dacapo.experiments.tasks.losses.affinities_loss
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.losses.affinities_loss.AffinitiesLoss
+
+
+Module Contents
+---------------
+
+.. py:class:: AffinitiesLoss(num_affinities: int, lsds_to_affs_weight_ratio: float)
+
+
+
+   A class representing a loss function that calculates the loss between affinities and local shape descriptors (LSDs).
+
+   .. attribute:: num_affinities
+
+      int
+      the number of affinities
+
+   .. attribute:: lsds_to_affs_weight_ratio
+
+      float
+      the ratio of the weight of the loss between affinities and LSDs
+
+   .. method:: compute(prediction, target, weight=None)
+
+      
+      Calculate the total loss between prediction and target.
+
+   .. note:: The AffinitiesLoss class is used to calculate the loss between affinities and local shape descriptors (LSDs).
+
+
+   .. py:attribute:: num_affinities
+
+
+   .. py:attribute:: lsds_to_affs_weight_ratio
+
+
+   .. py:method:: compute(prediction, target, weight)
+
+      Method to calculate the total loss between affinities and LSDs.
+
+      :param prediction: torch.Tensor
+                         the model's prediction
+      :param target: torch.Tensor
+                     the target values
+      :param weight: torch.Tensor
+                     the weight to apply to the loss
+
+      :returns:
+
+                torch.Tensor
+                    the total loss between affinities and LSDs
+
+      :raises ValueError: if the number of affinities in the prediction and target does not match
+
+      .. rubric:: Examples
+
+      >>> affinities_loss = AffinitiesLoss(3, 0.5)
+      >>> prediction = torch.tensor([[1, 2, 3, 4], [5, 6, 7, 8]])
+      >>> target = torch.tensor([[9, 10, 11, 12], [13, 14, 15, 16]])
+      >>> weight = torch.tensor([[1, 1, 1, 1], [1, 1, 1, 1]])
+      >>> affinities_loss.compute(prediction, target, weight)
+      tensor(0.5)
+
+      .. note:: The AffinitiesLoss class is used to calculate the loss between affinities and local shape descriptors (LSDs).
+
+
+

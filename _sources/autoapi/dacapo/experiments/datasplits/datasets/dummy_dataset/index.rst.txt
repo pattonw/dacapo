@@ -1,0 +1,45 @@
+dacapo.experiments.datasplits.datasets.dummy_dataset
+====================================================
+
+.. py:module:: dacapo.experiments.datasplits.datasets.dummy_dataset
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasets.dummy_dataset.DummyDataset
+
+
+Module Contents
+---------------
+
+.. py:class:: DummyDataset(dataset_config)
+
+
+
+   DummyDataset is a child class of the Dataset. This class has property 'raw' of Array type and a name.
+
+   .. attribute:: raw
+
+      Array
+      The raw data.
+
+   .. method:: __init__(dataset_config)
+
+      
+      Initializes the array type 'raw' and name for the DummyDataset instance.
+
+   .. rubric:: Notes
+
+   This class is used to create a dataset with raw data.
+
+
+   .. py:attribute:: raw
+      :type:  funlib.persistence.Array
+
+
+   .. py:attribute:: name
+
+

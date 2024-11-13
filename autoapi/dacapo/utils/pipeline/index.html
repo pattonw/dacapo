@@ -1,0 +1,828 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dacapo.utils.pipeline &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="dacapo.utils.view" href="../view/index.html" />
+    <link rel="prev" title="dacapo.utils.balance_weights" href="../balance_weights/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aws.html">AWS EC2 Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../roadmap.html">Road Map</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">dacapo</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../apply/index.html">dacapo.apply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../blockwise/index.html">dacapo.blockwise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../compute_context/index.html">dacapo.compute_context</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../experiments/index.html">dacapo.experiments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ext/index.html">dacapo.ext</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gp/index.html">dacapo.gp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../options/index.html">dacapo.options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plot/index.html">dacapo.plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict/index.html">dacapo.predict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict_local/index.html">dacapo.predict_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../store/index.html">dacapo.store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tmp/index.html">dacapo.tmp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../train/index.html">dacapo.train</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">dacapo.utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validate/index.html">dacapo.validate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">dacapo</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">dacapo.utils</a></li>
+      <li class="breadcrumb-item active">dacapo.utils.pipeline</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/dacapo/utils/pipeline/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dacapo.utils.pipeline">
+<span id="dacapo-utils-pipeline"></span><h1>dacapo.utils.pipeline<a class="headerlink" href="#module-dacapo.utils.pipeline" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.pipeline.CreatePoints" title="dacapo.utils.pipeline.CreatePoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CreatePoints</span></code></a></p></td>
+<td><p>A batch filter that creates random points in a 3D label volume.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.utils.pipeline.MakeRaw" title="dacapo.utils.pipeline.MakeRaw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MakeRaw</span></code></a></p></td>
+<td><p>A batch filter that generates a raw image from labels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.pipeline.DilatePoints" title="dacapo.utils.pipeline.DilatePoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DilatePoints</span></code></a></p></td>
+<td><p>A batch filter that performs dilation on labeled points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.utils.pipeline.RandomDilateLabels" title="dacapo.utils.pipeline.RandomDilateLabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RandomDilateLabels</span></code></a></p></td>
+<td><p>A batch filter that randomly dilates labels in a batch.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.pipeline.Relabel" title="dacapo.utils.pipeline.Relabel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Relabel</span></code></a></p></td>
+<td><p>A batch filter that relabels the labels in a batch.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.utils.pipeline.ExpandLabels" title="dacapo.utils.pipeline.ExpandLabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpandLabels</span></code></a></p></td>
+<td><p>A batch filter that expands labels by assigning the nearest label to each pixel within a specified distance.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.pipeline.ZerosSource" title="dacapo.utils.pipeline.ZerosSource"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ZerosSource</span></code></a></p></td>
+<td><p>A batch provider that generates arrays filled with zeros.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.pipeline.random_source_pipeline" title="dacapo.utils.pipeline.random_source_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_source_pipeline</span></code></a>([voxel_size, input_shape, ...])</p></td>
+<td><p>Create a random source pipeline and batch request for example training.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.CreatePoints">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.utils.pipeline.</span></span><span class="sig-name descname"><span class="pre">CreatePoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">150)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.CreatePoints" title="Link to this definition"></a></dt>
+<dd><p>A batch filter that creates random points in a 3D label volume.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.CreatePoints.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#dacapo.utils.pipeline.CreatePoints.labels" title="Link to this definition"></a></dt>
+<dd><p>The key of the label data in the batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.CreatePoints.num_points">
+<span class="sig-name descname"><span class="pre">num_points</span></span><a class="headerlink" href="#dacapo.utils.pipeline.CreatePoints.num_points" title="Link to this definition"></a></dt>
+<dd><p>A tuple specifying the range of the number of points to create.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.CreatePoints.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.CreatePoints.process" title="Link to this definition"></a></dt>
+<dd><p>Create random points in the label volume.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">num_points</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Process the batch by creating random points in the label volume.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>dict</em>) – The input batch containing label data.</p></li>
+<li><p><strong>request</strong> (<em>gp.BatchRequest</em>) – The batch request.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the number of points is not an integer.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CreatePoints</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.utils.pipeline.</span></span><span class="sig-name descname"><span class="pre">MakeRaw</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw" title="Link to this definition"></a></dt>
+<dd><p>A batch filter that generates a raw image from labels.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.raw">
+<span class="sig-name descname"><span class="pre">raw</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.raw" title="Link to this definition"></a></dt>
+<dd><p>The key of the raw data in the batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.labels" title="Link to this definition"></a></dt>
+<dd><p>The key of the label data in the batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.gaussian_noise_args">
+<span class="sig-name descname"><span class="pre">gaussian_noise_args</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.gaussian_noise_args" title="Link to this definition"></a></dt>
+<dd><p>A tuple specifying the mean and standard deviation of the Gaussian noise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.gaussian_noise_lim">
+<span class="sig-name descname"><span class="pre">gaussian_noise_lim</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.gaussian_noise_lim" title="Link to this definition"></a></dt>
+<dd><p>The limit of the Gaussian noise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.gaussian_blur_args">
+<span class="sig-name descname"><span class="pre">gaussian_blur_args</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.gaussian_blur_args" title="Link to this definition"></a></dt>
+<dd><p>A tuple specifying the mean and standard deviation of the Gaussian blur.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.membrane_like">
+<span class="sig-name descname"><span class="pre">membrane_like</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.membrane_like" title="Link to this definition"></a></dt>
+<dd><p>A boolean indicating whether to generate a membrane-like structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.membrane_size">
+<span class="sig-name descname"><span class="pre">membrane_size</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.membrane_size" title="Link to this definition"></a></dt>
+<dd><p>The size of the membrane-like structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.inside_value">
+<span class="sig-name descname"><span class="pre">inside_value</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.inside_value" title="Link to this definition"></a></dt>
+<dd><p>The value to set inside the membranes of objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.setup" title="Link to this definition"></a></dt>
+<dd><p>Set up the batch filter by defining the specification of the raw image.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.process" title="Link to this definition"></a></dt>
+<dd><p>Generate the raw image from the labels.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaussian_noise_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0.5,</span> <span class="pre">0.1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaussian_noise_lim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaussian_blur_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0.5,</span> <span class="pre">1.5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">membrane_like</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">membrane_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline.raw">
+<span class="sig-name descname"><span class="pre">raw</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline.raw" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline.labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline.gaussian_noise_args">
+<span class="sig-name descname"><span class="pre">gaussian_noise_args</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline.gaussian_noise_args" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline.gaussian_noise_lim">
+<span class="sig-name descname"><span class="pre">gaussian_noise_lim</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline.gaussian_noise_lim" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline.gaussian_blur_args">
+<span class="sig-name descname"><span class="pre">gaussian_blur_args</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline.gaussian_blur_args" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline.membrane_like">
+<span class="sig-name descname"><span class="pre">membrane_like</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline.membrane_like" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline.membrane_size">
+<span class="sig-name descname"><span class="pre">membrane_size</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline.membrane_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.MakeRaw.Pipeline.inside_value">
+<span class="sig-name descname"><span class="pre">inside_value</span></span><a class="headerlink" href="#dacapo.utils.pipeline.MakeRaw.Pipeline.inside_value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Set up the batch filter by defining the specification of the raw image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the data type is not float32.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MakeRaw</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd><p>Process the batch by generating the raw image from the labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>gp.Batch</em>) – The input batch.</p></li>
+<li><p><strong>request</strong> (<em>gp.BatchRequest</em>) – The request for the output batch.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The output batch.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>gp.Batch</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the data type is not float32.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MakeRaw</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.DilatePoints">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.utils.pipeline.</span></span><span class="sig-name descname"><span class="pre">DilatePoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2,</span> <span class="pre">8]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.DilatePoints" title="Link to this definition"></a></dt>
+<dd><p>A batch filter that performs dilation on labeled points.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.DilatePoints.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#dacapo.utils.pipeline.DilatePoints.labels" title="Link to this definition"></a></dt>
+<dd><p>The key of the labels data in the batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.DilatePoints.dilations">
+<span class="sig-name descname"><span class="pre">dilations</span></span><a class="headerlink" href="#dacapo.utils.pipeline.DilatePoints.dilations" title="Link to this definition"></a></dt>
+<dd><p>A list of two integers representing the range of dilations to apply.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.DilatePoints.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.DilatePoints.process" title="Link to this definition"></a></dt>
+<dd><p>Perform dilation on the labeled points.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">dilations</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd><p>Process the batch by performing dilation on the labeled points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>Batch</em>) – The input batch.</p></li>
+<li><p><strong>request</strong> (<em>Request</em>) – The request object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the dilations are not integers.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">DilatePoints</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.RandomDilateLabels">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.utils.pipeline.</span></span><span class="sig-name descname"><span class="pre">RandomDilateLabels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dilations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[2,</span> <span class="pre">8]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.RandomDilateLabels" title="Link to this definition"></a></dt>
+<dd><p>A batch filter that randomly dilates labels in a batch.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.RandomDilateLabels.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#dacapo.utils.pipeline.RandomDilateLabels.labels" title="Link to this definition"></a></dt>
+<dd><p>The key of the labels in the batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.RandomDilateLabels.dilations">
+<span class="sig-name descname"><span class="pre">dilations</span></span><a class="headerlink" href="#dacapo.utils.pipeline.RandomDilateLabels.dilations" title="Link to this definition"></a></dt>
+<dd><p>A list of two integers representing the range of dilations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.RandomDilateLabels.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.RandomDilateLabels.process" title="Link to this definition"></a></dt>
+<dd><p>Randomly dilate the labels in the batch.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">dilations</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd><p>Process the batch by randomly dilating labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>dict</em>) – The input batch.</p></li>
+<li><p><strong>request</strong> – The request object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the dilations are not integers.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RandomDilateLabels</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.Relabel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.utils.pipeline.</span></span><span class="sig-name descname"><span class="pre">Relabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.Relabel" title="Link to this definition"></a></dt>
+<dd><p>A batch filter that relabels the labels in a batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>labels</strong> (<em>str</em>) – The name of the labels data in the batch.</p></li>
+<li><p><strong>connectivity</strong> (<em>int</em><em>, </em><em>optional</em>) – The connectivity used for relabeling. Defaults to 1.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.Relabel.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.Relabel.process" title="Link to this definition"></a></dt>
+<dd><p>Process the batch and relabel the labels.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.Relabel.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#dacapo.utils.pipeline.Relabel.labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.Relabel.connectivity">
+<span class="sig-name descname"><span class="pre">connectivity</span></span><a class="headerlink" href="#dacapo.utils.pipeline.Relabel.connectivity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd><p>Process the batch and relabel the labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>Batch</em>) – The input batch.</p></li>
+<li><p><strong>request</strong> (<em>Request</em>) – The request for processing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The output batch.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Batch</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the connectivity is not an integer.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Relabel</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ExpandLabels">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.utils.pipeline.</span></span><span class="sig-name descname"><span class="pre">ExpandLabels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.ExpandLabels" title="Link to this definition"></a></dt>
+<dd><p>A batch filter that expands labels by assigning the nearest label to each pixel within a specified distance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ExpandLabels.labels">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#dacapo.utils.pipeline.ExpandLabels.labels" title="Link to this definition"></a></dt>
+<dd><p>The name of the labels data in the batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ExpandLabels.background">
+<span class="sig-name descname"><span class="pre">background</span></span><a class="headerlink" href="#dacapo.utils.pipeline.ExpandLabels.background" title="Link to this definition"></a></dt>
+<dd><p>The label value representing the background.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ExpandLabels.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.ExpandLabels.process" title="Link to this definition"></a></dt>
+<dd><p>Process the batch and expand the labels.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">labels</span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">background</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd><p>Process the batch by expanding the labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch</strong> (<em>gp.Batch</em>) – The input batch.</p></li>
+<li><p><strong>request</strong> (<em>gp.BatchRequest</em>) – The batch request.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the background is not an integer.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ExpandLabels</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ZerosSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.utils.pipeline.</span></span><span class="sig-name descname"><span class="pre">ZerosSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.ZerosSource" title="Link to this definition"></a></dt>
+<dd><p>A batch provider that generates arrays filled with zeros.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ZerosSource.key">
+<span class="sig-name descname"><span class="pre">key</span></span><a class="headerlink" href="#dacapo.utils.pipeline.ZerosSource.key" title="Link to this definition"></a></dt>
+<dd><p>The key to use for the generated array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ZerosSource._spec">
+<span class="sig-name descname"><span class="pre">_spec</span></span><a class="headerlink" href="#dacapo.utils.pipeline.ZerosSource._spec" title="Link to this definition"></a></dt>
+<dd><p>A dictionary containing the specification of the array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ZerosSource.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.ZerosSource.setup" title="Link to this definition"></a></dt>
+<dd><p>Perform any necessary setup before providing batches.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.ZerosSource.provide">
+<span class="sig-name descname"><span class="pre">provide</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.ZerosSource.provide" title="Link to this definition"></a></dt>
+<dd><p>Provide a batch containing an array filled with zeros.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">key</span></span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
+<dd><p>Perform any necessary setup before providing batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If the method is not implemented.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ZerosSource</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">provide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
+<dd><p>Provide a batch containing an array filled with zeros.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>gp.BatchRequest</em>) – The request for the batch.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The provided batch.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>gp.Batch</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ZerosSource</span><span class="o">.</span><span class="n">provide</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.utils.pipeline.random_source_pipeline">
+<span class="sig-prename descclassname"><span class="pre">dacapo.utils.pipeline.</span></span><span class="sig-name descname"><span class="pre">random_source_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">voxel_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(8,</span> <span class="pre">8,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(148,</span> <span class="pre">148,</span> <span class="pre">148)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">np.uint8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expand_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relabel_connectivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_dilate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(20,</span> <span class="pre">150)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaussian_noise_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0.1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaussian_blur_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.5,</span> <span class="pre">1.5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">membrane_like</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">membrane_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inside_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.pipeline.random_source_pipeline" title="Link to this definition"></a></dt>
+<dd><p>Create a random source pipeline and batch request for example training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>voxel_size</strong> (<em>tuple</em><em> of </em><em>int</em>) – The size of a voxel in world units.</p></li>
+<li><p><strong>input_shape</strong> (<em>tuple</em><em> of </em><em>int</em>) – The shape of the input arrays.</p></li>
+<li><p><strong>dtype</strong> (<em>numpy.dtype</em>) – The dtype of the label arrays.</p></li>
+<li><p><strong>expand_labels</strong> (<em>bool</em>) – Whether to expand the labels into the background.</p></li>
+<li><p><strong>relabel_connectivity</strong> (<em>int</em>) – The connectivity used for for relabeling.</p></li>
+<li><p><strong>random_dilate</strong> (<em>bool</em>) – Whether to randomly dilate the individual labels.</p></li>
+<li><p><strong>num_points</strong> (<em>tuple</em><em> of </em><em>int</em>) – The range of the number of points to add to the labels.</p></li>
+<li><p><strong>gaussian_noise_args</strong> (<em>tuple</em><em> of </em><em>float</em>) – The mean and standard deviation of the Gaussian noise to add to the raw array.</p></li>
+<li><p><strong>gaussian_blur_args</strong> (<em>tuple</em><em> of </em><em>float</em>) – The mean and standard deviation of the Gaussian blur to apply to the raw array.</p></li>
+<li><p><strong>membrane_like</strong> (<em>bool</em>) – Whether to generate a membrane-like structure in the raw array.</p></li>
+<li><p><strong>membrane_size</strong> (<em>int</em>) – The width of the membrane-like structure on the outside of the objects.</p></li>
+<li><p><strong>inside_value</strong> (<em>float</em>) – The value to set inside the membranes of objects.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The batch generating Gunpowder pipeline.
+gunpowder.BatchRequest: The batch request for the pipeline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>gunpowder.Pipeline</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the input_shape is not an integer.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random_source_pipeline</span><span class="p">(</span><span class="n">voxel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">148</span><span class="p">,</span> <span class="mi">148</span><span class="p">,</span> <span class="mi">148</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span> <span class="n">expand_labels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                       <span class="n">relabel_connectivity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_dilate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span> <span class="n">gaussian_noise_args</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>                       <span class="n">gaussian_blur_args</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span> <span class="n">membrane_like</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">membrane_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">inside_value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../balance_weights/index.html" class="btn btn-neutral float-left" title="dacapo.utils.balance_weights" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../view/index.html" class="btn btn-neutral float-right" title="dacapo.utils.view" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

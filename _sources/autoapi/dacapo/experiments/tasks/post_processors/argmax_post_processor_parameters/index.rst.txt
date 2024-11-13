@@ -1,0 +1,34 @@
+dacapo.experiments.tasks.post_processors.argmax_post_processor_parameters
+=========================================================================
+
+.. py:module:: dacapo.experiments.tasks.post_processors.argmax_post_processor_parameters
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.post_processors.argmax_post_processor_parameters.ArgmaxPostProcessorParameters
+
+
+Module Contents
+---------------
+
+.. py:class:: ArgmaxPostProcessorParameters
+
+
+
+   Parameters for the argmax post-processor. The argmax post-processor will set
+   the output to the index of the maximum value in the input array.
+
+   .. method:: parameter_names
+
+      Get the names of the parameters.
+
+   .. note::
+
+      This class is immutable. Once created, the values of its attributes
+      cannot be changed.
+
+

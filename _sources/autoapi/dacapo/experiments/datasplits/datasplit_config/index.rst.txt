@@ -1,0 +1,66 @@
+dacapo.experiments.datasplits.datasplit_config
+==============================================
+
+.. py:module:: dacapo.experiments.datasplits.datasplit_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasplit_config.DataSplitConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: DataSplitConfig
+
+   A class used to create a DataSplit configuration object.
+
+   .. attribute:: name
+
+      str
+      A name for the datasplit. This name will be saved so it can be found
+      and reused easily. It is recommended to keep it short and avoid special
+      characters.
+
+   .. method:: verify() -> Tuple[bool, str]
+
+      
+      Validates if it is a valid data split configuration.
+
+   .. rubric:: Notes
+
+   This class is used to create a DataSplit configuration object.
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      Validates if the current configuration is a valid data split configuration.
+
+      :returns:
+
+                Tuple[bool, str]
+                    True if the configuration is valid,
+                    False otherwise along with respective validation error message.
+
+      :raises NotImplementedError: If the method is not implemented in the derived class.
+
+      .. rubric:: Examples
+
+      >>> datasplit_config = DataSplitConfig(name="datasplit")
+      >>> datasplit_config.verify()
+      (True, "No validation for this DataSplit")
+
+      .. rubric:: Notes
+
+      This method is used to validate the configuration of DataSplit.
+
+
+

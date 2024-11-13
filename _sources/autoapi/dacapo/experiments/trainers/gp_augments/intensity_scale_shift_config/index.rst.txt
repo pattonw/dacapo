@@ -1,0 +1,72 @@
+dacapo.experiments.trainers.gp_augments.intensity_scale_shift_config
+====================================================================
+
+.. py:module:: dacapo.experiments.trainers.gp_augments.intensity_scale_shift_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.trainers.gp_augments.intensity_scale_shift_config.IntensityScaleShiftAugmentConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: IntensityScaleShiftAugmentConfig
+
+
+
+   This class is an implementation of AugmentConfig that applies intensity scaling and shifting.
+
+   .. attribute:: scale
+
+      A constant to scale your intensities.
+
+      :type: float
+
+   .. attribute:: shift
+
+      A constant to shift your intensities.
+
+      :type: float
+
+   .. method:: node(raw_key, _gt_key=None, _mask_key=None)
+
+      Get a gp.IntensityScaleShift node.
+
+   .. note:: This class is a subclass of AugmentConfig.
+
+
+   .. py:attribute:: scale
+      :type:  float
+
+
+   .. py:attribute:: shift
+      :type:  float
+
+
+   .. py:method:: node(raw_key: gunpowder.ArrayKey, _gt_key=None, _mask_key=None)
+
+      Get a gp.IntensityScaleShift node.
+
+      :param raw_key: Key for raw data.
+      :type raw_key: gp.ArrayKey
+      :param _gt_key: Specific key for ground truth data, not used in this implementation. Defaults to None.
+      :type _gt_key: [type], optional
+      :param _mask_key: Specific key for mask data, not used in this implementation. Defaults to None.
+      :type _mask_key: [type], optional
+
+      :returns: Intensity scaling and shifting node which can be incorporated in the pipeline.
+      :rtype: gunpowder.IntensityScaleShift
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> node = intensity_scale_shift_augment_config.node(raw_key)
+
+
+

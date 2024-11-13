@@ -1,0 +1,100 @@
+dacapo.gp.gamma_noise
+=====================
+
+.. py:module:: dacapo.gp.gamma_noise
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   dacapo.gp.gamma_noise.logger
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.gp.gamma_noise.GammaAugment
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:class:: GammaAugment(arrays, gamma_min, gamma_max)
+
+
+
+   Class for applying gamma noise augmentation.
+
+   .. attribute:: arrays
+
+      An iterable collection of np arrays to augment
+
+   .. attribute:: gamma_min
+
+      A float representing the lower limit of gamma perturbation
+
+   .. attribute:: gamma_max
+
+      A float representing the upper limit of gamma perturbation
+
+   .. method:: setup()
+
+      Method to configure the internal state of the class
+
+   .. method:: process()
+
+      Method to apply gamma noise to the desired arrays
+
+   .. method:: __augment()
+
+      Private method to perform the actual augmentation
+      
+      
+
+
+   .. py:attribute:: arrays
+
+
+   .. py:attribute:: gamma_min
+
+
+   .. py:attribute:: gamma_max
+
+
+   .. py:method:: setup()
+
+      Configuring the internal state by iterating over arrays.
+
+      :raises AssertionError: If the array data type is not float32 or float64
+
+      .. rubric:: Examples
+
+      >>> setup()
+      setup()
+
+
+
+   .. py:method:: process(batch, request)
+
+      Method to apply gamma noise to the desired arrays.
+
+      :param batch: The input batch to be processed.
+      :param request: An object which holds the requested output location.
+
+      :returns: The batch with the gamma noise applied.
+
+      :raises AssertionError: If the array data type is not float32 or float64
+
+      .. rubric:: Examples
+
+      >>> process(batch, request)
+      process(batch, request)
+
+
+

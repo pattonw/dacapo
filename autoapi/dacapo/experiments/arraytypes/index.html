@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dacapo.experiments.arraytypes &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="dacapo.experiments.arraytypes.annotations" href="annotations/index.html" />
+    <link rel="prev" title="dacapo.experiments.architectures.dummy_architecture_config" href="../architectures/dummy_architecture_config/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aws.html">AWS EC2 Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../roadmap.html">Road Map</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">dacapo</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../apply/index.html">dacapo.apply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../blockwise/index.html">dacapo.blockwise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../compute_context/index.html">dacapo.compute_context</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">dacapo.experiments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ext/index.html">dacapo.ext</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gp/index.html">dacapo.gp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../options/index.html">dacapo.options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plot/index.html">dacapo.plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict/index.html">dacapo.predict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict_local/index.html">dacapo.predict_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../store/index.html">dacapo.store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tmp/index.html">dacapo.tmp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../train/index.html">dacapo.train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../utils/index.html">dacapo.utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validate/index.html">dacapo.validate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">dacapo</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">dacapo.experiments</a></li>
+      <li class="breadcrumb-item active">dacapo.experiments.arraytypes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/dacapo/experiments/arraytypes/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dacapo.experiments.arraytypes">
+<span id="dacapo-experiments-arraytypes"></span><h1>dacapo.experiments.arraytypes<a class="headerlink" href="#module-dacapo.experiments.arraytypes" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="annotations/index.html">dacapo.experiments.arraytypes.annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arraytype/index.html">dacapo.experiments.arraytypes.arraytype</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binary/index.html">dacapo.experiments.arraytypes.binary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distances/index.html">dacapo.experiments.arraytypes.distances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embedding/index.html">dacapo.experiments.arraytypes.embedding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intensities/index.html">dacapo.experiments.arraytypes.intensities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mask/index.html">dacapo.experiments.arraytypes.mask</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probabilities/index.html">dacapo.experiments.arraytypes.probabilities</a></li>
+</ul>
+</div>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.experiments.arraytypes.AnnotationArray" title="dacapo.experiments.arraytypes.AnnotationArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnnotationArray</span></code></a></p></td>
+<td><p>An AnnotationArray is a uint8, uint16, uint32 or uint64 Array where each</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.experiments.arraytypes.IntensitiesArray" title="dacapo.experiments.arraytypes.IntensitiesArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IntensitiesArray</span></code></a></p></td>
+<td><p>An IntensitiesArray is an Array of measured intensities. Each voxel has a value in the range [min, max].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.experiments.arraytypes.DistanceArray" title="dacapo.experiments.arraytypes.DistanceArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DistanceArray</span></code></a></p></td>
+<td><p>An array containing signed distances to the nearest boundary voxel for a particular label class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.experiments.arraytypes.Mask" title="dacapo.experiments.arraytypes.Mask"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Mask</span></code></a></p></td>
+<td><p>A class that inherits the ArrayType class. This is a representation of a Mask in the system.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.experiments.arraytypes.EmbeddingArray" title="dacapo.experiments.arraytypes.EmbeddingArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmbeddingArray</span></code></a></p></td>
+<td><p>A generic output of a model that could represent almost anything. Assumed to be</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.experiments.arraytypes.ProbabilityArray" title="dacapo.experiments.arraytypes.ProbabilityArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProbabilityArray</span></code></a></p></td>
+<td><p>Class to represent an array containing probability distributions for each voxel pointed by its coordinate.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.AnnotationArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.experiments.arraytypes.</span></span><span class="sig-name descname"><span class="pre">AnnotationArray</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.AnnotationArray" title="Link to this definition"></a></dt>
+<dd><p>An AnnotationArray is a uint8, uint16, uint32 or uint64 Array where each
+voxel has a value associated with its class. The class of each voxel can be
+determined by simply taking the value.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.AnnotationArray.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.AnnotationArray.classes" title="Link to this definition"></a></dt>
+<dd><p>A mapping from class label to class name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[int, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.AnnotationArray.interpolatable">
+<span class="sig-name descname"><span class="pre">interpolatable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.AnnotationArray.interpolatable" title="Link to this definition"></a></dt>
+<dd><p>It is a method that returns False.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is used to create an AnnotationArray object which is used to represent an array of class labels.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">classes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id1">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interpolatable</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Method to return False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>bool</dt><dd><p>Returns a boolean value of False representing that the values are not interpolatable.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – This method is not implemented in this class.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">annotation_array</span> <span class="o">=</span> <span class="n">AnnotationArray</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;mitochondria&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;membrane&quot;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">annotation_array</span><span class="o">.</span><span class="n">interpolatable</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used to check if the array is interpolatable.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.IntensitiesArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.experiments.arraytypes.</span></span><span class="sig-name descname"><span class="pre">IntensitiesArray</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.IntensitiesArray" title="Link to this definition"></a></dt>
+<dd><p>An IntensitiesArray is an Array of measured intensities. Each voxel has a value in the range [min, max].</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.IntensitiesArray.channels">
+<span class="sig-name descname"><span class="pre">channels</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.IntensitiesArray.channels" title="Link to this definition"></a></dt>
+<dd><p>A mapping from channel to a name describing that channel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[int, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.IntensitiesArray.min">
+<span class="sig-name descname"><span class="pre">min</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.IntensitiesArray.min" title="Link to this definition"></a></dt>
+<dd><p>The minimum possible value of your intensities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.IntensitiesArray.max">
+<span class="sig-name descname"><span class="pre">max</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.IntensitiesArray.max" title="Link to this definition"></a></dt>
+<dd><p>The maximum possible value of your intensities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.IntensitiesArray.__attrs_post_init__">
+<span class="sig-name descname"><span class="pre">__attrs_post_init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.arraytypes.IntensitiesArray.__attrs_post_init__" title="Link to this definition"></a></dt>
+<dd><p>This method is called after the instance has been initialized by the constructor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.IntensitiesArray.interpolatable">
+<span class="sig-name descname"><span class="pre">interpolatable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.IntensitiesArray.interpolatable" title="Link to this definition"></a></dt>
+<dd><p>It is a method that returns True.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is used to create an IntensitiesArray object which is used to represent an array of measured intensities.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">channels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">min</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interpolatable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd><p>Method to return True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>bool</dt><dd><p>Returns a boolean value of True representing that the values are interpolatable.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – This method is not implemented in this class.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">intensities_array</span> <span class="o">=</span> <span class="n">IntensitiesArray</span><span class="p">(</span><span class="n">channels</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;channel1&quot;</span><span class="p">},</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intensities_array</span><span class="o">.</span><span class="n">interpolatable</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used to check if the array is interpolatable.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.DistanceArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.experiments.arraytypes.</span></span><span class="sig-name descname"><span class="pre">DistanceArray</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.DistanceArray" title="Link to this definition"></a></dt>
+<dd><p>An array containing signed distances to the nearest boundary voxel for a particular label class.
+Distances should be positive outside an object and negative inside an object. The distance should be 0 on the boundary.
+The class of each voxel can be determined by simply taking the argmin. The distance should be in the range [-max, max].</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.DistanceArray.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.DistanceArray.classes" title="Link to this definition"></a></dt>
+<dd><p>A mapping from channel to class on which distances were calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[int, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.DistanceArray.max">
+<span class="sig-name descname"><span class="pre">max</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.DistanceArray.max" title="Link to this definition"></a></dt>
+<dd><p>The maximum possible distance value of your distances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.DistanceArray.interpolatable">
+<span class="sig-name descname"><span class="pre">interpolatable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.DistanceArray.interpolatable" title="Link to this definition"></a></dt>
+<dd><p>It is a method that returns True.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is used to create a DistanceArray object which is used to represent an array containing signed distances to the nearest boundary voxel for a particular label class.
+The class of each voxel can be determined by simply taking the argmin.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">classes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id7">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interpolatable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd><p>Checks if the array is interpolatable. Returns True for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True indicating that the data can be interpolated.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – This method is not implemented in this class</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">distance_array</span> <span class="o">=</span> <span class="n">DistanceArray</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;class1&quot;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distance_array</span><span class="o">.</span><span class="n">interpolatable</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used to check if the array is interpolatable.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.Mask">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.experiments.arraytypes.</span></span><span class="sig-name descname"><span class="pre">Mask</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.Mask" title="Link to this definition"></a></dt>
+<dd><p>A class that inherits the ArrayType class. This is a representation of a Mask in the system.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.Mask.interpolatable">
+<span class="sig-name descname"><span class="pre">interpolatable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.arraytypes.Mask.interpolatable" title="Link to this definition"></a></dt>
+<dd><p>It is a method that returns False.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is used to represent a Mask object in the system.</p>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="id8">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interpolatable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd><p>Method to return False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>bool</dt><dd><p>Returns a boolean value of False representing that the values are not interpolatable.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – This method is not implemented in this class.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">Mask</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span><span class="o">.</span><span class="n">interpolatable</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used to check if the array is interpolatable.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.EmbeddingArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.experiments.arraytypes.</span></span><span class="sig-name descname"><span class="pre">EmbeddingArray</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.EmbeddingArray" title="Link to this definition"></a></dt>
+<dd><p>A generic output of a model that could represent almost anything. Assumed to be
+float, interpolatable, and have sum number of channels. The channels are not
+specified, and the array can be of any shape.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.EmbeddingArray.embedding_dims">
+<span class="sig-name descname"><span class="pre">embedding_dims</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.EmbeddingArray.embedding_dims" title="Link to this definition"></a></dt>
+<dd><p>The dimension of your embedding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.EmbeddingArray.interpolatable">
+<span class="sig-name descname"><span class="pre">interpolatable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.arraytypes.EmbeddingArray.interpolatable" title="Link to this definition"></a></dt>
+<dd><p>It is a method that returns True.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is used to represent an EmbeddingArray object in the system.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">embedding_dims</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id10">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interpolatable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd><p>Method to return True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>bool</dt><dd><p>Returns a boolean value of True representing that the values are interpolatable.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – This method is not implemented in this class.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">embedding_array</span> <span class="o">=</span> <span class="n">EmbeddingArray</span><span class="p">(</span><span class="n">embedding_dims</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding_array</span><span class="o">.</span><span class="n">interpolatable</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used to check if the array is interpolatable.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.ProbabilityArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.experiments.arraytypes.</span></span><span class="sig-name descname"><span class="pre">ProbabilityArray</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.ProbabilityArray" title="Link to this definition"></a></dt>
+<dd><p>Class to represent an array containing probability distributions for each voxel pointed by its coordinate.</p>
+<p>The class defines a ProbabilityArray object with each voxel having a vector of length <cite>c</cite>, where <cite>c</cite> is the
+number of classes. The l1 norm of this vector should always be 1. The class of each voxel can be
+determined by simply taking the argmax.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.ProbabilityArray.classes">
+<span class="sig-name descname"><span class="pre">classes</span></span><a class="headerlink" href="#dacapo.experiments.arraytypes.ProbabilityArray.classes" title="Link to this definition"></a></dt>
+<dd><p>A mapping from channel to class on which distances were calculated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is used to create a ProbabilityArray object which is used to represent an array containing probability distributions for each voxel pointed by its coordinate.
+The class of each voxel can be determined by simply taking the argmax.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">classes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="dacapo.experiments.arraytypes.ProbabilityArray.interpolatable">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">interpolatable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#dacapo.experiments.arraytypes.ProbabilityArray.interpolatable" title="Link to this definition"></a></dt>
+<dd><p>Checks if the array is interpolatable. Returns True for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True indicating that the data can be interpolated.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – This method is not implemented in this class</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">probability_array</span> <span class="o">=</span> <span class="n">ProbabilityArray</span><span class="p">(</span><span class="n">classes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;class1&quot;</span><span class="p">,</span> <span class="s2">&quot;class2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">probability_array</span><span class="o">.</span><span class="n">interpolatable</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used to check if the array is interpolatable.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../architectures/dummy_architecture_config/index.html" class="btn btn-neutral float-left" title="dacapo.experiments.architectures.dummy_architecture_config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="annotations/index.html" class="btn btn-neutral float-right" title="dacapo.experiments.arraytypes.annotations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

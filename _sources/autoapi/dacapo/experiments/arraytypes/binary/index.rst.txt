@@ -1,0 +1,61 @@
+dacapo.experiments.arraytypes.binary
+====================================
+
+.. py:module:: dacapo.experiments.arraytypes.binary
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.arraytypes.binary.BinaryArray
+
+
+Module Contents
+---------------
+
+.. py:class:: BinaryArray
+
+
+
+   A subclass of ArrayType representing BinaryArray. The BinaryArray object is created with two attributes; channels.
+   Each voxel in this array is either 1 or 0. The class of each voxel can be determined by simply taking the argmax.
+
+   .. attribute:: channels
+
+      A dictionary attribute representing channel mapping with its binary classification.
+
+      :type: Dict[int, str]
+
+   .. method:: interpolatable
+
+      Returns False as binary array type is not interpolatable.
+
+   .. note:: This class is used to represent a BinaryArray object in the system.
+
+
+   .. py:attribute:: channels
+      :type:  Dict[int, str]
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      This function returns the interpolatable property value of the binary array.
+
+      :returns: Always returns False because interpolation is not possible.
+      :rtype: bool
+
+      :raises NotImplementedError: This method is not implemented in this class.
+
+      .. rubric:: Examples
+
+      >>> binary_array = BinaryArray(channels={1: "class1"})
+      >>> binary_array.interpolatable
+      False
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+

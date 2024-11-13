@@ -1,0 +1,62 @@
+dacapo.experiments.arraytypes.annotations
+=========================================
+
+.. py:module:: dacapo.experiments.arraytypes.annotations
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.arraytypes.annotations.AnnotationArray
+
+
+Module Contents
+---------------
+
+.. py:class:: AnnotationArray
+
+
+
+   An AnnotationArray is a uint8, uint16, uint32 or uint64 Array where each
+   voxel has a value associated with its class. The class of each voxel can be
+   determined by simply taking the value.
+
+   .. attribute:: classes
+
+      A mapping from class label to class name.
+
+      :type: Dict[int, str]
+
+   .. method:: interpolatable(self) -> bool
+
+      It is a method that returns False.
+
+   .. note:: This class is used to create an AnnotationArray object which is used to represent an array of class labels.
+
+
+   .. py:attribute:: classes
+      :type:  Dict[int, str]
+
+
+   .. py:property:: interpolatable
+
+      Method to return False.
+
+      :returns:
+
+                bool
+                    Returns a boolean value of False representing that the values are not interpolatable.
+
+      :raises NotImplementedError: This method is not implemented in this class.
+
+      .. rubric:: Examples
+
+      >>> annotation_array = AnnotationArray(classes={1: "mitochondria", 2: "membrane"})
+      >>> annotation_array.interpolatable
+      False
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+

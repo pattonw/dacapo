@@ -1,0 +1,53 @@
+dacapo.experiments.validation_iteration_scores
+==============================================
+
+.. py:module:: dacapo.experiments.validation_iteration_scores
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.validation_iteration_scores.ValidationIterationScores
+
+
+Module Contents
+---------------
+
+.. py:class:: ValidationIterationScores
+
+   A class used to represent the validation iteration scores in an organized structure.
+
+   .. attribute:: iteration
+
+      The iteration associated with these validation scores.
+
+      :type: int
+
+   .. attribute:: scores
+
+      A list of scores per dataset, post processor
+
+      :type: List[List[List[float]]]
+
+   .. attribute:: parameters, and evaluation criterion.
+
+      
+
+   .. note::
+
+      The scores list is structured as follows:
+      - The outer list contains the scores for each dataset.
+      - The middle list contains the scores for each post processor parameter.
+      - The inner list contains the scores for each evaluation criterion.
+
+
+   .. py:attribute:: iteration
+      :type:  int
+
+
+   .. py:attribute:: scores
+      :type:  List[List[List[float]]]
+
+

@@ -1,0 +1,730 @@
+dacapo.experiments.datasplits.datasets.arrays
+=============================================
+
+.. py:module:: dacapo.experiments.datasplits.datasets.arrays
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/binarize_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/concat_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/constant_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/crop_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/dummy_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/dvid_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/intensity_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/logical_or_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/merge_instances_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/missing_annotations_mask_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/ones_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/resampled_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/sum_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/tiff_array_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/zarr_array_config/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasets.arrays.ArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.DummyArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.ZarrArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.BinarizeArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.ResampledArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.IntensitiesArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.MissingAnnotationsMaskConfig
+   dacapo.experiments.datasplits.datasets.arrays.OnesArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.ConcatArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.LogicalOrArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.CropArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.MergeInstancesArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.DVIDArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.SumArrayConfig
+   dacapo.experiments.datasplits.datasets.arrays.ConstantArrayConfig
+
+
+Package Contents
+----------------
+
+.. py:class:: ArrayConfig
+
+
+
+   Base class for array configurations. Each subclass of an
+   `Array` should have a corresponding config class derived from
+   `ArrayConfig`. This class should be used to store the configuration
+   of the array.
+
+   .. attribute:: name
+
+      A unique name for this array. This will be saved so you
+      and others can find and reuse this array. Keep it short
+      and avoid special characters.
+
+      :type: str
+
+   .. method:: verify(self) -> Tuple[bool, str]
+
+      This method is used to check whether this is a valid Array.
+
+   .. note::
+
+      This class is used to create a base class for array configurations. Each subclass of an
+      `Array` should have a corresponding config class derived from `ArrayConfig`.
+      This class should be used to store the configuration of the array.
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+      :abstractmethod:
+
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      Check whether this is a valid Array
+
+      :returns: A tuple with the first element being a boolean
+                indicating whether the array is valid and the second element being
+                a string with a message explaining why the array is invalid
+      :rtype: Tuple[bool, str]
+
+      :raises NotImplementedError: This method is not implemented in this class
+
+      .. rubric:: Examples
+
+      >>> array_config = ArrayConfig(name="array_config")
+      >>> array_config.verify()
+      (True, "No validation for this Array")
+
+      .. note:: This method is used to check whether this is a valid Array.
+
+
+
+.. py:class:: DummyArrayConfig
+
+
+
+   This is just a dummy array  config used for testing. None of the
+   attributes have any particular meaning. It is used to test the
+   ArrayConfig class.
+
+   .. method:: to_array
+
+      Returns the DummyArray object
+
+   .. method:: verify
+
+      Returns whether the DummyArrayConfig is valid
+
+   .. rubric:: Notes
+
+   The source_array_config must be an ArrayConfig object.
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      Check whether this is a valid Array
+
+      :returns: Whether the Array is valid and a message
+      :rtype: Tuple[bool, str]
+
+      :raises ValueError: If the source is not a tuple of strings
+
+      .. rubric:: Examples
+
+      >>> dummy_array_config = DummyArrayConfig(...)
+      >>> dummy_array_config.verify()
+      (False, "This is a DummyArrayConfig and is never valid")
+
+      .. rubric:: Notes
+
+      The source must be a tuple of strings.
+
+
+
+.. py:class:: ZarrArrayConfig
+
+
+
+   This config class provides the necessary configuration for a zarr array.
+
+   A zarr array is a container for large, multi-dimensional arrays. It is similar to HDF5, but is designed to work
+   with large arrays that do not fit into memory. Zarr arrays can be stored on disk or in the cloud
+   and can be accessed concurrently by multiple processes. Zarr arrays can be compressed and
+   support chunked, N-dimensional arrays.
+
+   .. attribute:: file_name
+
+      Path
+      The file name of the zarr container.
+
+   .. attribute:: dataset
+
+      str
+      The name of your dataset. May include '/' characters for nested heirarchies
+
+   .. attribute:: snap_to_grid
+
+      Optional[Coordinate]
+      If you need to make sure your ROI's align with a specific voxel_size
+
+   .. attribute:: _axes
+
+      Optional[List[str]]
+      The axis_names of your data!
+
+   .. method:: verify() -> Tuple[bool, str]
+
+      
+      Check whether this is a valid Array
+
+   .. note:: This class is a subclass of ArrayConfig.
+
+
+   .. py:attribute:: file_name
+      :type:  upath.UPath
+
+
+   .. py:attribute:: dataset
+      :type:  str
+
+
+   .. py:attribute:: snap_to_grid
+      :type:  Optional[funlib.geometry.Coordinate]
+
+
+   .. py:attribute:: mode
+      :type:  Optional[str]
+
+
+   .. py:method:: array(mode='r')
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      Check whether this is a valid Array
+
+      :returns: A tuple of a boolean and a string. The boolean indicates whether the Array is valid or not.
+                The string provides a reason why the Array is not valid.
+      :rtype: Tuple[bool, str]
+
+      :raises NotImplementedError: This method is not implemented for this Array
+
+      .. rubric:: Examples
+
+      >>> zarr_array_config = ZarrArrayConfig(
+      ...     file_name=Path("data.zarr"),
+      ...     dataset="data",
+      ...     snap_to_grid=Coordinate(1, 1, 1),
+      ...     _axes=["x", "y", "z"]
+      ... )
+      >>> zarr_array_config.verify()
+      (True, 'No validation for this Array')
+
+      .. note:: This method is not implemented for this Array
+
+
+
+.. py:class:: BinarizeArrayConfig
+
+
+
+   This config class provides the necessary configuration for turning an Annotated dataset into a
+   multi class binary classification problem. Each class will be binarized into a separate channel.
+
+   .. attribute:: source_array_config
+
+      The Array from which to pull annotated data. Is expected to contain a volume with uint64 voxels and no channel dimension
+
+      :type: ArrayConfig
+
+   .. attribute:: groupings
+
+      List of id groups with a symantic name. Each id group is a List of ids.
+      Group i found in groupings[i] will be binarized and placed in channel i.
+      An empty group will binarize all non background labels.
+
+      :type: List[Tuple[str, List[int]]]
+
+   .. attribute:: background
+
+      The id considered background. Will never be binarized to 1, defaults to 0.
+
+      :type: int
+
+   .. note::
+
+      This class is used to create a BinarizeArray object which is used to turn an Annotated dataset into a multi class binary classification problem.
+      Each class will be binarized into a separate channel.
+
+
+   .. py:attribute:: source_array_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig
+
+
+   .. py:attribute:: groupings
+      :type:  List[Tuple[str, List[int]]]
+
+
+   .. py:attribute:: background
+      :type:  int
+
+
+   .. py:method:: array(mode='r') -> funlib.persistence.Array
+
+
+.. py:class:: ResampledArrayConfig
+
+
+
+   A configuration for a ResampledArray. This array will up or down sample an array into the desired voxel size.
+
+   .. attribute:: source_array_config
+
+      The Array that you want to upsample or downsample.
+
+      :type: ArrayConfig
+
+   .. attribute:: upsample
+
+      The amount by which to upsample!
+
+      :type: Coordinate
+
+   .. attribute:: downsample
+
+      The amount by which to downsample!
+
+      :type: Coordinate
+
+   .. attribute:: interp_order
+
+      The order of the interpolation!
+
+      :type: bool
+
+   .. method:: create_array
+
+      Creates a ResampledArray from the configuration.
+
+   .. note:: This class is meant to be used with the ArrayDataset class.
+
+
+   .. py:attribute:: source_array_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig
+
+
+   .. py:attribute:: upsample
+      :type:  funlib.geometry.Coordinate
+
+
+   .. py:attribute:: downsample
+      :type:  funlib.geometry.Coordinate
+
+
+   .. py:attribute:: interp_order
+      :type:  bool
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+      :abstractmethod:
+
+
+
+.. py:class:: IntensitiesArrayConfig
+
+
+
+   This config class provides the necessary configuration for turning an Annotated dataset into a
+   multi class binary classification problem. It takes a source array and normalizes the intensities
+   between 0 and 1. The source array is expected to contain a volume with uint64 voxels and no channel dimension.
+
+   .. attribute:: source_array_config
+
+      The Array from which to pull annotated data
+
+      :type: ArrayConfig
+
+   .. attribute:: min
+
+      The minimum intensity in your data
+
+      :type: float
+
+   .. attribute:: max
+
+      The maximum intensity in your data
+
+      :type: float
+
+   .. method:: to_array
+
+      Returns the IntensitiesArray object
+
+   .. rubric:: Notes
+
+   The source_array_config must be an ArrayConfig object.
+
+
+   .. py:attribute:: source_array_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig
+
+
+   .. py:attribute:: min
+      :type:  float
+
+
+   .. py:attribute:: max
+      :type:  float
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+.. py:class:: MissingAnnotationsMaskConfig
+
+
+
+   This config class provides the necessary configuration for turning an Annotated dataset into a
+   multi class binary classification problem
+
+   .. attribute:: source_array_config
+
+      ArrayConfig
+      The Array from which to pull annotated data. Is expected to contain a volume with uint64 voxels and no channel dimension
+
+   .. attribute:: groupings
+
+      List[Tuple[str, List[int]]]
+      List of id groups with a symantic name. Each id group is a List of ids.
+      Group i found in groupings[i] will be binarized and placed in channel i.
+
+   .. note::
+
+      The output array will have a channel dimension equal to the number of groups.
+      Each channel will be a binary mask of the ids in the groupings list.
+
+
+   .. py:attribute:: source_array_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig
+
+
+   .. py:attribute:: groupings
+      :type:  List[Tuple[str, List[int]]]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+.. py:class:: OnesArrayConfig
+
+
+
+   This array read data from the source array and then return a np.ones_like() version.
+
+   This is useful for creating a mask array from a source array. For example, if you have a
+   2D array of data and you want to create a mask array that is the same shape as the data
+   array, you can use this class to create the mask array.
+
+   .. attribute:: source_array_config
+
+      The source array that you want to copy and fill with ones.
+
+   .. method:: create_array
+
+      Create the array.
+
+   .. note:: This class is a subclass of ArrayConfig.
+
+
+   .. py:attribute:: source_array_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+.. py:class:: ConcatArrayConfig
+
+
+
+   This array read data from the source array and then return a np.ones_like() version of the data.
+
+   .. attribute:: channels
+
+      An ordering for the source_arrays.
+
+      :type: List[str]
+
+   .. attribute:: source_array_configs
+
+      A mapping from channels to array_configs. If a channel has no ArrayConfig it will be filled with zeros
+
+      :type: Dict[str, ArrayConfig]
+
+   .. attribute:: default_config
+
+      An optional array providing the default array per channel. If not provided, missing channels will simply be filled with 0s
+
+      :type: Optional[ArrayConfig]
+
+   .. method:: __attrs_post_init__(self)
+
+      This method is called after the instance has been initialized by the constructor. It is used to set the default_config to an instance of ArrayConfig if it is None.
+
+   .. method:: get_array(self, source_arrays
+
+      Dict[str, np.ndarray]) -> np.ndarray: This method reads data from the source array and then return a np.ones_like() version of the data.
+
+   .. note::
+
+      This class is used to create a ConcatArray object which is used to read data from the source array and then return a np.ones_like() version of the data.
+      The source array is a dictionary with the key being the channel and the value being the array.
+
+
+   .. py:attribute:: channels
+      :type:  List[str]
+
+
+   .. py:attribute:: source_array_configs
+      :type:  Dict[str, dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig]
+
+
+   .. py:attribute:: default_config
+      :type:  Optional[dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+.. py:class:: LogicalOrArrayConfig
+
+
+
+   This config class takes a source array and performs a logical or over the channels.
+   Good for union multiple masks.
+
+   .. attribute:: source_array_config
+
+      The Array of masks from which to take the union
+
+      :type: ArrayConfig
+
+   .. method:: to_array
+
+      Returns the LogicalOrArray object
+
+   .. rubric:: Notes
+
+   The source_array_config must be an ArrayConfig object.
+
+
+   .. py:attribute:: source_array_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+.. py:class:: CropArrayConfig
+
+
+
+   This config class provides the necessary configuration for cropping an
+   Array to a smaller ROI. Especially useful for validation volumes that may
+   be too large for quick evaluation. The ROI is specified in the config. The
+   cropped Array will have the same dtype as the source Array.
+
+   .. attribute:: source_array_config
+
+      The Array to crop
+
+      :type: ArrayConfig
+
+   .. attribute:: roi
+
+      The ROI for cropping
+
+      :type: Roi
+
+   .. method:: from_toml(cls, toml_path
+
+      str) -> CropArrayConfig:
+      Load the CropArrayConfig from a TOML file
+
+   .. method:: to_toml(self, toml_path
+
+      str) -> None:
+      Save the CropArrayConfig to a TOML file
+
+   .. method:: create_array(self) -> CropArray
+
+      
+      Create the CropArray from the config
+
+   .. note::
+
+      This class is a subclass of ArrayConfig and inherits all its attributes
+      and methods. The only difference is that the array_type is CropArray.
+
+
+   .. py:attribute:: source_array_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig
+
+
+   .. py:attribute:: roi
+      :type:  funlib.geometry.Roi
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+.. py:class:: MergeInstancesArrayConfig
+
+
+
+   Configuration for an array that merges instances from multiple arrays
+   into a single array. The instances are merged by taking the union of the
+   instances in the source arrays.
+
+   .. attribute:: source_array_configs
+
+      List[ArrayConfig]
+      The Array of masks from which to take the union
+
+   .. method:: create_array
+
+      () -> MergeInstancesArray
+      Create a MergeInstancesArray instance from the configuration
+
+   .. rubric:: Notes
+
+   The MergeInstancesArrayConfig class is used to create a MergeInstancesArray
+
+
+   .. py:attribute:: source_array_configs
+      :type:  List[dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+.. py:class:: DVIDArrayConfig
+
+
+
+   This config class provides the necessary configuration for a DVID array. It takes a source string and returns the DVIDArray object.
+
+   .. attribute:: source
+
+      The source strings
+
+      :type: Tuple[str, str, str]
+
+   .. method:: to_array
+
+      Returns the DVIDArray object
+
+   .. rubric:: Notes
+
+   The source must be a tuple of strings.
+
+
+   .. py:attribute:: source
+      :type:  Tuple[str, str, str]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+      :abstractmethod:
+
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      Check whether this is a valid Array
+
+      :returns: Whether the Array is valid and a message
+      :rtype: Tuple[bool, str]
+
+      :raises ValueError: If the source is not a tuple of strings
+
+      .. rubric:: Examples
+
+      >>> dvid_array_config = DVIDArrayConfig(...)
+      >>> dvid_array_config.verify()
+      (True, "No validation for this Array")
+
+      .. rubric:: Notes
+
+      The source must be a tuple of strings.
+
+
+
+.. py:class:: SumArrayConfig
+
+
+
+   This config class provides the necessary configuration for a sum
+   array.
+
+   .. attribute:: source_array_configs
+
+      List[ArrayConfig]
+      The Array of masks from which to take the union
+
+   .. note:: This class is a subclass of ArrayConfig.
+
+
+   .. py:attribute:: source_array_configs
+      :type:  List[dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+
+.. py:class:: ConstantArrayConfig
+
+
+
+   This array read data from the source array and then return a np.ones_like() version.
+
+   This is useful for creating a mask array from a source array. For example, if you have a
+   2D array of data and you want to create a mask array that is the same shape as the data
+   array, you can use this class to create the mask array.
+
+   .. attribute:: source_array_config
+
+      The source array that you want to copy and fill with ones.
+
+   .. method:: create_array
+
+      Create the array.
+
+   .. note:: This class is a subclass of ArrayConfig.
+
+
+   .. py:attribute:: source_array_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig
+
+
+   .. py:attribute:: constant
+      :type:  int
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+

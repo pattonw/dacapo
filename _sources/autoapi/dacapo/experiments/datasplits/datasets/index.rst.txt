@@ -1,0 +1,490 @@
+dacapo.experiments.datasplits.datasets
+======================================
+
+.. py:module:: dacapo.experiments.datasplits.datasets
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/dacapo/experiments/datasplits/datasets/arrays/index
+   /autoapi/dacapo/experiments/datasplits/datasets/dataset/index
+   /autoapi/dacapo/experiments/datasplits/datasets/dataset_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/dummy_dataset/index
+   /autoapi/dacapo/experiments/datasplits/datasets/dummy_dataset_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/graphstores/index
+   /autoapi/dacapo/experiments/datasplits/datasets/raw_gt_dataset/index
+   /autoapi/dacapo/experiments/datasplits/datasets/raw_gt_dataset_config/index
+   /autoapi/dacapo/experiments/datasplits/datasets/simple/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasets.Dataset
+   dacapo.experiments.datasplits.datasets.DatasetConfig
+   dacapo.experiments.datasplits.datasets.DummyDataset
+   dacapo.experiments.datasplits.datasets.DummyDatasetConfig
+   dacapo.experiments.datasplits.datasets.RawGTDataset
+   dacapo.experiments.datasplits.datasets.RawGTDatasetConfig
+   dacapo.experiments.datasplits.datasets.SimpleDataset
+
+
+Package Contents
+----------------
+
+.. py:class:: Dataset
+
+
+
+   A class to represent a dataset.
+
+   .. attribute:: name
+
+      The name of the dataset.
+
+      :type: str
+
+   .. attribute:: raw
+
+      The raw dataset.
+
+      :type: Array
+
+   .. attribute:: gt
+
+      The ground truth data.
+
+      :type: Array, optional
+
+   .. attribute:: mask
+
+      The mask for the data.
+
+      :type: Array, optional
+
+   .. attribute:: weight
+
+      The weight of the dataset.
+
+      :type: int, optional
+
+   .. attribute:: sample_points
+
+      The list of sample points in the dataset.
+
+      :type: list[Coordinate], optional
+
+   .. method:: __eq__(other)
+
+      
+      Overloaded equality operator for dataset objects.
+
+   .. method:: __hash__()
+
+      
+      Calculates a hash for the dataset.
+
+   .. method:: __repr__()
+
+      
+      Returns the official string representation of the dataset object.
+
+   .. method:: __str__()
+
+      
+      Returns the string representation of the dataset object.
+
+   .. method:: _neuroglancer_layers(prefix="", exclude_layers=None)
+
+      
+      Generates neuroglancer layers for raw, gt and mask if they can be viewed by neuroglance, excluding those in
+      the exclude_layers.
+
+   .. rubric:: Notes
+
+   This class is a base class and should not be instantiated.
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: raw
+      :type:  funlib.persistence.Array
+
+
+   .. py:attribute:: gt
+      :type:  Optional[funlib.persistence.Array]
+
+
+   .. py:attribute:: mask
+      :type:  Optional[funlib.persistence.Array]
+
+
+   .. py:attribute:: weight
+      :type:  Optional[int]
+
+
+   .. py:attribute:: sample_points
+      :type:  Optional[List[funlib.geometry.Coordinate]]
+
+
+.. py:class:: DatasetConfig
+
+   A class used to define configuration for datasets. This provides the
+   framework to create a Dataset instance.
+
+   .. attribute:: name
+
+      str (eg: "sample_dataset").
+      A unique identifier to name the dataset.
+      It aids in easy identification and reusability of this dataset.
+      Advised to keep it short and refrain from using special characters.
+
+   .. attribute:: weight
+
+      int (default=1).
+      A numeric value that indicates how frequently this dataset should be
+      sampled in comparison to others. Higher the weight, more frequently it
+      gets sampled.
+
+   .. method:: verify
+
+      
+      Checks and validates the dataset configuration. The specific rules for
+      validation need to be defined by the user.
+
+   .. rubric:: Notes
+
+   This class is used to create a configuration object for datasets.
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: weight
+      :type:  int
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      Method to verify the dataset configuration.
+
+      Since there is no specific validation logic defined for this DataSet, this
+      method will always return True as default reaction and a message stating
+      the lack of validation.
+
+      :returns: A tuple of boolean value indicating the check (True or False) and
+                message specifying result of validation.
+      :rtype: tuple
+
+      :raises NotImplementedError: If the method is not implemented in the derived class.
+
+      .. rubric:: Examples
+
+      >>> dataset_config = DatasetConfig(name="sample_dataset")
+      >>> dataset_config.verify()
+      (True, "No validation for this DataSet")
+
+      .. rubric:: Notes
+
+      This method is used to validate the configuration of the dataset.
+
+
+
+.. py:class:: DummyDataset(dataset_config)
+
+
+
+   DummyDataset is a child class of the Dataset. This class has property 'raw' of Array type and a name.
+
+   .. attribute:: raw
+
+      Array
+      The raw data.
+
+   .. method:: __init__(dataset_config)
+
+      
+      Initializes the array type 'raw' and name for the DummyDataset instance.
+
+   .. rubric:: Notes
+
+   This class is used to create a dataset with raw data.
+
+
+   .. py:attribute:: raw
+      :type:  funlib.persistence.Array
+
+
+   .. py:attribute:: name
+
+
+.. py:class:: DummyDatasetConfig
+
+
+
+   A dummy configuration class for test datasets.
+
+   .. attribute:: dataset_type
+
+      Clearly mentions the type of dataset
+
+   .. attribute:: raw_config
+
+      This attribute holds the configurations related to dataset arrays.
+
+   .. method:: verify
+
+      A dummy verification method for testing purposes, always returns False and a message.
+
+   .. rubric:: Notes
+
+   This class is used to create a configuration object for the dummy dataset.
+
+
+   .. py:attribute:: dataset_type
+
+
+   .. py:attribute:: raw_config
+      :type:  dacapo.experiments.datasplits.datasets.arrays.ArrayConfig
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      A dummy method that always indicates the dataset config is not valid.
+
+      :returns: A tuple of False and a message indicating the invalidity.
+
+      :raises NotImplementedError: If the method is not implemented in the derived class.
+
+      .. rubric:: Examples
+
+      >>> dataset_config = DummyDatasetConfig(raw_config=DummyArrayConfig(name="dummy_array"))
+      >>> dataset_config.verify()
+      (False, "This is a DummyDatasetConfig and is never valid")
+
+      .. rubric:: Notes
+
+      This method is used to validate the configuration of the dataset.
+
+
+
+.. py:class:: RawGTDataset(dataset_config)
+
+
+
+   A dataset that contains raw and ground truth data. Optionally, it can also contain a mask.
+
+   .. attribute:: raw
+
+      Array
+      The raw data.
+
+   .. attribute:: gt
+
+      Array
+      The ground truth data.
+
+   .. attribute:: mask
+
+      Optional[Array]
+      The mask data.
+
+   .. attribute:: sample_points
+
+      Optional[List[Coordinate]]
+      The sample points in the graph.
+
+   .. attribute:: weight
+
+      Optional[float]
+      The weight of the dataset.
+
+   .. method:: __init__(dataset_config)
+
+      
+      Initialize the dataset.
+
+   .. rubric:: Notes
+
+   This class is a base class and should not be instantiated.
+
+
+   .. py:attribute:: raw
+      :type:  funlib.persistence.Array
+
+
+   .. py:attribute:: gt
+      :type:  funlib.persistence.Array
+
+
+   .. py:attribute:: mask
+      :type:  Optional[funlib.persistence.Array]
+
+
+   .. py:attribute:: sample_points
+      :type:  Optional[List[funlib.geometry.Coordinate]]
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: weight
+
+
+.. py:class:: RawGTDatasetConfig
+
+
+
+   This is a configuration class for the standard dataset with both raw and GT Array.
+
+   The configuration includes array configurations for raw data, ground truth data and mask data.
+   The configuration for ground truth (GT) data is mandatory, whereas configurations for raw
+   and mask data are optional. It also includes an optional list of points around which training samples
+   will be extracted.
+
+   .. attribute:: dataset_type
+
+      The type of dataset that is being configured.
+
+      :type: class
+
+   .. attribute:: raw_config
+
+      Configuration for the raw data associated with this dataset.
+
+      :type: Optional[ArrayConfig]
+
+   .. attribute:: gt_config
+
+      Configuration for the ground truth data associated with this dataset.
+
+      :type: Optional[ArrayConfig]
+
+   .. attribute:: mask_config
+
+      An optional mask configuration that sets the loss
+      equal to zero on voxels where the mask is 1.
+
+      :type: Optional[ArrayConfig]
+
+   .. attribute:: sample_points
+
+      An optional list of points around which
+      training samples will be extracted.
+
+      :type: Optional[List[Coordinate]]
+
+   .. method:: verify
+
+      A method to verify the validity of the configuration.
+
+   .. rubric:: Notes
+
+   This class is used to create a configuration object for the standard dataset with both raw and GT Array.
+
+
+   .. py:attribute:: dataset_type
+
+
+   .. py:attribute:: raw_config
+      :type:  Optional[dacapo.experiments.datasplits.datasets.arrays.ArrayConfig]
+
+
+   .. py:attribute:: gt_config
+      :type:  Optional[dacapo.experiments.datasplits.datasets.arrays.ArrayConfig]
+
+
+   .. py:attribute:: mask_config
+      :type:  Optional[dacapo.experiments.datasplits.datasets.arrays.ArrayConfig]
+
+
+   .. py:attribute:: sample_points
+      :type:  Optional[List[funlib.geometry.Coordinate]]
+
+
+.. py:class:: SimpleDataset
+
+
+
+   A class used to define configuration for datasets. This provides the
+   framework to create a Dataset instance.
+
+   .. attribute:: name
+
+      str (eg: "sample_dataset").
+      A unique identifier to name the dataset.
+      It aids in easy identification and reusability of this dataset.
+      Advised to keep it short and refrain from using special characters.
+
+   .. attribute:: weight
+
+      int (default=1).
+      A numeric value that indicates how frequently this dataset should be
+      sampled in comparison to others. Higher the weight, more frequently it
+      gets sampled.
+
+   .. method:: verify
+
+      
+      Checks and validates the dataset configuration. The specific rules for
+      validation need to be defined by the user.
+
+   .. rubric:: Notes
+
+   This class is used to create a configuration object for datasets.
+
+
+   .. py:attribute:: path
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: weight
+      :type:  int
+
+
+   .. py:attribute:: raw_name
+      :type:  str
+
+
+   .. py:attribute:: gt_name
+      :type:  str
+
+
+   .. py:attribute:: mask_name
+      :type:  str
+
+
+   .. py:method:: dataset_type(dataset_config)
+      :staticmethod:
+
+
+
+   .. py:property:: raw
+      :type: funlib.persistence.Array
+
+
+
+   .. py:property:: gt
+      :type: funlib.persistence.Array
+
+
+
+   .. py:property:: mask
+      :type: funlib.persistence.Array | None
+
+
+
+   .. py:property:: sample_points
+      :type: None
+
+
+

@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DaCapo &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="aws.html">AWS EC2 Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Road Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">DaCapo  </li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="toctree-wrapper compound">
+</div>
+<img src="https://raw.githubusercontent.com/janelia-cellmap/dacapo/main/docs/source/_static/CellMapLogo.png" alt="CellMap logo" width="85%">
+<section id="dacapo">
+<h1>DaCapo <img alt="DaCapo" src="https://raw.githubusercontent.com/janelia-cellmap/dacapo/main/docs/source/_static/icon_dacapo.png" /> <img alt="GitHub Org's stars" src="https://img.shields.io/github/stars/Janelia-cellmap/dacapo" /><a class="headerlink" href="#dacapo" title="Link to this heading"></a></h1>
+<p><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/dacapo-ml" />
+<a class="reference external" href="https://dacapo.readthedocs.io/en/stable/?badge=stable"><img alt="Documentation Status" src="https://readthedocs.org/projects/dacapo/badge/?version=stable" /></a>
+<img alt="Github Created At" src="https://img.shields.io/github/created-at/funkelab/dacapo" />
+<img alt="GitHub License" src="https://img.shields.io/github/license/janelia-cellmap/dacapo" />
+<img alt="Python Version from PEP 621 TOML" src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fjanelia-cellmap%2Fdacapo%2Fmain%2Fpyproject.toml" /></p>
+<p><a class="reference external" href="https://github.com/janelia-cellmap/dacapo/actions/workflows/tests.yaml"><img alt="tests" src="https://github.com/janelia-cellmap/dacapo/actions/workflows/tests.yaml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/janelia-cellmap/dacapo/actions/workflows/black.yaml"><img alt="black" src="https://github.com/janelia-cellmap/dacapo/actions/workflows/black.yaml/badge.svg" /></a>
+<a class="reference external" href="https://github.com/janelia-cellmap/dacapo/actions/workflows/mypy.yaml"><img alt="mypy" src="https://github.com/janelia-cellmap/dacapo/actions/workflows/mypy.yaml/badge.svg" /></a>
+<a class="reference external" href="https://janelia-cellmap.github.io/dacapo/"><img alt="docs" src="https://github.com/janelia-cellmap/dacapo/actions/workflows/docs.yaml/badge.svg" /></a>
+<a class="reference external" href="https://codecov.io/gh/janelia-cellmap/dacapo"><img alt="codecov" src="https://codecov.io/gh/janelia-cellmap/dacapo/branch/main/graph/badge.svg" /></a></p>
+<p>A framework for easy application of established machine learning techniques on large, multi-dimensional images.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dacapo</span></code> allows you to configure machine learning jobs as combinations of
+<a class="reference external" href="https://janelia-cellmap.github.io/dacapo/autoapi/dacapo/experiments/datasplits/index.html">DataSplits</a>,
+<a class="reference external" href="https://janelia-cellmap.github.io/dacapo/autoapi/dacapo/experiments/architectures/index.html">Architectures</a>,
+<a class="reference external" href="https://janelia-cellmap.github.io/dacapo/autoapi/dacapo/experiments/tasks/index.html">Tasks</a>,
+<a class="reference external" href="https://janelia-cellmap.github.io/dacapo/autoapi/dacapo/experiments/trainers/index.html">Trainers</a>,
+on arbitrarily large volumes of
+multi-dimensional images. <code class="docutils literal notranslate"><span class="pre">dacapo</span></code> is not tied to a particular learning
+framework, but currently only supports <a class="reference external" href="https://pytorch.org/"><code class="docutils literal notranslate"><span class="pre">torch</span></code></a> with
+plans to support <a class="reference external" href="https://www.tensorflow.org/"><code class="docutils literal notranslate"><span class="pre">tensorflow</span></code></a>.</p>
+<p><img alt="DaCapo Diagram" src="https://raw.githubusercontent.com/janelia-cellmap/dacapo/main/docs/source/_static/dacapo_diagram.png" /></p>
+<section id="installation-and-setup">
+<h2>Installation and Setup<a class="headerlink" href="#installation-and-setup" title="Link to this heading"></a></h2>
+<p>Currently, python&gt;=3.10 is supported. We recommend creating a new conda environment for dacapo with python 3.10.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">n</span> <span class="n">dacapo</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.10</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">dacapo</span>
+</pre></div>
+</div>
+<p>Then install DaCapo using pip with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">dacapo</span><span class="o">-</span><span class="n">ml</span>
+</pre></div>
+</div>
+<p>This will install the minimum required dependencies.</p>
+<p>You may additionally utilize a MongoDB server for storing outputs. To install and run MongoDB locally, refer to the MongoDB documentation <a class="reference external" href="https://www.mongodb.com/docs/manual/installation/">here</a>.</p>
+<p>The use of MongoDB, as well as specifying the compute context (on cluster or not) should be specified in the <code class="docutils literal notranslate"><span class="pre">dacapo.yaml</span></code> in the main directory.</p>
+</section>
+<section id="functionality-overview">
+<h2>Functionality Overview<a class="headerlink" href="#functionality-overview" title="Link to this heading"></a></h2>
+<p>Tasks we support and approaches for those tasks:</p>
+<ul class="simple">
+<li><p>Instance Segmentation</p>
+<ul>
+<li><p>Affinities</p></li>
+<li><p>Local Shape Descriptors</p></li>
+</ul>
+</li>
+<li><p>Semantic segmentation</p>
+<ul>
+<li><p>Signed distances</p></li>
+<li><p>One-hot encoding of different types of objects</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="example-tutorial">
+<h2>Example Tutorial<a class="headerlink" href="#example-tutorial" title="Link to this heading"></a></h2>
+<p>A minimal example tutorial can be found in the examples directory and opened in colab here: <a target="_blank" href="https://colab.research.google.com/github/janelia-cellmap/dacapo/blob/main/examples/starter_tutorial/minimal_tutorial.ipynb">
+<img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a></p>
+</section>
+<section id="helpful-resources-tools">
+<h2>Helpful Resources &amp; Tools<a class="headerlink" href="#helpful-resources-tools" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Chunked data, zarr, and n5</p>
+<ul>
+<li><p>OME-Zarr: a cloud-optimized bioimaging file format with international community support (doi: <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/36865282/">10.1101/2023.02.17.528834</a>)</p></li>
+<li><p>Videos about N5 and Fiji can be found in <a class="reference external" href="https://www.youtube.com/playlist?list=PLmZHHIZ9Gz-IJA7HtW8quZcuLViz9Em6e">this playlist</a>. For other questions, join the discussion on the <a class="reference external" href="https://forum.image.sc/tag/n5">Image.sc forum</a>.</p></li>
+<li><p>Read about chunked storage plugins in Fiji in this blog: <a class="reference external" href="https://openorganelle.janelia.org/news/2023-02-06-n5-plugins-for-fiji">N5 plugins for Fiji</a></p></li>
+<li><p>Script for converting tif to zarr can be found <a class="reference external" href="https://github.com/yuriyzubov/tif-to-zarr">here</a></p></li>
+</ul>
+</li>
+<li><p>Segmentations</p>
+<ul>
+<li><p>A description of local shape descriptors used for affinities task. Read the blog <a class="reference external" href="https://localshapedescriptors.github.io/">here</a>. Example image from the blog showing the difference between segmentations:</p></li>
+<li><p><img alt="" src="https://localshapedescriptors.github.io/assets/img/detection_vs_segmentation_neurons.jpeg" /></p></li>
+</ul>
+</li>
+<li><p>CellMap Models</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/janelia-cellmap/cellmap-models">GitHub Repo</a> of published models</p></li>
+<li><p>For example, the COSEM trained pytorch networks are located <a class="reference external" href="https://github.com/janelia-cellmap/cellmap-models/tree/main/src/cellmap_models/pytorch/cosem">here</a>.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://openorganelle.janelia.org">OpenOrganelle.org</a></p>
+<ul>
+<li><p><img alt="" src="https://raw.githubusercontent.com/janelia-cellmap/dacapo/main/docs/source/_static/mito_pred-seg.gif" /></p></li>
+<li><p>Example of <a class="reference external" href="https://tinyurl.com/3kw2tuab">unprocessed distance predictions</a></p></li>
+<li><p>Example of <a class="reference external" href="https://tinyurl.com/k59pba98">refined segmentations</a> that have undergone post-processing (e.g., thresholding, masking, smoothing)</p></li>
+<li><p>Example of <a class="reference external" href="https://tinyurl.com/pu8mespz">groundtruth data</a></p></li>
+</ul>
+</li>
+<li><p>Visualization</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/google/neuroglancer">Neuroglancer GitHub Repo</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="citing-this-repo">
+<h1>Citing this repo<a class="headerlink" href="#citing-this-repo" title="Link to this heading"></a></h1>
+<p>If you use our code, please cite us and spread the news!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@article</span><span class="p">{</span><span class="n">Patton_DaCapo_a_modular_2024</span><span class="p">,</span>
+<span class="n">author</span> <span class="o">=</span> <span class="p">{</span><span class="n">Patton</span><span class="p">,</span> <span class="n">William</span> <span class="ow">and</span> <span class="n">Rhoades</span><span class="p">,</span> <span class="n">Jeff</span> <span class="n">L</span><span class="o">.</span> <span class="ow">and</span> <span class="n">Zouinkhi</span><span class="p">,</span> <span class="n">Marwan</span> <span class="ow">and</span> <span class="n">Ackerman</span><span class="p">,</span> <span class="n">David</span> <span class="n">G</span><span class="o">.</span> <span class="ow">and</span> <span class="n">Malin</span><span class="o">-</span><span class="n">Mayor</span><span class="p">,</span> <span class="n">Caroline</span> <span class="ow">and</span> <span class="n">Adjavon</span><span class="p">,</span> <span class="n">Diane</span> <span class="ow">and</span> <span class="n">Heinrich</span><span class="p">,</span> <span class="n">Larissa</span> <span class="ow">and</span> <span class="n">Bennett</span><span class="p">,</span> <span class="n">Davis</span> <span class="ow">and</span> <span class="n">Zubov</span><span class="p">,</span> <span class="n">Yurii</span> <span class="ow">and</span> <span class="n">Project</span> <span class="n">Team</span><span class="p">,</span> <span class="n">CellMap</span> <span class="ow">and</span> <span class="n">Weigel</span><span class="p">,</span> <span class="n">Aubrey</span> <span class="n">V</span><span class="o">.</span> <span class="ow">and</span> <span class="n">Funke</span><span class="p">,</span> <span class="n">Jan</span><span class="p">},</span>
+<span class="n">doi</span> <span class="o">=</span> <span class="p">{</span><span class="mf">10.48550</span><span class="o">/</span><span class="n">arXiv</span><span class="mf">.2408.02834</span><span class="p">},</span>
+<span class="n">journal</span> <span class="o">=</span> <span class="p">{</span><span class="n">arXiv</span><span class="o">-</span><span class="n">cs</span><span class="o">.</span><span class="n">CV</span><span class="p">},</span>
+<span class="n">title</span> <span class="o">=</span> <span class="p">{{</span><span class="n">DaCapo</span><span class="p">:</span> <span class="n">a</span> <span class="n">modular</span> <span class="n">deep</span> <span class="n">learning</span> <span class="n">framework</span> <span class="k">for</span> <span class="n">scalable</span> <span class="mi">3</span><span class="n">D</span> <span class="n">image</span> <span class="n">segmentation</span><span class="p">}},</span>
+<span class="n">year</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2024</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="overview.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

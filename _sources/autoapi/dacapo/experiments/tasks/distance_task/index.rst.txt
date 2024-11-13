@@ -1,0 +1,66 @@
+dacapo.experiments.tasks.distance_task
+======================================
+
+.. py:module:: dacapo.experiments.tasks.distance_task
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.distance_task.DistanceTask
+
+
+Module Contents
+---------------
+
+.. py:class:: DistanceTask(task_config)
+
+
+
+   DistanceTask is a subclass of Task for handling tasks associated
+   with Distance.
+
+   DistanceTask uses `DistancePredictor` for prediction, `MSELoss` for
+   computing loss, `ThresholdPostProcessor` for post-processing the
+   prediction, and `BinarySegmentationEvaluator` for evaluating the
+   prediction.
+
+   .. attribute:: predictor
+
+      DistancePredictor object
+
+   .. attribute:: loss
+
+      MSELoss object
+
+   .. attribute:: post_processor
+
+      ThresholdPostProcessor object
+
+   .. attribute:: evaluator
+
+      BinarySegmentationEvaluator object
+
+   .. method:: __init__(self, task_config)
+
+      Initializes attributes of DistanceTask
+
+   .. rubric:: Notes
+
+   This is a subclass of Task.
+
+
+   .. py:attribute:: predictor
+
+
+   .. py:attribute:: loss
+
+
+   .. py:attribute:: post_processor
+
+
+   .. py:attribute:: evaluator
+
+

@@ -1,0 +1,47 @@
+dacapo.experiments.datasplits.datasets.arrays.merge_instances_array_config
+==========================================================================
+
+.. py:module:: dacapo.experiments.datasplits.datasets.arrays.merge_instances_array_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasets.arrays.merge_instances_array_config.MergeInstancesArrayConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: MergeInstancesArrayConfig
+
+
+
+   Configuration for an array that merges instances from multiple arrays
+   into a single array. The instances are merged by taking the union of the
+   instances in the source arrays.
+
+   .. attribute:: source_array_configs
+
+      List[ArrayConfig]
+      The Array of masks from which to take the union
+
+   .. method:: create_array
+
+      () -> MergeInstancesArray
+      Create a MergeInstancesArray instance from the configuration
+
+   .. rubric:: Notes
+
+   The MergeInstancesArrayConfig class is used to create a MergeInstancesArray
+
+
+   .. py:attribute:: source_array_configs
+      :type:  List[dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+

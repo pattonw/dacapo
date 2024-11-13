@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dacapo.experiments.tasks.evaluators.instance_evaluator &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="dacapo.experiments.tasks.hot_distance_task" href="../../hot_distance_task/index.html" />
+    <link rel="prev" title="dacapo.experiments.tasks.evaluators.instance_evaluation_scores" href="../instance_evaluation_scores/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../aws.html">AWS EC2 Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../roadmap.html">Road Map</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">dacapo</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../../apply/index.html">dacapo.apply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../blockwise/index.html">dacapo.blockwise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../compute_context/index.html">dacapo.compute_context</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../index.html">dacapo.experiments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ext/index.html">dacapo.ext</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../gp/index.html">dacapo.gp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../options/index.html">dacapo.options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../plot/index.html">dacapo.plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../predict/index.html">dacapo.predict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../predict_local/index.html">dacapo.predict_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../store/index.html">dacapo.store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tmp/index.html">dacapo.tmp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../train/index.html">dacapo.train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/index.html">dacapo.utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../validate/index.html">dacapo.validate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">dacapo</a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">dacapo.experiments</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">dacapo.experiments.tasks</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">dacapo.experiments.tasks.evaluators</a></li>
+      <li class="breadcrumb-item active">dacapo.experiments.tasks.evaluators.instance_evaluator</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/autoapi/dacapo/experiments/tasks/evaluators/instance_evaluator/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dacapo.experiments.tasks.evaluators.instance_evaluator">
+<span id="dacapo-experiments-tasks-evaluators-instance-evaluator"></span><h1>dacapo.experiments.tasks.evaluators.instance_evaluator<a class="headerlink" href="#module-dacapo.experiments.tasks.evaluators.instance_evaluator" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.logger" title="dacapo.experiments.tasks.evaluators.instance_evaluator.logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">logger</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator" title="dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InstanceEvaluator</span></code></a></p></td>
+<td><p>A class representing an evaluator for instance segmentation tasks.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.relabel" title="dacapo.experiments.tasks.evaluators.instance_evaluator.relabel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">relabel</span></code></a>(array[, return_backwards_map, inplace])</p></td>
+<td><p>Relabel array, such that IDs are consecutive. Excludes 0.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.voi" title="dacapo.experiments.tasks.evaluators.instance_evaluator.voi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">voi</span></code></a>(truth, test)</p></td>
+<td><p>Calculate the variation of information (VOI) between two segmentations.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py data">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.evaluators.instance_evaluator.logger">
+<span class="sig-prename descclassname"><span class="pre">dacapo.experiments.tasks.evaluators.instance_evaluator.</span></span><span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.logger" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.evaluators.instance_evaluator.relabel">
+<span class="sig-prename descclassname"><span class="pre">dacapo.experiments.tasks.evaluators.instance_evaluator.</span></span><span class="sig-name descname"><span class="pre">relabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_backwards_map</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inplace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.relabel" title="Link to this definition"></a></dt>
+<dd><p>Relabel array, such that IDs are consecutive. Excludes 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>ndarray</em>) – The array to relabel.</p></li>
+<li><p><strong>return_backwards_map</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>, optional) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, return an ndarray that maps new labels (indices in
+the array) to old labels.</p></li>
+<li><p><strong>inplace</strong> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>, optional) – Perform the replacement in-place on <code class="docutils literal notranslate"><span class="pre">array</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple <code class="docutils literal notranslate"><span class="pre">(relabelled,</span> <span class="pre">n)</span></code>, where <code class="docutils literal notranslate"><span class="pre">relabelled</span></code> is the relabelled
+array and <code class="docutils literal notranslate"><span class="pre">n</span></code> the number of unique labels found.
+If <code class="docutils literal notranslate"><span class="pre">return_backwards_map</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, returns <code class="docutils literal notranslate"><span class="pre">(relabelled,</span> <span class="pre">n,</span>
+<span class="pre">backwards_map)</span></code>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">array</span></code> is not of type <code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">relabel</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="go">(array([[1, 2, 0], [0, 2, 1]]), 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">relabel</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">return_backwards_map</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="go">(array([[1, 2, 0], [0, 2, 1]]), 2, [0, 1, 2])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is used to relabel an array, such that IDs are consecutive. Excludes 0.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.experiments.tasks.evaluators.instance_evaluator.</span></span><span class="sig-name descname"><span class="pre">InstanceEvaluator</span></span><a class="headerlink" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator" title="Link to this definition"></a></dt>
+<dd><p>A class representing an evaluator for instance segmentation tasks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator.criteria">
+<span class="sig-name descname"><span class="pre">criteria</span></span><a class="headerlink" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator.criteria" title="Link to this definition"></a></dt>
+<dd><p>List[str]
+the evaluation criteria</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_array_identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation_array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the output array against the evaluation array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator.score" title="Link to this definition"></a></dt>
+<dd><p>Return the evaluation scores.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The InstanceEvaluator class is used to evaluate the performance of an instance segmentation task.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">criteria</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['voi_merge',</span> <span class="pre">'voi_split',</span> <span class="pre">'voi']</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>A list of all criteria for which a model might be “best”. i.e. your
+criteria might be “precision”, “recall”, and “jaccard”. It is unlikely
+that the best iteration/post processing parameters will be the same
+for all 3 of these criteria</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>List[str]</dt><dd><p>the evaluation criteria</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – if the function is not implemented</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">evaluator</span> <span class="o">=</span> <span class="n">Evaluator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">evaluator</span><span class="o">.</span><span class="n">criteria</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is used to return the evaluation criteria.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_array_identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evaluation_array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the output array against the evaluation array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_array_identifier</strong> – str
+the identifier of the output array</p></li>
+<li><p><strong>evaluation_array</strong> – Zarr Array
+the evaluation array</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>InstanceEvaluationScores</dt><dd><p>the evaluation scores</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if the output array identifier is not valid</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">instance_evaluator</span> <span class="o">=</span> <span class="n">InstanceEvaluator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">output_array_identifier</span> <span class="o">=</span> <span class="s2">&quot;output_array&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">evaluation_array</span> <span class="o">=</span> <span class="n">open_from_identifier</span><span class="p">(</span><span class="s2">&quot;evaluation_array&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance_evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">output_array_identifier</span><span class="p">,</span> <span class="n">evaluation_array</span><span class="p">)</span>
+<span class="go">InstanceEvaluationScores(voi_merge=0.0, voi_split=0.0)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is used to evaluate the output array against the evaluation array.</p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id2">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../instance_evaluation_scores/index.html#dacapo.experiments.tasks.evaluators.instance_evaluation_scores.InstanceEvaluationScores" title="dacapo.experiments.tasks.evaluators.instance_evaluation_scores.InstanceEvaluationScores"><span class="pre">dacapo.experiments.tasks.evaluators.instance_evaluation_scores.InstanceEvaluationScores</span></a></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Return the evaluation scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>InstanceEvaluationScores</dt><dd><p>the evaluation scores</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – if the function is not implemented</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">instance_evaluator</span> <span class="o">=</span> <span class="n">InstanceEvaluator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance_evaluator</span><span class="o">.</span><span class="n">score</span>
+<span class="go">InstanceEvaluationScores(voi_merge=0.0, voi_split=0.0)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is used to return the evaluation scores.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.evaluators.instance_evaluator.voi">
+<span class="sig-prename descclassname"><span class="pre">dacapo.experiments.tasks.evaluators.instance_evaluator.</span></span><span class="sig-name descname"><span class="pre">voi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.tasks.evaluators.instance_evaluator.voi" title="Link to this definition"></a></dt>
+<dd><p>Calculate the variation of information (VOI) between two segmentations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>truth</strong> – ndarray
+the ground truth segmentation</p></li>
+<li><p><strong>test</strong> – ndarray
+the test segmentation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>dict</dt><dd><p>the variation of information (VOI) scores</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if the truth and test arrays are not of type np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voi</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
+<span class="go">{&#39;voi_split&#39;: 0.0, &#39;voi_merge&#39;: 0.0}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is used to calculate the variation of information (VOI) between two segmentations.</p>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../instance_evaluation_scores/index.html" class="btn btn-neutral float-left" title="dacapo.experiments.tasks.evaluators.instance_evaluation_scores" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../hot_distance_task/index.html" class="btn btn-neutral float-right" title="dacapo.experiments.tasks.hot_distance_task" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

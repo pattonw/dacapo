@@ -1,0 +1,125 @@
+dacapo.experiments.tasks.predictors.dummy_predictor
+===================================================
+
+.. py:module:: dacapo.experiments.tasks.predictors.dummy_predictor
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.predictors.dummy_predictor.DummyPredictor
+
+
+Module Contents
+---------------
+
+.. py:class:: DummyPredictor(embedding_dims)
+
+
+
+   A dummy predictor class that inherits from the base Predictor class.
+
+   .. attribute:: embedding_dims
+
+      The number of embedding dimensions.
+
+      :type: int
+
+   .. method:: __init__(self, embedding_dims
+
+      int): Initializes a new instance of the DummyPredictor class.
+
+   .. method:: create_model(self, architecture)
+
+      Creates a model using the given architecture.
+
+   .. method:: create_target(self, gt)
+
+      Creates a target based on the ground truth.
+
+   .. method:: create_weight(self, gt, target, mask, moving_class_counts=None)
+
+      Creates a weight based on the ground truth, target, and mask.
+
+   .. method:: output_array_type
+
+      Gets the output array type.
+
+   .. rubric:: Notes
+
+   This is a subclass of Predictor.
+
+
+   .. py:attribute:: embedding_dims
+
+
+   .. py:method:: create_model(architecture)
+
+      Creates a model using the given architecture.
+
+      :param architecture: The architecture to use for creating the model.
+
+      :returns: The created model.
+      :rtype: Model
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> model = predictor.create_model(architecture)
+
+
+
+   .. py:method:: create_target(gt)
+
+      Creates a target based on the ground truth.
+
+      :param gt: The ground truth.
+
+      :returns: The created target.
+      :rtype: NumpyArray
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.create_target(gt)
+
+
+
+   .. py:method:: create_weight(gt, target, mask, moving_class_counts=None)
+
+      Creates a weight based on the ground truth, target, and mask.
+
+      :param gt: The ground truth.
+      :param target: The target.
+      :param mask: The mask.
+      :param moving_class_counts: The moving class counts.
+
+      :returns: The created weight and None.
+      :rtype: Tuple[NumpyArray, None]
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.create_weight(gt, target, mask, moving_class_counts)
+
+
+
+   .. py:property:: output_array_type
+
+      Gets the output array type.
+
+      :returns: The output array type.
+      :rtype: EmbeddingArray
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.output_array_type
+
+

@@ -1,0 +1,68 @@
+dacapo.experiments.datasplits.datasets.arrays.dvid_array_config
+===============================================================
+
+.. py:module:: dacapo.experiments.datasplits.datasets.arrays.dvid_array_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasets.arrays.dvid_array_config.DVIDArrayConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: DVIDArrayConfig
+
+
+
+   This config class provides the necessary configuration for a DVID array. It takes a source string and returns the DVIDArray object.
+
+   .. attribute:: source
+
+      The source strings
+
+      :type: Tuple[str, str, str]
+
+   .. method:: to_array
+
+      Returns the DVIDArray object
+
+   .. rubric:: Notes
+
+   The source must be a tuple of strings.
+
+
+   .. py:attribute:: source
+      :type:  Tuple[str, str, str]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+      :abstractmethod:
+
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      Check whether this is a valid Array
+
+      :returns: Whether the Array is valid and a message
+      :rtype: Tuple[bool, str]
+
+      :raises ValueError: If the source is not a tuple of strings
+
+      .. rubric:: Examples
+
+      >>> dvid_array_config = DVIDArrayConfig(...)
+      >>> dvid_array_config.verify()
+      (True, "No validation for this Array")
+
+      .. rubric:: Notes
+
+      The source must be a tuple of strings.
+
+
+

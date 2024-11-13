@@ -1,0 +1,84 @@
+dacapo.blockwise.argmax_worker
+==============================
+
+.. py:module:: dacapo.blockwise.argmax_worker
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   dacapo.blockwise.argmax_worker.logger
+   dacapo.blockwise.argmax_worker.read_write_conflict
+   dacapo.blockwise.argmax_worker.fit
+   dacapo.blockwise.argmax_worker.path
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   dacapo.blockwise.argmax_worker.cli
+   dacapo.blockwise.argmax_worker.start_worker
+   dacapo.blockwise.argmax_worker.start_worker_fn
+   dacapo.blockwise.argmax_worker.spawn_worker
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:data:: read_write_conflict
+   :type:  bool
+   :value: False
+
+
+.. py:data:: fit
+   :type:  str
+   :value: 'valid'
+
+
+.. py:data:: path
+
+.. py:function:: cli(log_level)
+
+   CLI for running the threshold worker.
+
+   :param log_level: The log level to use.
+   :type log_level: str
+
+
+.. py:function:: start_worker(input_container: upath.UPath | str, input_dataset: str, output_container: upath.UPath | str, output_dataset: str, return_io_loop: bool = False)
+
+.. py:function:: start_worker_fn(input_container: upath.UPath | str, input_dataset: str, output_container: upath.UPath | str, output_dataset: str, return_io_loop: bool = False)
+
+   Start the threshold worker.
+
+   :param input_container: The input container.
+   :type input_container: Path | str
+   :param input_dataset: The input dataset.
+   :type input_dataset: str
+   :param output_container: The output container.
+   :type output_container: Path | str
+   :param output_dataset: The output dataset.
+   :type output_dataset: str
+
+
+.. py:function:: spawn_worker(input_array_identifier: dacapo.store.array_store.LocalArrayIdentifier, output_array_identifier: dacapo.store.array_store.LocalArrayIdentifier)
+
+   Spawn a worker to predict on a given dataset.
+
+   :param model: The model to use for prediction.
+   :type model: Model
+   :param raw_array: The raw data to predict on.
+   :type raw_array: Array
+   :param prediction_array_identifier: The identifier of the prediction array.
+   :type prediction_array_identifier: LocalArrayIdentifier
+
+   :returns: The function to run the worker.
+   :rtype: Callable
+
+

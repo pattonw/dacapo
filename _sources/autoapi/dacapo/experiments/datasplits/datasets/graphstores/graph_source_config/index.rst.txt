@@ -1,0 +1,38 @@
+dacapo.experiments.datasplits.datasets.graphstores.graph_source_config
+======================================================================
+
+.. py:module:: dacapo.experiments.datasplits.datasets.graphstores.graph_source_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasets.graphstores.graph_source_config.GraphStoreConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: GraphStoreConfig
+
+   Base class for graph store configurations. Each subclass of a
+   `GraphStore` should have a corresponding config class derived from
+   `GraphStoreConfig`.
+
+   .. attribute:: store_type
+
+      The type of graph store that is being configured.
+
+      :type: class
+
+   .. method:: verify
+
+      A method to verify the validity of the configuration.
+
+   .. rubric:: Notes
+
+   This class is used to create a configuration object for the graph store.
+
+

@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dacapo.experiments.tasks.post_processors.dummy_post_processor &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="dacapo.experiments.tasks.post_processors.dummy_post_processor_parameters" href="../dummy_post_processor_parameters/index.html" />
+    <link rel="prev" title="dacapo.experiments.tasks.post_processors.argmax_post_processor_parameters" href="../argmax_post_processor_parameters/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../aws.html">AWS EC2 Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../roadmap.html">Road Map</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html">dacapo</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../../../apply/index.html">dacapo.apply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../blockwise/index.html">dacapo.blockwise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../compute_context/index.html">dacapo.compute_context</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../../../index.html">dacapo.experiments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ext/index.html">dacapo.ext</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../gp/index.html">dacapo.gp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../options/index.html">dacapo.options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../plot/index.html">dacapo.plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../predict/index.html">dacapo.predict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../predict_local/index.html">dacapo.predict_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../store/index.html">dacapo.store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../tmp/index.html">dacapo.tmp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../train/index.html">dacapo.train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/index.html">dacapo.utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../validate/index.html">dacapo.validate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">dacapo</a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">dacapo.experiments</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">dacapo.experiments.tasks</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">dacapo.experiments.tasks.post_processors</a></li>
+      <li class="breadcrumb-item active">dacapo.experiments.tasks.post_processors.dummy_post_processor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../../_sources/autoapi/dacapo/experiments/tasks/post_processors/dummy_post_processor/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dacapo.experiments.tasks.post_processors.dummy_post_processor">
+<span id="dacapo-experiments-tasks-post-processors-dummy-post-processor"></span><h1>dacapo.experiments.tasks.post_processors.dummy_post_processor<a class="headerlink" href="#module-dacapo.experiments.tasks.post_processors.dummy_post_processor" title="Link to this heading"></a></h1>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor" title="dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DummyPostProcessor</span></code></a></p></td>
+<td><p>Dummy post-processor that stores some dummy data. The dummy data is a 10x10x10</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.experiments.tasks.post_processors.dummy_post_processor.</span></span><span class="sig-name descname"><span class="pre">DummyPostProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detection_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor" title="Link to this definition"></a></dt>
+<dd><p>Dummy post-processor that stores some dummy data. The dummy data is a 10x10x10
+array filled with the value of the min_size parameter. The min_size parameter
+is specified in the parameters of the post-processor. The post-processor has
+a detection threshold that is used to determine if an object is detected.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor.detection_threshold">
+<span class="sig-name descname"><span class="pre">detection_threshold</span></span><a class="headerlink" href="#dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor.detection_threshold" title="Link to this definition"></a></dt>
+<dd><p>The detection threshold.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor.enumerate_parameters">
+<span class="sig-name descname"><span class="pre">enumerate_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor.enumerate_parameters" title="Link to this definition"></a></dt>
+<dd><p>Enumerate all possible parameters of this post-processor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor.set_prediction">
+<span class="sig-name descname"><span class="pre">set_prediction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor.set_prediction" title="Link to this definition"></a></dt>
+<dd><p>Set the prediction array identifier.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.experiments.tasks.post_processors.dummy_post_processor.DummyPostProcessor.process" title="Link to this definition"></a></dt>
+<dd><p>Convert predictions into the final output.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is abstract. Subclasses must implement the abstract methods. Once
+created, the values of its attributes cannot be changed.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">detection_threshold</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">enumerate_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../dummy_post_processor_parameters/index.html#dacapo.experiments.tasks.post_processors.dummy_post_processor_parameters.DummyPostProcessorParameters" title="dacapo.experiments.tasks.post_processors.dummy_post_processor_parameters.DummyPostProcessorParameters"><span class="pre">dacapo.experiments.tasks.post_processors.dummy_post_processor_parameters.DummyPostProcessorParameters</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Enumerate all possible parameters of this post-processor. Should
+return instances of <code class="docutils literal notranslate"><span class="pre">PostProcessorParameters</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An iterable of <cite>PostProcessorParameters</cite> instances.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented in the subclass.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">post_processor</span> <span class="o">=</span> <span class="n">DummyPostProcessor</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">parameters</span> <span class="ow">in</span> <span class="n">post_processor</span><span class="o">.</span><span class="n">enumerate_parameters</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+<span class="go">DummyPostProcessorParameters(id=0, min_size=1)</span>
+<span class="go">DummyPostProcessorParameters(id=1, min_size=2)</span>
+<span class="go">DummyPostProcessorParameters(id=2, min_size=3)</span>
+<span class="go">DummyPostProcessorParameters(id=3, min_size=4)</span>
+<span class="go">DummyPostProcessorParameters(id=4, min_size=5)</span>
+<span class="go">DummyPostProcessorParameters(id=5, min_size=6)</span>
+<span class="go">DummyPostProcessorParameters(id=6, min_size=7)</span>
+<span class="go">DummyPostProcessorParameters(id=7, min_size=8)</span>
+<span class="go">DummyPostProcessorParameters(id=8, min_size=9)</span>
+<span class="go">DummyPostProcessorParameters(id=9, min_size=10)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method must be implemented in the subclass. It should return an
+iterable of <cite>PostProcessorParameters</cite> instances.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">set_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction_array_identifier</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd><p>Set the prediction array identifier.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>prediction_array_identifier</strong> – The identifier of the array containing
+the model’s prediction.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If the method is not implemented in the subclass.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">post_processor</span> <span class="o">=</span> <span class="n">DummyPostProcessor</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post_processor</span><span class="o">.</span><span class="n">set_prediction</span><span class="p">(</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method must be implemented in the subclass. It should set the
+<cite>prediction_array_identifier</cite> attribute.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_array_identifier</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd><p>Convert predictions into the final output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> – The parameters of the post-processor.</p></li>
+<li><p><strong>output_array_identifier</strong> – The identifier of the output array.</p></li>
+<li><p><strong>num_workers</strong> – The number of workers to use.</p></li>
+<li><p><strong>chunk_size</strong> – The size of the chunks to process.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The output array.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If the method is not implemented in the subclass.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">post_processor</span> <span class="o">=</span> <span class="n">DummyPostProcessor</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">post_processor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="s2">&quot;output&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method must be implemented in the subclass. It should process the
+predictions and store the output in the output array.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../argmax_post_processor_parameters/index.html" class="btn btn-neutral float-left" title="dacapo.experiments.tasks.post_processors.argmax_post_processor_parameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../dummy_post_processor_parameters/index.html" class="btn btn-neutral float-right" title="dacapo.experiments.tasks.post_processors.dummy_post_processor_parameters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

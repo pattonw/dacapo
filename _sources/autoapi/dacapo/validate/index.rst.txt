@@ -1,0 +1,43 @@
+dacapo.validate
+===============
+
+.. py:module:: dacapo.validate
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   dacapo.validate.logger
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   dacapo.validate.validate
+   dacapo.validate.validate_run
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:function:: validate(run_name: str, iteration: int = 0, datasets_config=None)
+
+   Validate a run at a given iteration. Loads the weights from a previously
+   stored checkpoint. Returns the best parameters and scores for this
+   iteration.
+
+
+.. py:function:: validate_run(run: dacapo.experiments.Run, iteration: int, datasets_config=None)
+
+   Validate an already loaded run at the given iteration. This does not
+   load the weights of that iteration, it is assumed that the model is already
+   loaded correctly. Returns the best parameters and scores for this
+   iteration.
+
+

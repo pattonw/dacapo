@@ -1,0 +1,336 @@
+dacapo.experiments.arraytypes
+=============================
+
+.. py:module:: dacapo.experiments.arraytypes
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/dacapo/experiments/arraytypes/annotations/index
+   /autoapi/dacapo/experiments/arraytypes/arraytype/index
+   /autoapi/dacapo/experiments/arraytypes/binary/index
+   /autoapi/dacapo/experiments/arraytypes/distances/index
+   /autoapi/dacapo/experiments/arraytypes/embedding/index
+   /autoapi/dacapo/experiments/arraytypes/intensities/index
+   /autoapi/dacapo/experiments/arraytypes/mask/index
+   /autoapi/dacapo/experiments/arraytypes/probabilities/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.arraytypes.AnnotationArray
+   dacapo.experiments.arraytypes.IntensitiesArray
+   dacapo.experiments.arraytypes.DistanceArray
+   dacapo.experiments.arraytypes.Mask
+   dacapo.experiments.arraytypes.EmbeddingArray
+   dacapo.experiments.arraytypes.ProbabilityArray
+
+
+Package Contents
+----------------
+
+.. py:class:: AnnotationArray
+
+
+
+   An AnnotationArray is a uint8, uint16, uint32 or uint64 Array where each
+   voxel has a value associated with its class. The class of each voxel can be
+   determined by simply taking the value.
+
+   .. attribute:: classes
+
+      A mapping from class label to class name.
+
+      :type: Dict[int, str]
+
+   .. method:: interpolatable(self) -> bool
+
+      It is a method that returns False.
+
+   .. note:: This class is used to create an AnnotationArray object which is used to represent an array of class labels.
+
+
+   .. py:attribute:: classes
+      :type:  Dict[int, str]
+
+
+   .. py:property:: interpolatable
+
+      Method to return False.
+
+      :returns:
+
+                bool
+                    Returns a boolean value of False representing that the values are not interpolatable.
+
+      :raises NotImplementedError: This method is not implemented in this class.
+
+      .. rubric:: Examples
+
+      >>> annotation_array = AnnotationArray(classes={1: "mitochondria", 2: "membrane"})
+      >>> annotation_array.interpolatable
+      False
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+
+.. py:class:: IntensitiesArray
+
+
+
+   An IntensitiesArray is an Array of measured intensities. Each voxel has a value in the range [min, max].
+
+   .. attribute:: channels
+
+      A mapping from channel to a name describing that channel.
+
+      :type: Dict[int, str]
+
+   .. attribute:: min
+
+      The minimum possible value of your intensities.
+
+      :type: float
+
+   .. attribute:: max
+
+      The maximum possible value of your intensities.
+
+      :type: float
+
+   .. method:: __attrs_post_init__(self)
+
+      This method is called after the instance has been initialized by the constructor.
+
+   .. method:: interpolatable(self) -> bool
+
+      It is a method that returns True.
+
+   .. note:: This class is used to create an IntensitiesArray object which is used to represent an array of measured intensities.
+
+
+   .. py:attribute:: channels
+      :type:  Dict[int, str]
+
+
+   .. py:attribute:: min
+      :type:  float
+
+
+   .. py:attribute:: max
+      :type:  float
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      Method to return True.
+
+      :returns:
+
+                bool
+                    Returns a boolean value of True representing that the values are interpolatable.
+
+      :raises NotImplementedError: This method is not implemented in this class.
+
+      .. rubric:: Examples
+
+      >>> intensities_array = IntensitiesArray(channels={1: "channel1"}, min=0, max=1)
+      >>> intensities_array.interpolatable
+      True
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+
+.. py:class:: DistanceArray
+
+
+
+   An array containing signed distances to the nearest boundary voxel for a particular label class.
+   Distances should be positive outside an object and negative inside an object. The distance should be 0 on the boundary.
+   The class of each voxel can be determined by simply taking the argmin. The distance should be in the range [-max, max].
+
+   .. attribute:: classes
+
+      A mapping from channel to class on which distances were calculated.
+
+      :type: Dict[int, str]
+
+   .. attribute:: max
+
+      The maximum possible distance value of your distances.
+
+      :type: float
+
+   .. method:: interpolatable(self) -> bool
+
+      It is a method that returns True.
+
+   .. note::
+
+      This class is used to create a DistanceArray object which is used to represent an array containing signed distances to the nearest boundary voxel for a particular label class.
+      The class of each voxel can be determined by simply taking the argmin.
+
+
+   .. py:attribute:: classes
+      :type:  Dict[int, str]
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      Checks if the array is interpolatable. Returns True for this class.
+
+      :returns: True indicating that the data can be interpolated.
+      :rtype: bool
+
+      :raises NotImplementedError: This method is not implemented in this class
+
+      .. rubric:: Examples
+
+      >>> distance_array = DistanceArray(classes={1: "class1"})
+      >>> distance_array.interpolatable
+      True
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+
+.. py:class:: Mask
+
+
+
+   A class that inherits the ArrayType class. This is a representation of a Mask in the system.
+
+   .. method:: interpolatable()
+
+      
+      It is a method that returns False.
+
+   .. note:: This class is used to represent a Mask object in the system.
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      Method to return False.
+
+      :returns:
+
+                bool
+                    Returns a boolean value of False representing that the values are not interpolatable.
+
+      :raises NotImplementedError: This method is not implemented in this class.
+
+      .. rubric:: Examples
+
+      >>> mask = Mask()
+      >>> mask.interpolatable
+      False
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+
+.. py:class:: EmbeddingArray
+
+
+
+   A generic output of a model that could represent almost anything. Assumed to be
+   float, interpolatable, and have sum number of channels. The channels are not
+   specified, and the array can be of any shape.
+
+   .. attribute:: embedding_dims
+
+      The dimension of your embedding.
+
+      :type: int
+
+   .. method:: interpolatable()
+
+      
+      It is a method that returns True.
+
+   .. note:: This class is used to represent an EmbeddingArray object in the system.
+
+
+   .. py:attribute:: embedding_dims
+      :type:  int
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      Method to return True.
+
+      :returns:
+
+                bool
+                    Returns a boolean value of True representing that the values are interpolatable.
+
+      :raises NotImplementedError: This method is not implemented in this class.
+
+      .. rubric:: Examples
+
+      >>> embedding_array = EmbeddingArray(embedding_dims=10)
+      >>> embedding_array.interpolatable
+      True
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+
+.. py:class:: ProbabilityArray
+
+
+
+   Class to represent an array containing probability distributions for each voxel pointed by its coordinate.
+
+   The class defines a ProbabilityArray object with each voxel having a vector of length `c`, where `c` is the
+   number of classes. The l1 norm of this vector should always be 1. The class of each voxel can be
+   determined by simply taking the argmax.
+
+   .. attribute:: classes
+
+      A mapping from channel to class on which distances were calculated.
+
+      :type: List[str]
+
+   .. note::
+
+      This class is used to create a ProbabilityArray object which is used to represent an array containing probability distributions for each voxel pointed by its coordinate.
+      The class of each voxel can be determined by simply taking the argmax.
+
+
+   .. py:attribute:: classes
+      :type:  List[str]
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      Checks if the array is interpolatable. Returns True for this class.
+
+      :returns: True indicating that the data can be interpolated.
+      :rtype: bool
+
+      :raises NotImplementedError: This method is not implemented in this class
+
+      .. rubric:: Examples
+
+      >>> probability_array = ProbabilityArray(classes=["class1", "class2"])
+      >>> probability_array.interpolatable
+      True
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+

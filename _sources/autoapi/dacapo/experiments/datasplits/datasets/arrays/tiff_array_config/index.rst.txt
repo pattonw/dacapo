@@ -1,0 +1,69 @@
+dacapo.experiments.datasplits.datasets.arrays.tiff_array_config
+===============================================================
+
+.. py:module:: dacapo.experiments.datasplits.datasets.arrays.tiff_array_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasets.arrays.tiff_array_config.TiffArrayConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: TiffArrayConfig
+
+
+
+   This config class provides the necessary configuration for a tiff array
+
+   .. attribute:: file_name
+
+      Path
+      The file name of the tiff.
+
+   .. attribute:: offset
+
+      Coordinate
+      The offset of the array.
+
+   .. attribute:: voxel_size
+
+      Coordinate
+      The voxel size of the array.
+
+   .. attribute:: axis_names
+
+      List[str]
+      The axis_names of the array.
+
+   .. note:: This class is a subclass of ArrayConfig.
+
+
+   .. py:attribute:: file_name
+      :type:  upath.UPath
+
+
+   .. py:attribute:: offset
+      :type:  funlib.geometry.Coordinate
+
+
+   .. py:attribute:: voxel_size
+      :type:  funlib.geometry.Coordinate
+
+
+   .. py:attribute:: axis_names
+      :type:  list[str]
+
+
+   .. py:attribute:: units
+      :type:  list[str]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+

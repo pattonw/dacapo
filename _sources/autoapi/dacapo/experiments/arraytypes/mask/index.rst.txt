@@ -1,0 +1,53 @@
+dacapo.experiments.arraytypes.mask
+==================================
+
+.. py:module:: dacapo.experiments.arraytypes.mask
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.arraytypes.mask.Mask
+
+
+Module Contents
+---------------
+
+.. py:class:: Mask
+
+
+
+   A class that inherits the ArrayType class. This is a representation of a Mask in the system.
+
+   .. method:: interpolatable()
+
+      
+      It is a method that returns False.
+
+   .. note:: This class is used to represent a Mask object in the system.
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      Method to return False.
+
+      :returns:
+
+                bool
+                    Returns a boolean value of False representing that the values are not interpolatable.
+
+      :raises NotImplementedError: This method is not implemented in this class.
+
+      .. rubric:: Examples
+
+      >>> mask = Mask()
+      >>> mask.interpolatable
+      False
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+

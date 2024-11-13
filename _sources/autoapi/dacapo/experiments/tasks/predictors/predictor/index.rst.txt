@@ -1,0 +1,170 @@
+dacapo.experiments.tasks.predictors.predictor
+=============================================
+
+.. py:module:: dacapo.experiments.tasks.predictors.predictor
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.predictors.predictor.Predictor
+
+
+Module Contents
+---------------
+
+.. py:class:: Predictor
+
+
+
+   A predictor is a class that defines how to train a model to predict a
+   certain output from a certain input.
+
+   A predictor is responsible for creating the model, the target, the weight,
+   and the output array type for a given training architecture.
+
+   .. method:: create_model(self, architecture
+
+      "Architecture") -> "Model": Given a training architecture, create a model for this predictor.
+
+   .. method:: create_target(self, gt
+
+      Array) -> Array: Create the target array for training, given a ground-truth array.
+
+   .. method:: create_weight(self, gt
+
+      Array, target: Array, mask: Array, moving_class_counts: Any) -> Tuple[Array, Any]: Create the weight array for training, given a ground-truth and associated target array.
+
+   .. method:: gt_region_for_roi(self, target_spec)
+
+      Report how much spatial context this predictor needs to generate a target for the given ROI.
+
+   .. method:: padding(self, gt_voxel_size
+
+      Coordinate) -> Coordinate: Return the padding needed for the ground-truth array.
+
+   .. rubric:: Notes
+
+   This is a subclass of ABC.
+
+
+   .. py:method:: create_model(architecture: dacapo.experiments.architectures.architecture.Architecture) -> dacapo.experiments.model.Model
+      :abstractmethod:
+
+
+      Given a training architecture, create a model for this predictor.
+      This is usually done by appending extra layers to the output of the
+      architecture to get the output tensor of the architecture into the
+      right shape for this predictor.
+
+      :param architecture: The training architecture.
+
+      :returns: The model.
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.create_model(architecture)
+
+
+
+   .. py:method:: create_target(gt: funlib.persistence.Array) -> funlib.persistence.Array
+      :abstractmethod:
+
+
+      Create the target array for training, given a ground-truth array.
+
+      In general, the target is different from the ground-truth.
+
+      The target is the array that is passed to the loss, and hence directly
+      compared to the prediction (i.e., the output of the model). Depending
+      on the predictor, the target can therefore be different from the
+      ground-truth (e.g., an instance segmentation ground-truth would have to
+      be converted into boundaries, if the model is predicting boundaries).
+
+      By default, it is assumed that the spatial dimensions of ground-truth
+      and target are the same.
+
+      If your predictor needs more ground-truth context to create a target
+      (e.g., because it predicts the distance to a boundary, up to a certain
+      threshold), you can request a larger ground-truth region. See method
+      ``gt_region_for_roi``.
+
+      :param gt: The ground-truth array.
+
+      :returns: The target array.
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.create_target(gt)
+
+
+
+   .. py:method:: create_weight(gt: funlib.persistence.Array, target: funlib.persistence.Array, mask: funlib.persistence.Array, moving_class_counts: Any) -> Tuple[funlib.persistence.Array, Any]
+      :abstractmethod:
+
+
+      Create the weight array for training, given a ground-truth and
+      associated target array.
+
+      :param gt: The ground-truth array.
+      :param target: The target array.
+      :param mask: The mask array.
+      :param moving_class_counts: The moving class counts.
+
+      :returns: The weight array and the moving class counts.
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.create_weight(gt, target, mask, moving_class_counts)
+
+
+
+   .. py:property:: output_array_type
+      :abstractmethod:
+
+
+
+   .. py:method:: gt_region_for_roi(target_spec)
+
+      Report how much spatial context this predictor needs to generate a
+      target for the given ROI. By default, uses the same ROI.
+
+      Overwrite this method to request ground-truth in a larger ROI, as
+      needed.
+
+      :param target_spec: The ROI for which the target is requested.
+
+      :returns: The ROI for which the ground-truth is requested.
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.gt_region_for_roi(target_spec)
+
+
+
+   .. py:method:: padding(gt_voxel_size: funlib.geometry.Coordinate) -> funlib.geometry.Coordinate
+
+      Return the padding needed for the ground-truth array.
+
+      :param gt_voxel_size: The voxel size of the ground-truth array.
+
+      :returns: The padding needed for the ground-truth array.
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.padding(gt_voxel_size)
+
+
+

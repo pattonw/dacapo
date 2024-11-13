@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AWS EC2 Setup Guide &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fine-Tune Cosem Starter" href="cosem_starter.html" />
+    <link rel="prev" title="Docker Configuration for JupyterHub-Dacapo" href="docker.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AWS EC2 Setup Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-docker-image-on-aws-ec2">Running Docker Image on AWS EC2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#s3-access-configuration">S3 Access Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storing-checkpoints-and-experiments-data-in-s3">Storing Checkpoints and Experiments Data in S3</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Road Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">AWS EC2 Setup Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/aws.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <nav class="contents local" id="contents" role="doc-toc">
+<span id="module-dacapo"></span><ul class="simple">
+<li><p><a class="reference internal" href="#aws-ec2-setup-guide" id="id1">AWS EC2 Setup Guide</a></p></li>
+</ul>
+</nav>
+<section id="aws-ec2-setup-guide">
+<h1><a class="toc-backref" href="#id1" role="doc-backlink">AWS EC2 Setup Guide</a><a class="headerlink" href="#aws-ec2-setup-guide" title="Link to this heading"></a></h1>
+<p>This guide will help you to run your Docker image on an AWS EC2 instance and set up S3 access for storing data.</p>
+<section id="running-docker-image-on-aws-ec2">
+<h2>Running Docker Image on AWS EC2<a class="headerlink" href="#running-docker-image-on-aws-ec2" title="Link to this heading"></a></h2>
+<p>To run your Docker image on an AWS EC2 instance, follow these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Create Key Pair</strong> (if you don’t have one already):</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aws<span class="w"> </span>ec2<span class="w"> </span>create-key-pair<span class="w"> </span>--key-name<span class="w"> </span>MyKeyPair<span class="w"> </span>--query<span class="w"> </span><span class="s1">&#39;KeyMaterial&#39;</span><span class="w"> </span>--output<span class="w"> </span>text<span class="w"> </span>&gt;<span class="w"> </span>MyKeyPair.pem
+chmod<span class="w"> </span><span class="m">400</span><span class="w"> </span>MyKeyPair.pem
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>Create a Security Group</strong> (if you don’t have one already):</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aws<span class="w"> </span>ec2<span class="w"> </span>create-security-group<span class="w"> </span>--group-name<span class="w"> </span>my-security-group<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;My security group&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>Authorize Inbound Traffic for the Security Group</strong>:</p></li>
+</ol>
+<ol class="arabic" start="4">
+<li><p><strong>Run EC2 Instance with Docker Image</strong>:</p>
+<p>Use the following script to launch an EC2 instance, pull your Docker image from DockerHub, and run it with port forwarding:</p>
+</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aws<span class="w"> </span>ec2<span class="w"> </span>run-instances<span class="w">      </span>--image-id<span class="w"> </span>ami-0b8956f13d7bdfe7b<span class="w">      </span>--count<span class="w"> </span><span class="m">1</span><span class="w">      </span>--instance-type<span class="w"> </span>p3.2xlarge<span class="w">      </span>--key-name<span class="w"> </span>&lt;YOUR_KEY_PAIR&gt;<span class="w">      </span>--security-groups<span class="w"> </span>&lt;YOUR_SECURITY_GROUP&gt;<span class="w">      </span>--user-data<span class="w"> </span><span class="s1">&#39;#!/bin/bash</span>
+<span class="s1">  yum update -y</span>
+<span class="s1">  amazon-linux-extras install docker -y</span>
+<span class="s1">  service docker start</span>
+<span class="s1">  docker pull mzouink/dacapo:0.3.0</span>
+<span class="s1">  docker run -d -p 80:8000 mzouink/dacapo:0.3.0&#39;</span>
+</pre></div>
+</div>
+<p>Replace <cite>&lt;YOUR_KEY_PAIR&gt;</cite> with the name of your key pair and <cite>&lt;YOUR_SECURITY_GROUP&gt;</cite> with the name of your security group.</p>
+</section>
+<section id="s3-access-configuration">
+<h2>S3 Access Configuration<a class="headerlink" href="#s3-access-configuration" title="Link to this heading"></a></h2>
+<p>You can work locally using S3 data by setting the <cite>AWS_ACCESS_KEY_ID</cite> and <cite>AWS_SECRET_ACCESS_KEY</cite> environment variables. You can also set the <cite>AWS_REGION</cite> environment variable to specify the region to use. If you are using a profile, you can set the <cite>AWS_PROFILE</cite> environment variable to specify the profile to use.</p>
+<p>To configure AWS CLI, use the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aws<span class="w"> </span>configure
+</pre></div>
+</div>
+</section>
+<section id="storing-checkpoints-and-experiments-data-in-s3">
+<h2>Storing Checkpoints and Experiments Data in S3<a class="headerlink" href="#storing-checkpoints-and-experiments-data-in-s3" title="Link to this heading"></a></h2>
+<p>To store checkpoints and experiments data in S3, modify the <cite>dacapo.yaml</cite> file to include the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">runs_base_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;s3://dacapotest&quot;</span>
+</pre></div>
+</div>
+<p>This setup will help you run your Docker image on AWS EC2 and configure S3 access for storing checkpoints and experiment data.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="docker.html" class="btn btn-neutral float-left" title="Docker Configuration for JupyterHub-Dacapo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cosem_starter.html" class="btn btn-neutral float-right" title="Fine-Tune Cosem Starter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

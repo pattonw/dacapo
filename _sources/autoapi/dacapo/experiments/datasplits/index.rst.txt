@@ -1,0 +1,725 @@
+dacapo.experiments.datasplits
+=============================
+
+.. py:module:: dacapo.experiments.datasplits
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/dacapo/experiments/datasplits/datasets/index
+   /autoapi/dacapo/experiments/datasplits/datasplit/index
+   /autoapi/dacapo/experiments/datasplits/datasplit_config/index
+   /autoapi/dacapo/experiments/datasplits/datasplit_generator/index
+   /autoapi/dacapo/experiments/datasplits/dummy_datasplit/index
+   /autoapi/dacapo/experiments/datasplits/dummy_datasplit_config/index
+   /autoapi/dacapo/experiments/datasplits/keys/index
+   /autoapi/dacapo/experiments/datasplits/simple_config/index
+   /autoapi/dacapo/experiments/datasplits/train_validate_datasplit/index
+   /autoapi/dacapo/experiments/datasplits/train_validate_datasplit_config/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.DataSplit
+   dacapo.experiments.datasplits.DataSplitConfig
+   dacapo.experiments.datasplits.DummyDataSplit
+   dacapo.experiments.datasplits.DummyDataSplitConfig
+   dacapo.experiments.datasplits.TrainValidateDataSplit
+   dacapo.experiments.datasplits.TrainValidateDataSplitConfig
+   dacapo.experiments.datasplits.DataSplitGenerator
+   dacapo.experiments.datasplits.DatasetSpec
+   dacapo.experiments.datasplits.SimpleDataSplitConfig
+
+
+Package Contents
+----------------
+
+.. py:class:: DataSplit
+
+
+
+   A class for creating a simple train dataset and no validation dataset. It is derived from `DataSplit` class.
+   It is used to split the data into training and validation datasets. The training and validation datasets are
+   used to train and validate the model respectively.
+
+   .. attribute:: train
+
+      list
+      The list containing training datasets. In this class, it contains only one dataset for training.
+
+   .. attribute:: validate
+
+      list
+      The list containing validation datasets. In this class, it is an empty list as no validation dataset is set.
+
+   .. method:: __init__(self, datasplit_config)
+
+      
+      The constructor for DummyDataSplit class. It initialises a list with training datasets according to the input configuration.
+
+   .. rubric:: Notes
+
+   This class is used to split the data into training and validation datasets.
+
+
+   .. py:attribute:: train
+      :type:  List[dacapo.experiments.datasplits.datasets.Dataset]
+
+
+   .. py:attribute:: validate
+      :type:  Optional[List[dacapo.experiments.datasplits.datasets.Dataset]]
+
+
+.. py:class:: DataSplitConfig
+
+   A class used to create a DataSplit configuration object.
+
+   .. attribute:: name
+
+      str
+      A name for the datasplit. This name will be saved so it can be found
+      and reused easily. It is recommended to keep it short and avoid special
+      characters.
+
+   .. method:: verify() -> Tuple[bool, str]
+
+      
+      Validates if it is a valid data split configuration.
+
+   .. rubric:: Notes
+
+   This class is used to create a DataSplit configuration object.
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      Validates if the current configuration is a valid data split configuration.
+
+      :returns:
+
+                Tuple[bool, str]
+                    True if the configuration is valid,
+                    False otherwise along with respective validation error message.
+
+      :raises NotImplementedError: If the method is not implemented in the derived class.
+
+      .. rubric:: Examples
+
+      >>> datasplit_config = DataSplitConfig(name="datasplit")
+      >>> datasplit_config.verify()
+      (True, "No validation for this DataSplit")
+
+      .. rubric:: Notes
+
+      This method is used to validate the configuration of DataSplit.
+
+
+
+.. py:class:: DummyDataSplit(datasplit_config)
+
+
+
+   A class for creating a simple train dataset and no validation dataset. It is derived from `DataSplit` class.
+   It is used to split the data into training and validation datasets. The training and validation datasets are
+   used to train and validate the model respectively.
+
+   .. attribute:: train
+
+      list
+      The list containing training datasets. In this class, it contains only one dataset for training.
+
+   .. attribute:: validate
+
+      list
+      The list containing validation datasets. In this class, it is an empty list as no validation dataset is set.
+
+   .. method:: __init__(self, datasplit_config)
+
+      
+      The constructor for DummyDataSplit class. It initialises a list with training datasets according to the input configuration.
+
+   .. rubric:: Notes
+
+   This class is used to split the data into training and validation datasets.
+
+
+   .. py:attribute:: train
+      :type:  List[dacapo.experiments.datasplits.datasets.Dataset]
+
+
+   .. py:attribute:: validate
+      :type:  List[dacapo.experiments.datasplits.datasets.Dataset]
+
+
+.. py:class:: DummyDataSplitConfig
+
+
+
+   A simple class representing config for Dummy DataSplit.
+
+   This class is derived from 'DataSplitConfig' and is initialized with
+   'DatasetConfig' for training dataset.
+
+   .. attribute:: datasplit_type
+
+      Class of dummy data split functionality.
+
+   .. attribute:: train_config
+
+      Config for the training dataset. Defaults to DummyDatasetConfig.
+
+   .. method:: verify()
+
+      
+      A method for verification. This method always return 'False' plus
+      a string indicating the condition.
+
+   .. rubric:: Notes
+
+   This class is used to represent the configuration for Dummy DataSplit.
+
+
+   .. py:attribute:: datasplit_type
+
+
+   .. py:attribute:: train_config
+      :type:  dacapo.experiments.datasplits.datasets.DatasetConfig
+
+
+   .. py:method:: verify() -> Tuple[bool, str]
+
+      A method for verification. This method always return 'False' plus
+      a string indicating the condition.
+
+      :returns: A tuple contains a boolean 'False' and a string.
+      :rtype: Tuple[bool, str]
+
+      .. rubric:: Examples
+
+      >>> dummy_datasplit_config = DummyDataSplitConfig(train_config)
+      >>> dummy_datasplit_config.verify()
+      (False, "This is a DummyDataSplit and is never valid")
+
+      .. rubric:: Notes
+
+      This method is used to verify the configuration of DummyDataSplit.
+
+
+
+.. py:class:: TrainValidateDataSplit(datasplit_config)
+
+
+
+   A DataSplit that contains a list of training and validation datasets. This
+   class is used to split the data into training and validation datasets. The
+   training and validation datasets are used to train and validate the model
+   respectively.
+
+   .. attribute:: train
+
+      list
+      The list of training datasets.
+
+   .. attribute:: validate
+
+      list
+      The list of validation datasets.
+
+   .. method:: __init__(datasplit_config)
+
+      
+      Initializes the TrainValidateDataSplit class with specified config to
+      split the data into training and validation datasets.
+
+   .. rubric:: Notes
+
+   This class is used to split the data into training and validation datasets.
+
+
+   .. py:attribute:: train
+      :type:  List[dacapo.experiments.datasplits.datasets.Dataset]
+
+
+   .. py:attribute:: validate
+      :type:  List[dacapo.experiments.datasplits.datasets.Dataset]
+
+
+.. py:class:: TrainValidateDataSplitConfig
+
+
+
+   This is the standard Train/Validate DataSplit config. It contains a list of
+   training and validation datasets. This class is used to split the data into
+   training and validation datasets. The training and validation datasets are
+   used to train and validate the model respectively.
+
+   .. attribute:: train_configs
+
+      list
+      The list of training datasets.
+
+   .. attribute:: validate_configs
+
+      list
+      The list of validation datasets.
+
+   .. method:: __init__(datasplit_config)
+
+      
+      Initializes the TrainValidateDataSplitConfig class with specified config to
+      split the data into training and validation datasets.
+
+   .. rubric:: Notes
+
+   This class is used to split the data into training and validation datasets.
+
+
+   .. py:attribute:: datasplit_type
+
+
+   .. py:attribute:: train_configs
+      :type:  List[dacapo.experiments.datasplits.datasets.DatasetConfig]
+
+
+   .. py:attribute:: validate_configs
+      :type:  List[dacapo.experiments.datasplits.datasets.DatasetConfig]
+
+
+.. py:class:: DataSplitGenerator(name: str, datasets: List[DatasetSpec], input_resolution: Union[Sequence[int], funlib.geometry.Coordinate], output_resolution: Union[Sequence[int], funlib.geometry.Coordinate], targets: Optional[List[str]] = None, segmentation_type: Union[str, SegmentationType] = 'semantic', max_gt_downsample=32, max_gt_upsample=4, max_raw_training_downsample=16, max_raw_training_upsample=2, max_raw_validation_downsample=8, max_raw_validation_upsample=2, min_training_volume_size=8000, raw_min=0, raw_max=255, classes_separator_character='&', use_negative_class=False, max_validation_volume_size=None, binarize_gt=False)
+
+   Generates DataSplitConfig for a given task config and datasets.
+
+   Class names in gt_dataset should be within [] e.g. [mito&peroxisome&er] for
+   multiple classes or [mito] for one class.
+
+   Currently only supports:
+    - semantic segmentation.
+    Supports:
+       - 2D and 3D datasets.
+       - Zarr, N5 and OME-Zarr datasets.
+       - Multi class targets.
+       - Different resolutions for raw and ground truth datasets.
+       - Different resolutions for training and validation datasets.
+
+   .. attribute:: name
+
+      str
+      The name of the data split generator.
+
+   .. attribute:: datasets
+
+      list
+      The list of dataset specifications.
+
+   .. attribute:: input_resolution
+
+      obj
+      The input resolution.
+
+   .. attribute:: output_resolution
+
+      obj
+      The output resolution.
+
+   .. attribute:: targets
+
+      list
+      The list of targets.
+
+   .. attribute:: segmentation_type
+
+      obj
+      The segmentation type.
+
+   .. attribute:: max_gt_downsample
+
+      int
+      The maximum ground truth downsample.
+
+   .. attribute:: max_gt_upsample
+
+      int
+      The maximum ground truth upsample.
+
+   .. attribute:: max_raw_training_downsample
+
+      int
+      The maximum raw training downsample.
+
+   .. attribute:: max_raw_training_upsample
+
+      int
+      The maximum raw training upsample.
+
+   .. attribute:: max_raw_validation_downsample
+
+      int
+      The maximum raw validation downsample.
+
+   .. attribute:: max_raw_validation_upsample
+
+      int
+      The maximum raw validation upsample.
+
+   .. attribute:: min_training_volume_size
+
+      int
+      The minimum training volume size.
+
+   .. attribute:: raw_min
+
+      int
+      The minimum raw value.
+
+   .. attribute:: raw_max
+
+      int
+      The maximum raw value.
+
+   .. attribute:: classes_separator_character
+
+      str
+      The classes separator character.
+
+   .. attribute:: max_validation_volume_size
+
+      int
+      The maximum validation volume size. Default is None. If None, the validation volume size is not limited.
+      else, the validation volume size is limited to the specified value.
+      e.g. 600**3 for 600^3 voxels = 216_000_000 voxels.
+
+   .. method:: __init__(name, datasets, input_resolution, output_resolution, targets, segmentation_type, max_gt_downsample, max_gt_upsample, max_raw_training_downsample, max_raw_training_upsample, max_raw_validation_downsample, max_raw_validation_upsample, min_training_volume_size, raw_min, raw_max, classes_separator_character)
+
+      
+      Initializes the DataSplitGenerator class with the specified name, datasets, input resolution, output resolution, targets, segmentation type, maximum ground truth downsample, maximum ground truth upsample, maximum raw training downsample, maximum raw training upsample, maximum raw validation downsample, maximum raw validation upsample, minimum training volume size, minimum raw value, maximum raw value, and classes separator character.
+
+   .. method:: __str__(self)
+
+      
+      A method to get the string representation of the class.
+
+   .. method:: class_name(self)
+
+      
+      A method to get the class name.
+
+   .. method:: check_class_name(self, class_name)
+
+      
+      A method to check the class name.
+
+   .. method:: compute(self)
+
+      
+      A method to compute the data split.
+
+   .. method:: __generate_semantic_seg_datasplit(self)
+
+      
+      A method to generate the semantic segmentation data split.
+
+   .. method:: __generate_semantic_seg_dataset_crop(self, dataset)
+
+      
+      A method to generate the semantic segmentation dataset crop.
+
+   .. method:: generate_csv(datasets, csv_path)
+
+      
+      A method to generate the CSV file.
+
+   .. method:: generate_from_csv(csv_path, input_resolution, output_resolution, name, **kwargs)
+
+      
+      A method to generate the data split from the CSV file.
+
+   .. rubric:: Notes
+
+   - This class is used to generate the DataSplitConfig for a given task config and datasets.
+   - Class names in gt_dataset shoulb be within [] e.g. [mito&peroxisome&er] for mutiple classes or [mito] for one class
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: datasets
+
+
+   .. py:attribute:: input_resolution
+
+
+   .. py:attribute:: output_resolution
+
+
+   .. py:attribute:: targets
+
+
+   .. py:attribute:: segmentation_type
+
+
+   .. py:attribute:: max_gt_downsample
+
+
+   .. py:attribute:: max_gt_upsample
+
+
+   .. py:attribute:: max_raw_training_downsample
+
+
+   .. py:attribute:: max_raw_training_upsample
+
+
+   .. py:attribute:: max_raw_validation_downsample
+
+
+   .. py:attribute:: max_raw_validation_upsample
+
+
+   .. py:attribute:: min_training_volume_size
+
+
+   .. py:attribute:: raw_min
+
+
+   .. py:attribute:: raw_max
+
+
+   .. py:attribute:: classes_separator_character
+
+
+   .. py:attribute:: use_negative_class
+
+
+   .. py:attribute:: max_validation_volume_size
+
+
+   .. py:attribute:: binarize_gt
+
+
+   .. py:property:: class_name
+
+      Get the class name.
+
+      :param self: obj
+                   The object.
+
+      :returns: The class name.
+      :rtype: obj
+
+      :raises ValueError:
+      :raises If the class name is already set, a ValueError is raised.:
+
+      .. rubric:: Examples
+
+      >>> class_name
+
+      .. rubric:: Notes
+
+      This function is used to get the class name.
+
+
+   .. py:method:: check_class_name(class_name)
+
+      Check the class name.
+
+      :param self: obj
+                   The object.
+      :param class_name: obj
+                         The class name.
+
+      :returns: The class name.
+      :rtype: obj
+
+      :raises ValueError:
+      :raises If the class name is already set, a ValueError is raised.:
+
+      .. rubric:: Examples
+
+      >>> check_class_name(class_name)
+
+      .. rubric:: Notes
+
+      This function is used to check the class name.
+
+
+
+   .. py:method:: compute()
+
+      Compute the data split.
+
+      :param self: obj
+                   The object.
+
+      :returns: The data split.
+      :rtype: obj
+
+      :raises NotImplementedError:
+      :raises If the segmentation type is not implemented, a NotImplementedError is raised.:
+
+      .. rubric:: Examples
+
+      >>> compute()
+
+      .. rubric:: Notes
+
+      This function is used to compute the data split.
+
+
+
+   .. py:method:: generate_from_csv(csv_path: upath.UPath, input_resolution: Union[Sequence[int], funlib.geometry.Coordinate], output_resolution: Union[Sequence[int], funlib.geometry.Coordinate], name: Optional[str] = None, **kwargs)
+      :staticmethod:
+
+
+      Generate the data split from the CSV file.
+
+      :param csv_path: obj
+                       The CSV file path.
+      :param input_resolution: obj
+                               The input resolution.
+      :param output_resolution: obj
+                                The output resolution.
+      :param name: str
+                   The name.
+      :param \*\*kwargs: dict
+                         The keyword arguments.
+
+      :returns: The data split.
+      :rtype: obj
+
+      :raises FileNotFoundError:
+      :raises If the file does not exist, a FileNotFoundError is raised.:
+
+      .. rubric:: Examples
+
+      >>> generate_from_csv(csv_path, input_resolution, output_resolution, name, **kwargs)
+
+      .. rubric:: Notes
+
+      This function is used to generate the data split from the CSV file.
+
+
+
+.. py:class:: DatasetSpec(dataset_type: Union[str, DatasetType], raw_container: Union[str, upath.UPath], raw_dataset: str, gt_container: Union[str, upath.UPath], gt_dataset: str)
+
+   A class for dataset specification. It is used to specify the dataset.
+
+   .. attribute:: dataset_type
+
+      obj
+      The dataset type.
+
+   .. attribute:: raw_container
+
+      obj
+      The raw container.
+
+   .. attribute:: raw_dataset
+
+      str
+      The raw dataset.
+
+   .. attribute:: gt_container
+
+      obj
+      The ground truth container.
+
+   .. attribute:: gt_dataset
+
+      str
+      The ground truth dataset.
+
+   .. method:: __init__(dataset_type, raw_container, raw_dataset, gt_container, gt_dataset)
+
+      
+      Initializes the DatasetSpec class with the specified dataset type, raw container, raw dataset, ground truth container, and ground truth dataset.
+
+   .. method:: __str__(self)
+
+      
+      A method to get the string representation of the class.
+
+   .. rubric:: Notes
+
+   This class is used to specify the dataset.
+
+
+   .. py:attribute:: dataset_type
+
+
+   .. py:attribute:: raw_container
+
+
+   .. py:attribute:: raw_dataset
+
+
+   .. py:attribute:: gt_container
+
+
+   .. py:attribute:: gt_dataset
+
+
+.. py:class:: SimpleDataSplitConfig
+
+
+
+   A convention over configuration datasplit that can handle many of the most
+   basic cases.
+
+
+   .. py:attribute:: path
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: train_group_name
+      :type:  str
+
+
+   .. py:attribute:: validate_group_name
+      :type:  str
+
+
+   .. py:attribute:: raw_name
+      :type:  str
+
+
+   .. py:attribute:: gt_name
+      :type:  str
+
+
+   .. py:attribute:: mask_name
+      :type:  str
+
+
+   .. py:method:: datasplit_type(datasplit_config)
+      :staticmethod:
+
+
+
+   .. py:method:: get_paths(group_name: str) -> list[pathlib.Path]
+
+
+   .. py:property:: train
+      :type: list[dacapo.experiments.datasplits.datasets.simple.SimpleDataset]
+
+
+
+   .. py:property:: validate
+      :type: list[dacapo.experiments.datasplits.datasets.simple.SimpleDataset]
+
+
+

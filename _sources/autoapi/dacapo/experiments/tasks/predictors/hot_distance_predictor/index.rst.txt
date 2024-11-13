@@ -1,0 +1,311 @@
+dacapo.experiments.tasks.predictors.hot_distance_predictor
+==========================================================
+
+.. py:module:: dacapo.experiments.tasks.predictors.hot_distance_predictor
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.predictors.hot_distance_predictor.logger
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.predictors.hot_distance_predictor.HotDistancePredictor
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:class:: HotDistancePredictor(channels: List[str], scale_factor: float, mask_distances: bool)
+
+
+
+   Predict signed distances and one hot embedding (as a proxy task) for a binary segmentation task.
+   Distances deep within background are pushed to -inf, distances deep within
+   the foreground object are pushed to inf. After distances have been
+   calculated they are passed through a tanh so that distances saturate at +-1.
+   Multiple classes can be predicted via multiple distance channels. The names
+   of each class that is being segmented can be passed in as a list of strings
+   in the channels argument.
+
+   .. attribute:: channels
+
+      List of strings, each string is the name of a class that is being segmented.
+
+   .. attribute:: scale_factor
+
+      The scale factor for the distance transform.
+
+   .. attribute:: mask_distances
+
+      Whether to mask distances based on the distance to the boundary.
+
+   .. attribute:: norm
+
+      The normalization function to use for the distance transform.
+
+   .. attribute:: dt_scale_factor
+
+      The scale factor for the distance transform.
+
+   .. attribute:: max_distance
+
+      The maximum distance to consider for the distance transform.
+
+   .. attribute:: epsilon
+
+      The epsilon value to use for the distance transform.
+
+   .. attribute:: threshold
+
+      The threshold value to use for the distance transform.
+
+   .. method:: __init__(self, channels
+
+      List[str], scale_factor: float, mask_distances: bool): Initializes the HotDistancePredictor.
+
+   .. method:: create_model(self, architecture)
+
+      Create the model for the predictor.
+
+   .. method:: create_target(self, gt)
+
+      Create the target array for training.
+
+   .. method:: create_weight(self, gt, target, mask, moving_class_counts=None)
+
+      Create the weight array for training.
+
+   .. method:: create_distance_mask(self, distances, mask, voxel_size, normalize=None, normalize_args=None)
+
+      Create the distance mask for training.
+
+   .. method:: process(self, labels, voxel_size, normalize=None, normalize_args=None)
+
+      Process the labels array and convert it to one-hot encoding.
+
+   .. method:: gt_region_for_roi(self, target_spec)
+
+      Report how much spatial context this predictor needs to generate a target for the given ROI.
+
+   .. method:: padding(self, gt_voxel_size)
+
+      Return the padding needed for the ground-truth
+
+   .. rubric:: Notes
+
+   This is a subclass of Predictor.
+
+
+   .. py:attribute:: channels
+
+
+   .. py:attribute:: norm
+      :value: 'tanh'
+
+
+
+   .. py:attribute:: dt_scale_factor
+
+
+   .. py:attribute:: mask_distances
+
+
+   .. py:attribute:: max_distance
+
+
+   .. py:attribute:: epsilon
+      :value: 0.05
+
+
+
+   .. py:attribute:: threshold
+      :value: 0.8
+
+
+
+   .. py:property:: embedding_dims
+
+      Get the number of embedding dimensions.
+
+      :returns: The number of embedding dimensions.
+      :rtype: int
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> embedding_dims = predictor.embedding_dims
+
+
+   .. py:property:: classes
+
+      Get the number of classes.
+
+      :returns: The number of classes.
+      :rtype: int
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> classes = predictor.classes
+
+
+   .. py:method:: create_model(architecture)
+
+      Create the model for the predictor.
+
+      :param architecture: The architecture for the model.
+
+      :returns: The created model.
+      :rtype: Model
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> model = predictor.create_model(architecture)
+
+
+
+   .. py:method:: create_target(gt)
+
+      Create the target array for training.
+
+      :param gt: The ground truth array.
+
+      :returns: The created target array.
+      :rtype: NumpyArray
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> target = predictor.create_target(gt)
+
+
+
+   .. py:method:: create_weight(gt, target, mask, moving_class_counts=None)
+
+      Create the weight array for training, given a ground-truth and
+      associated target array.
+
+      :param gt: The ground-truth array.
+      :param target: The target array.
+      :param mask: The mask array.
+      :param moving_class_counts: The moving class counts.
+
+      :returns: The weight array and the moving class counts.
+      :rtype: Tuple[NumpyArray, np.ndarray]
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.create_weight(gt, target, mask, moving_class_counts)
+
+
+
+   .. py:property:: output_array_type
+
+      Get the output array type.
+
+      :returns: The output array type.
+      :rtype: ProbabilityArray
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> output_array_type = predictor.output_array_type
+
+      .. rubric:: Notes
+
+      Technically this is a probability array + distance array, but it is only ever referenced for interpolatability (which is true for both).
+
+
+   .. py:method:: create_distance_mask(distances: numpy.ndarray, mask: numpy.ndarray, voxel_size: funlib.geometry.Coordinate, normalize=None, normalize_args=None)
+
+      Create the distance mask for training.
+
+      :param distances: The distances array.
+      :param mask: The mask array.
+      :param voxel_size: The voxel size.
+      :param normalize: The normalization function to use.
+      :param normalize_args: The normalization arguments.
+
+      :returns: The distance mask.
+      :rtype: np.ndarray
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> distance_mask = self.create_distance_mask(distances, mask, voxel_size, normalize, normalize_args)
+
+
+
+   .. py:method:: process(labels: numpy.ndarray, voxel_size: funlib.geometry.Coordinate, normalize=None, normalize_args=None)
+
+      Process the labels array and convert it to one-hot encoding.
+
+      :param labels: The labels array.
+      :param voxel_size: The voxel size.
+      :param normalize: The normalization function to use.
+      :param normalize_args: The normalization arguments.
+
+      :returns: The one-hot encoded array.
+      :rtype: np.ndarray
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.process(labels, voxel_size, normalize, normalize_args)
+
+
+
+   .. py:method:: gt_region_for_roi(target_spec)
+
+      Report how much spatial context this predictor needs to generate a
+      target for the given ROI. By default, uses the same ROI.
+
+      :param target_spec: The ROI for which the target is requested.
+
+      :returns: The ROI for which the ground-truth is requested.
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.gt_region_for_roi(target_spec)
+
+
+
+   .. py:method:: padding(gt_voxel_size: funlib.geometry.Coordinate) -> funlib.geometry.Coordinate
+
+      Return the padding needed for the ground-truth array.
+
+      :param gt_voxel_size: The voxel size of the ground-truth array.
+
+      :returns: The padding needed for the ground-truth array.
+      :rtype: Coordinate
+
+      :raises NotImplementedError: This method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> predictor.padding(gt_voxel_size)
+
+
+

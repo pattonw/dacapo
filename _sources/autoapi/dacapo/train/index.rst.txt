@@ -1,0 +1,50 @@
+dacapo.train
+============
+
+.. py:module:: dacapo.train
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   dacapo.train.logger
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   dacapo.train.train
+   dacapo.train.train_run
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:function:: train(run_name: str, do_validate=True)
+
+   Train a run
+
+   :param run_name: Name of the run to train
+
+   :raises ValueError: If run_name is not found in config store
+
+   .. rubric:: Examples
+
+   >>> train("run_name")
+
+
+.. py:function:: train_run(run: dacapo.experiments.Run, do_validate=True)
+
+   Train a run
+
+   :param run: Run object to train
+
+   :raises ValueError: If run_name is not found in config store
+
+

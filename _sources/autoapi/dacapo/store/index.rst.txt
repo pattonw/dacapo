@@ -1,0 +1,27 @@
+dacapo.store
+============
+
+.. py:module:: dacapo.store
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/dacapo/store/array_store/index
+   /autoapi/dacapo/store/config_store/index
+   /autoapi/dacapo/store/conversion_hooks/index
+   /autoapi/dacapo/store/converter/index
+   /autoapi/dacapo/store/create_store/index
+   /autoapi/dacapo/store/file_config_store/index
+   /autoapi/dacapo/store/file_stats_store/index
+   /autoapi/dacapo/store/local_array_store/index
+   /autoapi/dacapo/store/local_weights_store/index
+   /autoapi/dacapo/store/mongo_config_store/index
+   /autoapi/dacapo/store/mongo_stats_store/index
+   /autoapi/dacapo/store/stats_store/index
+   /autoapi/dacapo/store/weights_store/index
+
+

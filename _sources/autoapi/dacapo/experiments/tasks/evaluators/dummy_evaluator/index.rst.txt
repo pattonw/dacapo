@@ -1,0 +1,108 @@
+dacapo.experiments.tasks.evaluators.dummy_evaluator
+===================================================
+
+.. py:module:: dacapo.experiments.tasks.evaluators.dummy_evaluator
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.evaluators.dummy_evaluator.DummyEvaluator
+
+
+Module Contents
+---------------
+
+.. py:class:: DummyEvaluator
+
+
+
+   A class representing a dummy evaluator. This evaluator is used for testing purposes.
+
+   .. attribute:: criteria
+
+      List[str]
+      the evaluation criteria
+
+   .. method:: evaluate(output_array_identifier, evaluation_dataset)
+
+      
+      Evaluate the output array against the evaluation dataset.
+
+   .. method:: score
+
+      
+      Return the evaluation scores.
+
+   .. note:: The DummyEvaluator class is used to evaluate the performance of a dummy task.
+
+
+   .. py:attribute:: criteria
+      :value: ['frizz_level', 'blipp_score']
+
+
+      A list of all criteria for which a model might be "best". i.e. your
+      criteria might be "precision", "recall", and "jaccard". It is unlikely
+      that the best iteration/post processing parameters will be the same
+      for all 3 of these criteria
+
+      :returns:
+
+                List[str]
+                    the evaluation criteria
+
+      :raises NotImplementedError: if the function is not implemented
+
+      .. rubric:: Examples
+
+      >>> evaluator = Evaluator()
+      >>> evaluator.criteria
+      []
+
+      .. note:: This function is used to return the evaluation criteria.
+
+
+   .. py:method:: evaluate(output_array_identifier, evaluation_dataset)
+
+      Evaluate the given output array and dataset and returns the scores based on predefined criteria.
+
+      :param output_array_identifier: The output array to be evaluated.
+      :param evaluation_dataset: The dataset to be used for evaluation.
+
+      :returns: An object of DummyEvaluationScores class, with the evaluation scores.
+      :rtype: DummyEvaluationScore
+
+      :raises ValueError: if the output array identifier is not valid
+
+      .. rubric:: Examples
+
+      >>> dummy_evaluator = DummyEvaluator()
+      >>> output_array_identifier = "output_array"
+      >>> evaluation_dataset = "evaluation_dataset"
+      >>> dummy_evaluator.evaluate(output_array_identifier, evaluation_dataset)
+      DummyEvaluationScores(frizz_level=0.0, blipp_score=0.0)
+
+      .. note:: This function is used to evaluate the output array against the evaluation dataset.
+
+
+
+   .. py:property:: score
+      :type: dacapo.experiments.tasks.evaluators.dummy_evaluation_scores.DummyEvaluationScores
+
+
+      Return the evaluation scores.
+
+      :returns: An object of DummyEvaluationScores class, with the evaluation scores.
+      :rtype: DummyEvaluationScores
+
+      .. rubric:: Examples
+
+      >>> dummy_evaluator = DummyEvaluator()
+      >>> dummy_evaluator.score
+      DummyEvaluationScores(frizz_level=0.0, blipp_score=0.0)
+
+      .. note:: This function is used to return the evaluation scores.
+
+

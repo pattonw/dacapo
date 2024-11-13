@@ -1,0 +1,56 @@
+dacapo.experiments.tasks.pretrained_task_config
+===============================================
+
+.. py:module:: dacapo.experiments.tasks.pretrained_task_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.pretrained_task_config.PretrainedTaskConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: PretrainedTaskConfig
+
+
+
+   Configuration for a task that uses a pretrained model. The model is loaded from a file
+   and the weights are loaded from a file.
+
+   .. attribute:: sub_task_config
+
+      The task to run starting with the provided pretrained weights.
+
+      :type: TaskConfig
+
+   .. attribute:: weights
+
+      A checkpoint containing pretrained model weights.
+
+      :type: Path
+
+   .. method:: verify(self) -> Tuple[bool, str]
+
+      This method verifies the PretrainedTaskConfig object.
+
+   .. rubric:: Notes
+
+   This is a subclass of TaskConfig.
+
+
+   .. py:attribute:: task_type
+
+
+   .. py:attribute:: sub_task_config
+      :type:  dacapo.experiments.tasks.task_config.TaskConfig
+
+
+   .. py:attribute:: weights
+      :type:  upath.UPath
+
+

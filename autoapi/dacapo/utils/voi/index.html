@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dacapo.utils.voi &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="dacapo.validate" href="../../validate/index.html" />
+    <link rel="prev" title="dacapo.utils.view" href="../view/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aws.html">AWS EC2 Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../roadmap.html">Road Map</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">dacapo</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../apply/index.html">dacapo.apply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../blockwise/index.html">dacapo.blockwise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../compute_context/index.html">dacapo.compute_context</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../experiments/index.html">dacapo.experiments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ext/index.html">dacapo.ext</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gp/index.html">dacapo.gp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../options/index.html">dacapo.options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plot/index.html">dacapo.plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict/index.html">dacapo.predict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict_local/index.html">dacapo.predict_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../store/index.html">dacapo.store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tmp/index.html">dacapo.tmp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../train/index.html">dacapo.train</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">dacapo.utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validate/index.html">dacapo.validate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">dacapo</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">dacapo.utils</a></li>
+      <li class="breadcrumb-item active">dacapo.utils.voi</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/dacapo/utils/voi/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dacapo.utils.voi">
+<span id="dacapo-utils-voi"></span><h1>dacapo.utils.voi<a class="headerlink" href="#module-dacapo.utils.voi" title="Link to this heading"></a></h1>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.voi.voi" title="dacapo.utils.voi.voi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">voi</span></code></a>(reconstruction, groundtruth[, ...])</p></td>
+<td><p>Return the conditional entropies of the variation of information metric. [1]</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.utils.voi.split_vi" title="dacapo.utils.voi.split_vi"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_vi</span></code></a>(x[, y, ignore_x, ignore_y])</p></td>
+<td><p>Return the symmetric conditional entropies associated with the VI.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.voi.vi_tables" title="dacapo.utils.voi.vi_tables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vi_tables</span></code></a>(x[, y, ignore_x, ignore_y])</p></td>
+<td><p>Return probability tables used for calculating VI.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.utils.voi.contingency_table" title="dacapo.utils.voi.contingency_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contingency_table</span></code></a>(seg, gt[, ignore_seg, ignore_gt, norm])</p></td>
+<td><p>Return the contingency table for all regions in matched segmentations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.voi.divide_columns" title="dacapo.utils.voi.divide_columns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">divide_columns</span></code></a>(matrix, row[, in_place])</p></td>
+<td><p>Divide each column of <cite>matrix</cite> by the corresponding element in <cite>row</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.utils.voi.divide_rows" title="dacapo.utils.voi.divide_rows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">divide_rows</span></code></a>(matrix, column[, in_place])</p></td>
+<td><p>Divide each row of <cite>matrix</cite> by the corresponding element in <cite>column</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.utils.voi.xlogx" title="dacapo.utils.voi.xlogx"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xlogx</span></code></a>(x[, out, in_place])</p></td>
+<td><p>Compute x * log_2(x).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.utils.voi.voi">
+<span class="sig-prename descclassname"><span class="pre">dacapo.utils.voi.</span></span><span class="sig-name descname"><span class="pre">voi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reconstruction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groundtruth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_reconstruction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_groundtruth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.voi.voi" title="Link to this definition"></a></dt>
+<dd><p>Return the conditional entropies of the variation of information metric. [1]</p>
+<p>Let X be a reconstruction, and Y a ground truth labelling. The variation of
+information between the two is the sum of two conditional entropies:</p>
+<blockquote>
+<div><p>VI(X, Y) = H(X|Y) + H(Y|X).</p>
+</div></blockquote>
+<p>The first one, H(X|Y), is a measure of oversegmentation, the second one,
+H(Y|X), a measure of undersegmentation. These measures are referred to as
+the variation of information split or merge error, respectively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seg</strong> (<em>np.ndarray</em><em>, </em><em>int type</em><em>, </em><em>arbitrary shape</em>) – A candidate segmentation.</p></li>
+<li><p><strong>gt</strong> (np.ndarray, int type, same shape as <cite>seg</cite>) – The ground truth segmentation.</p></li>
+<li><p><strong>ignore_seg</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Any points having a label in this list are ignored in the evaluation.
+By default, only the label 0 in the ground truth will be ignored.</p></li>
+<li><p><strong>ignore_gt</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Any points having a label in this list are ignored in the evaluation.
+By default, only the label 0 in the ground truth will be ignored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>(split, merge)</strong> – The variation of information split and merge error, i.e., H(X|Y) and H(Y|X)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>reconstruction</cite> and <cite>groundtruth</cite> have different shapes.</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Meila, M. (2007). Comparing clusterings - an information based
+distance. Journal of Multivariate Analysis 98, 873-895.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.utils.voi.split_vi">
+<span class="sig-prename descclassname"><span class="pre">dacapo.utils.voi.</span></span><span class="sig-name descname"><span class="pre">split_vi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.voi.split_vi" title="Link to this definition"></a></dt>
+<dd><p>Return the symmetric conditional entropies associated with the VI.</p>
+<p>The variation of information is defined as VI(X,Y) = H(X|Y) + H(Y|X).
+If Y is the ground-truth segmentation, then H(Y|X) can be interpreted
+as the amount of under-segmentation of Y and H(X|Y) is then the amount
+of over-segmentation.  In other words, a perfect over-segmentation
+will have H(Y|X)=0 and a perfect under-segmentation will have H(X|Y)=0.</p>
+<p>If y is None, x is assumed to be a contingency table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>np.ndarray</em>) – Label field (int type) or contingency table (float). <cite>x</cite> is
+interpreted as a contingency table (summing to 1.0) if and only if <cite>y</cite>
+is not provided.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em><em> of </em><em>int</em><em>, </em><em>same shape as x</em><em>, </em><em>optional</em>) – A label field to compare to <cite>x</cite>.</p></li>
+<li><p><strong>ignore_x</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Any points having a label in this list are ignored in the evaluation.
+Ignore 0-labeled points by default.</p></li>
+<li><p><strong>ignore_y</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Any points having a label in this list are ignored in the evaluation.
+Ignore 0-labeled points by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>sv</strong> – The conditional entropies of Y|X and X|Y.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray of float, shape (2,)</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">vi</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.utils.voi.vi_tables">
+<span class="sig-prename descclassname"><span class="pre">dacapo.utils.voi.</span></span><span class="sig-name descname"><span class="pre">vi_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.voi.vi_tables" title="Link to this definition"></a></dt>
+<dd><p>Return probability tables used for calculating VI.</p>
+<p>If y is None, x is assumed to be a contingency table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>np.ndarray</em>) – Either x and y are provided as equal-shaped np.ndarray label fields
+(int type), or y is not provided and x is a contingency table
+(sparse.csc_matrix) that may or may not sum to 1.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – Either x and y are provided as equal-shaped np.ndarray label fields
+(int type), or y is not provided and x is a contingency table
+(sparse.csc_matrix) that may or may not sum to 1.</p></li>
+<li><p><strong>ignore_x</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Rows and columns (respectively) to ignore in the contingency table.
+These are labels that are not counted when evaluating VI.</p></li>
+<li><p><strong>ignore_y</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Rows and columns (respectively) to ignore in the contingency table.
+These are labels that are not counted when evaluating VI.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>pxy</strong> (<em>sparse.csc_matrix of float</em>) – The normalized contingency table.</p></li>
+<li><p><strong>px, py, hxgy, hygx, lpygx, lpxgy</strong> (<em>np.ndarray of float</em>) – The proportions of each label in <cite>x</cite> and <cite>y</cite> (<cite>px</cite>, <cite>py</cite>), the
+per-segment conditional entropies of <cite>x</cite> given <cite>y</cite> and vice-versa, the
+per-segment conditional probability p log p.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If <cite>x</cite> and <cite>y</cite> have different shapes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.utils.voi.contingency_table">
+<span class="sig-prename descclassname"><span class="pre">dacapo.utils.voi.</span></span><span class="sig-name descname"><span class="pre">contingency_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_seg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_gt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.voi.contingency_table" title="Link to this definition"></a></dt>
+<dd><p>Return the contingency table for all regions in matched segmentations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seg</strong> (<em>np.ndarray</em><em>, </em><em>int type</em><em>, </em><em>arbitrary shape</em>) – A candidate segmentation.</p></li>
+<li><p><strong>gt</strong> (np.ndarray, int type, same shape as <cite>seg</cite>) – The ground truth segmentation.</p></li>
+<li><p><strong>ignore_seg</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Values to ignore in <cite>seg</cite>. Voxels in <cite>seg</cite> having a value in this list
+will not contribute to the contingency table. (default: [0])</p></li>
+<li><p><strong>ignore_gt</strong> (<em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Values to ignore in <cite>gt</cite>. Voxels in <cite>gt</cite> having a value in this list
+will not contribute to the contingency table. (default: [0])</p></li>
+<li><p><strong>norm</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to normalize the table so that it sums to 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>cont</strong> – A contingency table. <cite>cont[i, j]</cite> will equal the number of voxels
+labeled <cite>i</cite> in <cite>seg</cite> and <cite>j</cite> in <cite>gt</cite>. (Or the proportion of such voxels
+if <cite>norm=True</cite>.)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>scipy.sparse.csc_matrix</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>seg</cite> and <cite>gt</cite> have different shapes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.utils.voi.divide_columns">
+<span class="sig-prename descclassname"><span class="pre">dacapo.utils.voi.</span></span><span class="sig-name descname"><span class="pre">divide_columns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.voi.divide_columns" title="Link to this definition"></a></dt>
+<dd><p>Divide each column of <cite>matrix</cite> by the corresponding element in <cite>row</cite>.</p>
+<p>The result is as follows: out[i, j] = matrix[i, j] / row[j]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<em>np.ndarray</em><em>, </em><em>scipy.sparse.csc_matrix</em><em> or </em><em>csr_matrix</em><em>, </em><em>shape</em><em> (</em><em>M</em><em>, </em><em>N</em><em>)</em>) – The input matrix.</p></li>
+<li><p><strong>column</strong> (<em>a 1D np.ndarray</em><em>, </em><em>shape</em><em> (</em><em>N</em><em>,</em><em>)</em>) – The row dividing <cite>matrix</cite>.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em><em> (</em><em>optional</em><em>, </em><em>default False</em><em>)</em>) – Do the computation in-place.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> – The result of the row-wise division.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>same type as <cite>matrix</cite></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>row</cite> contains zeros.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.utils.voi.divide_rows">
+<span class="sig-prename descclassname"><span class="pre">dacapo.utils.voi.</span></span><span class="sig-name descname"><span class="pre">divide_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.voi.divide_rows" title="Link to this definition"></a></dt>
+<dd><p>Divide each row of <cite>matrix</cite> by the corresponding element in <cite>column</cite>.</p>
+<p>The result is as follows: out[i, j] = matrix[i, j] / column[i]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matrix</strong> (<em>np.ndarray</em><em>, </em><em>scipy.sparse.csc_matrix</em><em> or </em><em>csr_matrix</em><em>, </em><em>shape</em><em> (</em><em>M</em><em>, </em><em>N</em><em>)</em>) – The input matrix.</p></li>
+<li><p><strong>column</strong> (<em>a 1D np.ndarray</em><em>, </em><em>shape</em><em> (</em><em>M</em><em>,</em><em>)</em>) – The column dividing <cite>matrix</cite>.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em><em> (</em><em>optional</em><em>, </em><em>default False</em><em>)</em>) – Do the computation in-place.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out</strong> – The result of the row-wise division.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>same type as <cite>matrix</cite></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>column</cite> contains zeros.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.utils.voi.xlogx">
+<span class="sig-prename descclassname"><span class="pre">dacapo.utils.voi.</span></span><span class="sig-name descname"><span class="pre">xlogx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_place</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.utils.voi.xlogx" title="Link to this definition"></a></dt>
+<dd><p>Compute x * log_2(x).</p>
+<p>We define 0 * log_2(0) = 0</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>np.ndarray</em><em> or </em><em>scipy.sparse.csc_matrix</em><em> or </em><em>csr_matrix</em>) – The input array.</p></li>
+<li><p><strong>out</strong> (<em>same type as x</em><em> (</em><em>optional</em><em>)</em>) – If provided, use this array/matrix for the result.</p></li>
+<li><p><strong>in_place</strong> (<em>bool</em><em> (</em><em>optional</em><em>, </em><em>default False</em><em>)</em>) – Operate directly on x.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>y</strong> – Result of x * log_2(x).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>same type as x</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If x contains negative values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../view/index.html" class="btn btn-neutral float-left" title="dacapo.utils.view" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../validate/index.html" class="btn btn-neutral float-right" title="dacapo.validate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

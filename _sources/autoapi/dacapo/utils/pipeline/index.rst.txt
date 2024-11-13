@@ -1,0 +1,491 @@
+dacapo.utils.pipeline
+=====================
+
+.. py:module:: dacapo.utils.pipeline
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.utils.pipeline.CreatePoints
+   dacapo.utils.pipeline.MakeRaw
+   dacapo.utils.pipeline.DilatePoints
+   dacapo.utils.pipeline.RandomDilateLabels
+   dacapo.utils.pipeline.Relabel
+   dacapo.utils.pipeline.ExpandLabels
+   dacapo.utils.pipeline.ZerosSource
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   dacapo.utils.pipeline.random_source_pipeline
+
+
+Module Contents
+---------------
+
+.. py:class:: CreatePoints(labels, num_points=(20, 150))
+
+
+
+   A batch filter that creates random points in a 3D label volume.
+
+   .. attribute:: labels
+
+      The key of the label data in the batch.
+
+      :type: str
+
+   .. attribute:: num_points
+
+      A tuple specifying the range of the number of points to create.
+
+      :type: tuple
+
+   .. method:: process
+
+      Create random points in the label volume.
+      
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: num_points
+
+
+   .. py:method:: process(batch, request)
+
+      Process the batch by creating random points in the label volume.
+
+      :param batch: The input batch containing label data.
+      :type batch: dict
+      :param request: The batch request.
+      :type request: gp.BatchRequest
+
+      :raises ValueError: If the number of points is not an integer.
+
+      .. rubric:: Examples
+
+      >>> CreatePoints.process(batch, request)
+
+
+
+.. py:class:: MakeRaw
+
+
+
+   A batch filter that generates a raw image from labels.
+
+   .. attribute:: raw
+
+      The key of the raw data in the batch.
+
+      :type: str
+
+   .. attribute:: labels
+
+      The key of the label data in the batch.
+
+      :type: str
+
+   .. attribute:: gaussian_noise_args
+
+      A tuple specifying the mean and standard deviation of the Gaussian noise.
+
+      :type: tuple
+
+   .. attribute:: gaussian_noise_lim
+
+      The limit of the Gaussian noise.
+
+      :type: float
+
+   .. attribute:: gaussian_blur_args
+
+      A tuple specifying the mean and standard deviation of the Gaussian blur.
+
+      :type: tuple
+
+   .. attribute:: membrane_like
+
+      A boolean indicating whether to generate a membrane-like structure.
+
+      :type: bool
+
+   .. attribute:: membrane_size
+
+      The size of the membrane-like structure.
+
+      :type: int
+
+   .. attribute:: inside_value
+
+      The value to set inside the membranes of objects.
+
+      :type: float
+
+   .. method:: setup
+
+      Set up the batch filter by defining the specification of the raw image.
+
+   .. method:: process
+
+      Generate the raw image from the labels.
+      
+
+
+   .. py:class:: Pipeline(raw, labels, gaussian_noise_args: Iterable = (0.5, 0.1), gaussian_noise_lim: float = 0.3, gaussian_blur_args: Iterable = (0.5, 1.5), membrane_like=True, membrane_size=3, inside_value=0.5)
+
+      .. py:attribute:: raw
+
+
+      .. py:attribute:: labels
+
+
+      .. py:attribute:: gaussian_noise_args
+
+
+      .. py:attribute:: gaussian_noise_lim
+
+
+      .. py:attribute:: gaussian_blur_args
+
+
+      .. py:attribute:: membrane_like
+
+
+      .. py:attribute:: membrane_size
+
+
+      .. py:attribute:: inside_value
+
+
+
+   .. py:method:: setup()
+
+      Set up the batch filter by defining the specification of the raw image.
+
+      :raises ValueError: If the data type is not float32.
+
+      .. rubric:: Examples
+
+      >>> MakeRaw.setup()
+
+
+
+   .. py:method:: process(batch, request)
+
+      Process the batch by generating the raw image from the labels.
+
+      :param batch: The input batch.
+      :type batch: gp.Batch
+      :param request: The request for the output batch.
+      :type request: gp.BatchRequest
+
+      :returns: The output batch.
+      :rtype: gp.Batch
+
+      :raises ValueError: If the data type is not float32.
+
+      .. rubric:: Examples
+
+      >>> MakeRaw.process(batch, request)
+
+
+
+.. py:class:: DilatePoints(labels, dilations=[2, 8])
+
+
+
+   A batch filter that performs dilation on labeled points.
+
+   .. attribute:: labels
+
+      The key of the labels data in the batch.
+
+      :type: str
+
+   .. attribute:: dilations
+
+      A list of two integers representing the range of dilations to apply.
+
+      :type: list[int]
+
+   .. method:: process
+
+      Perform dilation on the labeled points.
+      
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: dilations
+
+
+   .. py:method:: process(batch, request)
+
+      Process the batch by performing dilation on the labeled points.
+
+      :param batch: The input batch.
+      :type batch: Batch
+      :param request: The request object.
+      :type request: Request
+
+      :raises ValueError: If the dilations are not integers.
+
+      .. rubric:: Examples
+
+      >>> DilatePoints.process(batch, request)
+
+
+
+.. py:class:: RandomDilateLabels(labels, dilations=[2, 8])
+
+
+
+   A batch filter that randomly dilates labels in a batch.
+
+   .. attribute:: labels
+
+      The key of the labels in the batch.
+
+      :type: str
+
+   .. attribute:: dilations
+
+      A list of two integers representing the range of dilations.
+
+      :type: list[int]
+
+   .. method:: process
+
+      Randomly dilate the labels in the batch.
+      
+      
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: dilations
+
+
+   .. py:method:: process(batch, request)
+
+      Process the batch by randomly dilating labels.
+
+      :param batch: The input batch.
+      :type batch: dict
+      :param request: The request object.
+
+      :raises ValueError: If the dilations are not integers.
+
+      .. rubric:: Examples
+
+      >>> RandomDilateLabels.process(batch, request)
+
+
+
+.. py:class:: Relabel(labels, connectivity=1)
+
+
+
+   A batch filter that relabels the labels in a batch.
+
+   :param labels: The name of the labels data in the batch.
+   :type labels: str
+   :param connectivity: The connectivity used for relabeling. Defaults to 1.
+   :type connectivity: int, optional
+
+   .. method:: process
+
+      Process the batch and relabel the labels.
+      
+      
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: connectivity
+
+
+   .. py:method:: process(batch, request)
+
+      Process the batch and relabel the labels.
+
+      :param batch: The input batch.
+      :type batch: Batch
+      :param request: The request for processing.
+      :type request: Request
+
+      :returns: The output batch.
+      :rtype: Batch
+
+      :raises ValueError: If the connectivity is not an integer.
+
+      .. rubric:: Examples
+
+      >>> Relabel.process(batch, request)
+
+
+
+.. py:class:: ExpandLabels(labels, background=0)
+
+
+
+   A batch filter that expands labels by assigning the nearest label to each pixel within a specified distance.
+
+   .. attribute:: labels
+
+      The name of the labels data in the batch.
+
+      :type: str
+
+   .. attribute:: background
+
+      The label value representing the background.
+
+      :type: int
+
+   .. method:: process
+
+      Process the batch and expand the labels.
+      
+      
+
+
+   .. py:attribute:: labels
+
+
+   .. py:attribute:: background
+
+
+   .. py:method:: process(batch, request)
+
+      Process the batch by expanding the labels.
+
+      :param batch: The input batch.
+      :type batch: gp.Batch
+      :param request: The batch request.
+      :type request: gp.BatchRequest
+
+      :raises ValueError: If the background is not an integer.
+
+      .. rubric:: Examples
+
+      >>> ExpandLabels.process(batch, request)
+
+
+
+.. py:class:: ZerosSource(key, spec)
+
+
+
+   A batch provider that generates arrays filled with zeros.
+
+   .. attribute:: key
+
+      The key to use for the generated array.
+
+      :type: str
+
+   .. attribute:: _spec
+
+      A dictionary containing the specification of the array.
+
+      :type: dict
+
+   .. method:: setup
+
+      Perform any necessary setup before providing batches.
+
+   .. method:: provide
+
+      Provide a batch containing an array filled with zeros.
+      
+      
+
+
+   .. py:attribute:: key
+
+
+   .. py:method:: setup()
+
+      Perform any necessary setup before providing batches.
+
+      :raises NotImplementedError: If the method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> ZerosSource.setup()
+
+
+
+   .. py:method:: provide(request)
+
+      Provide a batch containing an array filled with zeros.
+
+      :param request: The request for the batch.
+      :type request: gp.BatchRequest
+
+      :returns: The provided batch.
+      :rtype: gp.Batch
+
+      :raises NotImplementedError: If the method is not implemented.
+
+      .. rubric:: Examples
+
+      >>> ZerosSource.provide(request)
+
+
+
+.. py:function:: random_source_pipeline(voxel_size=(8, 8, 8), input_shape=(148, 148, 148), dtype=np.uint8, expand_labels=False, relabel_connectivity=1, random_dilate=True, num_points=(20, 150), gaussian_noise_args=(0, 0.1), gaussian_blur_args=(0.5, 1.5), membrane_like=True, membrane_size=3, inside_value=0.5)
+
+   Create a random source pipeline and batch request for example training.
+
+   :param voxel_size: The size of a voxel in world units.
+   :type voxel_size: tuple of int
+   :param input_shape: The shape of the input arrays.
+   :type input_shape: tuple of int
+   :param dtype: The dtype of the label arrays.
+   :type dtype: numpy.dtype
+   :param expand_labels: Whether to expand the labels into the background.
+   :type expand_labels: bool
+   :param relabel_connectivity: The connectivity used for for relabeling.
+   :type relabel_connectivity: int
+   :param random_dilate: Whether to randomly dilate the individual labels.
+   :type random_dilate: bool
+   :param num_points: The range of the number of points to add to the labels.
+   :type num_points: tuple of int
+   :param gaussian_noise_args: The mean and standard deviation of the Gaussian noise to add to the raw array.
+   :type gaussian_noise_args: tuple of float
+   :param gaussian_blur_args: The mean and standard deviation of the Gaussian blur to apply to the raw array.
+   :type gaussian_blur_args: tuple of float
+   :param membrane_like: Whether to generate a membrane-like structure in the raw array.
+   :type membrane_like: bool
+   :param membrane_size: The width of the membrane-like structure on the outside of the objects.
+   :type membrane_size: int
+   :param inside_value: The value to set inside the membranes of objects.
+   :type inside_value: float
+
+   :returns: The batch generating Gunpowder pipeline.
+             gunpowder.BatchRequest: The batch request for the pipeline.
+   :rtype: gunpowder.Pipeline
+
+   :raises ValueError: If the input_shape is not an integer.
+
+   .. rubric:: Examples
+
+   >>> random_source_pipeline(voxel_size=(8, 8, 8), input_shape=(148, 148, 148), dtype=np.uint8, expand_labels=False,
+   >>>                        relabel_connectivity=1, random_dilate=True, num_points=(20, 150), gaussian_noise_args=(0, 0.1),
+   >>>                        gaussian_blur_args=(0.5, 1.5), membrane_like=True, membrane_size=3, inside_value=0.5)
+
+

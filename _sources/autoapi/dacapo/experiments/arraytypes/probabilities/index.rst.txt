@@ -1,0 +1,63 @@
+dacapo.experiments.arraytypes.probabilities
+===========================================
+
+.. py:module:: dacapo.experiments.arraytypes.probabilities
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.arraytypes.probabilities.ProbabilityArray
+
+
+Module Contents
+---------------
+
+.. py:class:: ProbabilityArray
+
+
+
+   Class to represent an array containing probability distributions for each voxel pointed by its coordinate.
+
+   The class defines a ProbabilityArray object with each voxel having a vector of length `c`, where `c` is the
+   number of classes. The l1 norm of this vector should always be 1. The class of each voxel can be
+   determined by simply taking the argmax.
+
+   .. attribute:: classes
+
+      A mapping from channel to class on which distances were calculated.
+
+      :type: List[str]
+
+   .. note::
+
+      This class is used to create a ProbabilityArray object which is used to represent an array containing probability distributions for each voxel pointed by its coordinate.
+      The class of each voxel can be determined by simply taking the argmax.
+
+
+   .. py:attribute:: classes
+      :type:  List[str]
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      Checks if the array is interpolatable. Returns True for this class.
+
+      :returns: True indicating that the data can be interpolated.
+      :rtype: bool
+
+      :raises NotImplementedError: This method is not implemented in this class
+
+      .. rubric:: Examples
+
+      >>> probability_array = ProbabilityArray(classes=["class1", "class2"])
+      >>> probability_array.interpolatable
+      True
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+

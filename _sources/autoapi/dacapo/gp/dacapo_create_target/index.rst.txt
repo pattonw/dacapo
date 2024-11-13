@@ -1,0 +1,144 @@
+dacapo.gp.dacapo_create_target
+==============================
+
+.. py:module:: dacapo.gp.dacapo_create_target
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.gp.dacapo_create_target.DaCapoTargetFilter
+
+
+Module Contents
+---------------
+
+.. py:class:: DaCapoTargetFilter(predictor: dacapo.experiments.tasks.predictors.Predictor, gt_key: gunpowder.ArrayKey, target_key: Optional[gunpowder.ArrayKey] = None, weights_key: Optional[gunpowder.ArrayKey] = None, mask_key: Optional[gunpowder.ArrayKey] = None)
+
+
+
+   A Gunpowder node for generating the target from the ground truth
+
+   .. attribute:: Predictor
+
+      The DaCapo Predictor to use to transform gt into target
+
+      :type: Predictor
+
+   .. attribute:: gt
+
+      The dataset to use for generating the target.
+
+      :type: ``Array``
+
+   .. attribute:: target_key
+
+      The key with which to provide the target.
+
+      :type: ``gp.ArrayKey``
+
+   .. attribute:: weights_key
+
+      The key with which to provide the weights.
+
+      :type: ``gp.ArrayKey``
+
+   .. attribute:: mask_key
+
+      The key with which to provide the mask.
+
+      :type: ``gp.ArrayKey``
+
+   .. method:: setup()
+
+      Set up the provider.
+
+   .. method:: prepare(request)
+
+      Prepare the request.
+
+   .. method:: process(batch, request)
+
+      Process the batch.
+
+   .. note::
+
+      This class is a subclass of gunpowder.BatchFilter and is used to
+      generate the target from the ground truth.
+
+
+   .. py:attribute:: predictor
+
+
+   .. py:attribute:: gt_key
+
+
+   .. py:attribute:: target_key
+
+
+   .. py:attribute:: weights_key
+
+
+   .. py:attribute:: mask_key
+
+
+   .. py:attribute:: moving_counts
+      :value: None
+
+
+
+   .. py:method:: setup()
+
+      Set up the provider. This function sets the provider to provide the
+      target with the given key.
+
+      :raises RuntimeError: If the key is already provided.
+
+      .. rubric:: Examples
+
+      >>> target_filter.setup()
+
+
+
+   .. py:method:: prepare(request)
+
+      Prepare the request.
+
+      :param request: The request to prepare.
+      :type request: gp.BatchRequest
+
+      :returns: The dependencies.
+      :rtype: deps (gp.BatchRequest)
+
+      :raises NotImplementedError: If the target_key is not provided.
+
+      .. rubric:: Examples
+
+      >>> request = gp.BatchRequest()
+      >>> request[gp.ArrayKey("GT")] = gp.ArraySpec(roi=gp.Roi((0, 0, 0), (1, 1, 1)))
+      >>> target_filter.prepare(request)
+
+
+
+   .. py:method:: process(batch, request)
+
+      Process the batch.
+
+      :param batch: The batch to process.
+      :type batch: gp.Batch
+      :param request: The request to process.
+      :type request: gp.BatchRequest
+
+      :returns: The output batch.
+      :rtype: output (gp.Batch)
+
+      .. rubric:: Examples
+
+      >>> request = gp.BatchRequest()
+      >>> request[gp.ArrayKey("GT")] = gp.ArraySpec(roi=gp.Roi((0, 0, 0), (1, 1, 1)))
+      >>> target_filter.process(batch, request)
+
+
+

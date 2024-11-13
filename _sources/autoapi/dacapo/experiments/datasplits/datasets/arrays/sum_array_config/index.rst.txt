@@ -1,0 +1,39 @@
+dacapo.experiments.datasplits.datasets.arrays.sum_array_config
+==============================================================
+
+.. py:module:: dacapo.experiments.datasplits.datasets.arrays.sum_array_config
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.datasplits.datasets.arrays.sum_array_config.SumArrayConfig
+
+
+Module Contents
+---------------
+
+.. py:class:: SumArrayConfig
+
+
+
+   This config class provides the necessary configuration for a sum
+   array.
+
+   .. attribute:: source_array_configs
+
+      List[ArrayConfig]
+      The Array of masks from which to take the union
+
+   .. note:: This class is a subclass of ArrayConfig.
+
+
+   .. py:attribute:: source_array_configs
+      :type:  List[dacapo.experiments.datasplits.datasets.arrays.array_config.ArrayConfig]
+
+
+   .. py:method:: array(mode: str = 'r') -> funlib.persistence.Array
+
+

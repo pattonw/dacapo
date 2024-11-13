@@ -1,0 +1,946 @@
+dacapo.experiments.architectures.cnnectome_unet
+===============================================
+
+.. py:module:: dacapo.experiments.architectures.cnnectome_unet
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.architectures.cnnectome_unet.CNNectomeUNet
+   dacapo.experiments.architectures.cnnectome_unet.CNNectomeUNetModule
+   dacapo.experiments.architectures.cnnectome_unet.ConvPass
+   dacapo.experiments.architectures.cnnectome_unet.Downsample
+   dacapo.experiments.architectures.cnnectome_unet.Upsample
+   dacapo.experiments.architectures.cnnectome_unet.AttentionBlockModule
+
+
+Module Contents
+---------------
+
+.. py:class:: CNNectomeUNet(architecture_config)
+
+
+
+   A U-Net architecture for 3D or 4D data. The U-Net expects 3D or 4D tensors
+   shaped like::
+
+       ``(batch=1, channels, [length,] depth, height, width)``.
+
+   This U-Net performs only "valid" convolutions, i.e., sizes of the feature
+   maps decrease after each convolution. It will perfrom 4D convolutions as
+   long as ``length`` is greater than 1. As soon as ``length`` is 1 due to a
+   valid convolution, the time dimension will be dropped and tensors with
+   ``(b, c, z, y, x)`` will be use (and returned) from there on.
+
+   .. attribute:: fmaps_in
+
+      The number of input channels.
+
+   .. attribute:: fmaps_out
+
+      The number of feature maps in the output layer. This is also the
+      number of output feature maps. Stored in the ``channels`` dimension.
+
+   .. attribute:: num_fmaps
+
+      The number of feature maps in the first layer. This is also the
+      number of output feature maps. Stored in the ``channels`` dimension.
+
+   .. attribute:: fmap_inc_factor
+
+      By how much to multiply the number of feature maps between layers.
+      If layer 0 has ``k`` feature maps, layer ``l`` will have
+      ``k*fmap_inc_factor**l``.
+
+   .. attribute:: downsample_factors
+
+      List of tuples ``(z, y, x)`` to use to down- and up-sample the
+      feature maps between layers.
+
+   .. attribute:: kernel_size_down
+
+      List of lists of kernel sizes. The number of sizes in a list
+      determines the number of convolutional layers in the corresponding
+      level of the build on the left side. Kernel sizes can be given as
+      tuples or integer. If not given, each convolutional pass will
+      consist of two 3x3x3 convolutions.
+
+      :type: optional
+
+   .. attribute:: kernel_size_up
+
+      List of lists of kernel sizes. The number of sizes in a list
+      determines the number of convolutional layers in the corresponding
+      level of the build on the right side. Within one of the lists going
+      from left to right. Kernel sizes can be given as tuples or integer.
+      If not given, each convolutional pass will consist of two 3x3x3
+      convolutions.
+
+      :type: optional
+
+   .. attribute:: activation
+
+      Which activation to use after a convolution. Accepts the name of
+      any tensorflow activation function (e.g., ``ReLU`` for
+      ``torch.nn.ReLU``).
+
+   .. attribute:: fov
+
+      Initial field of view in physical units
+
+      :type: optional
+
+   .. attribute:: voxel_size
+
+      Size of a voxel in the input data, in physical units
+
+      :type: optional
+
+   .. attribute:: num_heads
+
+      Number of decoders. The resulting U-Net has one single encoder
+      path and num_heads decoder paths. This is useful in a multi-task
+      learning context.
+
+      :type: optional
+
+   .. attribute:: constant_upsample
+
+      If set to true, perform a constant upsampling instead of a
+      transposed convolution in the upsampling layers.
+
+      :type: optional
+
+   .. attribute:: padding
+
+      How to pad convolutions. Either 'same' or 'valid' (default).
+
+      :type: optional
+
+   .. attribute:: upsample_channel_contraction
+
+      When performing the ConvTranspose, whether to reduce the number
+      of channels by the fmap_increment_factor. can be either bool or
+      list of bools to apply independently per layer.
+
+   .. attribute:: activation_on_upsample
+
+      Whether or not to add an activation after the upsample operation.
+
+   .. attribute:: use_attention
+
+      Whether or not to use an attention block in the U-Net.
+
+       Methods:
+           forward(x):
+               Forward pass of the U-Net.
+           scale(voxel_size):
+               Scale the voxel size according to the upsampling factors.
+           input_shape:
+               Return the input shape of the U-Net.
+           num_in_channels:
+               Return the number of input channels.
+           num_out_channels:
+               Return the number of output channels.
+           eval_shape_increase:
+               Return the increase in shape due to the U-Net.
+       Note:
+           This class is a wrapper around the ``CNNectomeUNetModule`` class.
+           The ``CNNectomeUNetModule`` class is the actual implementation of the
+           U-Net architecture.
+
+
+   .. py:attribute:: fmaps_out
+
+
+   .. py:attribute:: fmaps_in
+
+
+   .. py:attribute:: num_fmaps
+
+
+   .. py:attribute:: fmap_inc_factor
+
+
+   .. py:attribute:: downsample_factors
+
+
+   .. py:attribute:: kernel_size_down
+
+
+   .. py:attribute:: kernel_size_up
+
+
+   .. py:attribute:: constant_upsample
+
+
+   .. py:attribute:: padding
+
+
+   .. py:attribute:: upsample_factors
+
+
+   .. py:attribute:: use_attention
+
+
+   .. py:attribute:: batch_norm
+
+
+   .. py:attribute:: unet
+
+
+   .. py:property:: eval_shape_increase
+
+      The increase in shape due to the U-Net.
+
+      :returns: The increase in shape due to the U-Net.
+
+      :raises AttributeError: If the increase in shape is not given.
+
+      .. rubric:: Examples
+
+      >>> unet.eval_shape_increase
+      (1, 1, 128, 128, 128)
+
+      .. note:: The increase in shape should be given as a tuple ``(batch, channels, [length,] depth, height, width)``.
+
+
+   .. py:method:: module()
+
+      Create the U-Net module.
+
+      :returns: The U-Net module.
+
+      :raises AttributeError: If the number of input channels is not given.
+      :raises AttributeError: If the number of output channels is not given.
+      :raises AttributeError: If the number of feature maps in the first layer is not given.
+      :raises AttributeError: If the factor by which the number of feature maps increases between layers is not given.
+      :raises AttributeError: If the downsample factors are not given.
+      :raises AttributeError: If the kernel sizes for the down pass are not given.
+      :raises AttributeError: If the kernel sizes for the up pass are not given.
+      :raises AttributeError: If the constant upsample flag is not given.
+      :raises AttributeError: If the padding is not given.
+      :raises AttributeError: If the upsample factors are not given.
+      :raises AttributeError: If the activation on upsample flag is not given.
+      :raises AttributeError: If the use attention flag is not given.
+
+      .. rubric:: Examples
+
+      >>> unet.module()
+      CNNectomeUNetModule(
+          in_channels=1,
+          num_fmaps=24,
+          num_fmaps_out=1,
+          fmap_inc_factor=2,
+          kernel_size_down=[[(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)]],
+          kernel_size_up=[[(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)]],
+          downsample_factors=[(2, 2, 2), (2, 2, 2), (2, 2, 2)],
+          constant_upsample=False,
+          padding='valid',
+          activation_on_upsample=True,
+          upsample_channel_contraction=[False, True, True],
+          use_attention=False
+      )
+
+      .. note:: The U-Net module is an instance of the ``CNNectomeUNetModule`` class.
+
+
+
+   .. py:method:: scale(voxel_size)
+
+      Scale the voxel size according to the upsampling factors.
+
+      :param voxel_size: The size of a voxel in the input data.
+      :type voxel_size: tuple
+
+      :returns: The scaled voxel size.
+
+      :raises ValueError: If the voxel size is not given.
+
+      .. rubric:: Examples
+
+      >>> unet.scale((1, 1, 1))
+      (1, 1, 1)
+
+      .. note:: The voxel size should be given as a tuple ``(z, y, x)``.
+
+
+
+   .. py:property:: input_shape
+
+      Return the input shape of the U-Net.
+
+      :returns: The input shape of the U-Net.
+
+      :raises AttributeError: If the input shape is not given.
+
+      .. rubric:: Examples
+
+      >>> unet.input_shape
+      (1, 1, 128, 128, 128)
+
+      .. note:: The input shape should be given as a tuple ``(batch, channels, [length,] depth, height, width)``.
+
+
+   .. py:property:: num_in_channels
+      :type: int
+
+
+      Return the number of input channels.
+
+      :returns: The number of input channels.
+
+      :raises AttributeError: If the number of input channels is not given.
+
+      .. rubric:: Examples
+
+      >>> unet.num_in_channels
+      1
+
+      .. note:: The number of input channels should be given as an integer.
+
+
+   .. py:property:: num_out_channels
+      :type: int
+
+
+      Return the number of output channels.
+
+      :returns: The number of output channels.
+
+      :raises AttributeError: If the number of output channels is not given.
+
+      .. rubric:: Examples
+
+      >>> unet.num_out_channels
+      1
+
+      .. note:: The number of output channels should be given as an integer.
+
+
+   .. py:method:: forward(x)
+
+      Forward pass of the U-Net.
+
+      :param x: The input tensor.
+      :type x: Tensor
+
+      :returns: The output tensor.
+
+      :raises RuntimeError: If the tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> unet = CNNectomeUNet(architecture_config)
+      >>> x = torch.randn(1, 1, 64, 64, 64)
+      >>> unet(x)
+
+      .. note:: The input tensor should be given as a 5D tensor.
+
+
+
+.. py:class:: CNNectomeUNetModule(in_channels, num_fmaps, fmap_inc_factor, downsample_factors, kernel_size_down=None, kernel_size_up=None, activation='ReLU', num_fmaps_out=None, num_heads=1, constant_upsample=False, padding='valid', upsample_channel_contraction=False, activation_on_upsample=False, use_attention=False, batch_norm=True)
+
+
+
+   A U-Net module for 3D or 4D data. The U-Net expects 3D or 4D tensors shaped
+   like::
+
+           ``(batch=1, channels, [length,] depth, height, width)``.
+
+   This U-Net performs only "valid" convolutions, i.e., sizes of the feature maps
+   decrease after each convolution. It will perfrom 4D convolutions as long as
+   ``length`` is greater than 1. As soon as ``length`` is 1 due to a valid
+   convolution, the time dimension will be dropped and tensors with ``(b, c, z, y, x)``
+   will be use (and returned) from there on.
+
+   .. attribute:: num_levels
+
+      The number of levels in the U-Net.
+
+   .. attribute:: num_heads
+
+      The number of decoders.
+
+   .. attribute:: in_channels
+
+      The number of input channels.
+
+   .. attribute:: out_channels
+
+      The number of output channels.
+
+   .. attribute:: dims
+
+      The number of dimensions.
+
+   .. attribute:: use_attention
+
+      Whether or not to use an attention block in the U-Net.
+
+   .. attribute:: l_conv
+
+      The left convolutional passes.
+
+   .. attribute:: l_down
+
+      The left downsample layers.
+
+   .. attribute:: r_up
+
+      The right up/crop/concatenate layers.
+
+   .. attribute:: r_conv
+
+      The right convolutional passes.
+
+   .. attribute:: kernel_size_down
+
+      The kernel sizes for the down pass.
+
+   .. attribute:: kernel_size_up
+
+      The kernel sizes for the up pass.
+
+   .. attribute:: fmap_inc_factor
+
+      The factor by which the number of feature maps increases between layers.
+
+   .. attribute:: downsample_factors
+
+      The downsample factors.
+
+   .. attribute:: constant_upsample
+
+      Whether to perform a constant upsampling instead of a transposed convolution.
+
+   .. attribute:: padding
+
+      How to pad convolutions.
+
+   .. attribute:: upsample_channel_contraction
+
+      Whether to reduce the number of channels by the fmap_increment_factor.
+
+   .. attribute:: activation_on_upsample
+
+      Whether or not to add an activation after the upsample operation.
+
+   .. attribute:: use_attention
+
+      Whether or not to use an attention block in the U-Net.
+
+   .. attribute:: attention
+
+      The attention blocks.
+
+   .. method:: rec_forward(level, f_in)
+
+      
+      Recursive forward pass of the U-Net.
+
+   .. method:: forward(x)
+
+      
+      Forward pass of the U-Net.
+
+   .. note:: The input tensor should be given as a 5D tensor.
+
+
+   .. py:attribute:: num_levels
+
+
+   .. py:attribute:: num_heads
+
+
+   .. py:attribute:: in_channels
+
+
+   .. py:attribute:: out_channels
+
+
+   .. py:attribute:: dims
+
+
+   .. py:attribute:: use_attention
+
+
+   .. py:attribute:: batch_norm
+
+
+   .. py:attribute:: kernel_size_down
+
+
+   .. py:attribute:: kernel_size_up
+
+
+   .. py:attribute:: l_conv
+
+
+   .. py:attribute:: l_down
+
+
+   .. py:attribute:: r_up
+
+
+   .. py:attribute:: r_conv
+
+
+   .. py:method:: rec_forward(level, f_in)
+
+      Recursive forward pass of the U-Net.
+
+      :param level: The level of the U-Net.
+      :type level: int
+      :param f_in: The input tensor.
+      :type f_in: Tensor
+
+      :returns: The output tensor.
+
+      :raises RuntimeError: If the tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> unet = CNNectomeUNetModule(
+      ...     in_channels=1,
+      ...     num_fmaps=24,
+      ...     num_fmaps_out=1,
+      ...     fmap_inc_factor=2,
+      ...     kernel_size_down=[[(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)]],
+      ...     kernel_size_up=[[(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)]],
+      ...     downsample_factors=[(2, 2, 2), (2, 2, 2), (2, 2, 2)],
+      ...     constant_upsample=False,
+      ...     padding='valid',
+      ...     activation_on_upsample=True,
+      ...     upsample_channel_contraction=[False, True, True],
+      ...     use_attention=False
+      ... )
+      >>> x = torch.randn(1, 1, 64, 64, 64)
+      >>> unet.rec_forward(2, x)
+
+      .. note:: The input tensor should be given as a 5D tensor.
+
+
+
+   .. py:method:: forward(x)
+
+      Forward pass of the U-Net.
+
+      :param x: The input tensor.
+      :type x: Tensor
+
+      :returns: The output tensor.
+
+      :raises RuntimeError: If the tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> unet = CNNectomeUNetModule(
+      ...     in_channels=1,
+      ...     num_fmaps=24,
+      ...     num_fmaps_out=1,
+      ...     fmap_inc_factor=2,
+      ...     kernel_size_down=[[(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)]],
+      ...     kernel_size_up=[[(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)], [(3, 3, 3), (3, 3, 3)]],
+      ...     downsample_factors=[(2, 2, 2), (2, 2, 2), (2, 2, 2)],
+      ...     constant_upsample=False,
+      ...     padding='valid',
+      ...     activation_on_upsample=True,
+      ...     upsample_channel_contraction=[False, True, True],
+      ...     use_attention=False
+      ... )
+      >>> x = torch.randn(1, 1, 64, 64, 64)
+      >>> unet(x)
+
+      .. note:: The input tensor should be given as a 5D tensor.
+
+
+
+.. py:class:: ConvPass(in_channels, out_channels, kernel_sizes, activation, padding='valid', batch_norm=True)
+
+
+
+   Convolutional pass module. This module performs a series of convolutional
+   layers followed by an activation function. The module can also pad the
+   feature maps to ensure translation equivariance. The module can perform
+   2D or 3D convolutions.
+
+   .. attribute:: dims
+
+      The number of dimensions.
+
+   .. attribute:: conv_pass
+
+      The convolutional pass module.
+
+   .. method:: forward(x)
+
+      
+      Forward pass of the Conv
+
+   .. note:: The input tensor should be given as a 5D tensor.
+
+
+   .. py:attribute:: conv_pass
+
+
+   .. py:method:: forward(x)
+
+      Forward pass of the ConvPass module.
+
+      :param x: The input tensor.
+      :type x: Tensor
+
+      :returns: The output tensor.
+
+      :raises RuntimeError: If the tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> conv_pass = ConvPass(1, 1, [(3, 3, 3), (3, 3, 3)], "ReLU")
+      >>> x = torch.randn(1, 1, 64, 64, 64)
+      >>> conv_pass(x)
+
+      .. note:: The input tensor should be given as a 5D tensor.
+
+
+
+.. py:class:: Downsample(downsample_factor)
+
+
+
+   Downsample module. This module performs downsampling of the input tensor
+   using either max-pooling or average pooling. The module can also crop the
+   feature maps to ensure translation equivariance with a stride of the
+   downsampling factor.
+
+   .. attribute:: dims
+
+      The number of dimensions.
+
+   .. attribute:: downsample_factor
+
+      The downsampling factor.
+
+   .. attribute:: down
+
+      The downsampling layer.
+
+   .. method:: forward(x)
+
+      
+      Downsample the input tensor.
+
+   .. note:: The input tensor should be given as a 5D tensor.
+
+
+   .. py:attribute:: dims
+
+
+   .. py:attribute:: downsample_factor
+
+
+   .. py:attribute:: down
+
+
+   .. py:method:: forward(x)
+
+      Downsample the input tensor.
+
+      :param x: The input tensor.
+      :type x: Tensor
+
+      :returns: The downsampled tensor.
+
+      :raises RuntimeError: If the tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> downsample = Downsample((2, 2, 2))
+      >>> x = torch.randn(1, 1, 64, 64, 64)
+      >>> downsample(x)
+
+      .. note:: The input tensor should be given as a 5D tensor.
+
+
+
+.. py:class:: Upsample(scale_factor, mode='transposed_conv', in_channels=None, out_channels=None, crop_factor=None, next_conv_kernel_sizes=None, activation=None)
+
+
+
+   Upsample module. This module performs upsampling of the input tensor using
+   either transposed convolutions or nearest neighbor interpolation. The
+   module can also crop the feature maps to ensure translation equivariance
+   with a stride of the upsampling factor.
+
+   .. attribute:: crop_factor
+
+      The crop factor.
+
+   .. attribute:: next_conv_kernel_sizes
+
+      The kernel sizes for the convolutional layers.
+
+   .. attribute:: dims
+
+      The number of dimensions.
+
+   .. attribute:: up
+
+      The upsampling layer.
+
+   .. method:: crop_to_factor(x, factor, kernel_sizes)
+
+      
+      Crop feature maps to ensure translation equivariance with stride of
+      upsampling factor.
+
+   .. method:: crop(x, shape)
+
+      
+      Center-crop x to match spatial dimensions given by shape.
+
+   .. method:: forward(g_out, f_left=None)
+
+      
+      Forward pass of the Upsample module.
+
+   .. note:: The input tensor should be given as a 5D tensor.
+
+
+   .. py:attribute:: crop_factor
+
+
+   .. py:attribute:: next_conv_kernel_sizes
+
+
+   .. py:attribute:: dims
+
+
+   .. py:method:: crop_to_factor(x, factor, kernel_sizes)
+
+      Crop feature maps to ensure translation equivariance with stride of
+      upsampling factor. This should be done right after upsampling, before
+      application of the convolutions with the given kernel sizes.
+
+      The crop could be done after the convolutions, but it is more efficient
+      to do that before (feature maps will be smaller).
+
+      We need to ensure that the feature map is large enough to ensure that
+      the translation equivariance is maintained. This is done by cropping
+      the feature map to the largest size that is a multiple of the factor
+      and that is large enough to ensure that the translation equivariance
+      is maintained.
+
+      We need (spatial_shape - convolution_crop) to be a multiple of factor,
+      i.e.:
+      (s - c) = n*k
+
+      where s is the spatial size of the feature map, c is the crop due to
+      the convolutions, n is the number of strides of the upsampling factor,
+      and k is the upsampling factor.
+
+      We want to find the largest n for which s' = n*k + c <= s
+
+      n = floor((s - c)/k)
+
+      This gives us the target shape s'
+
+      s' = n*k + c
+
+      :param x: The input tensor.
+      :type x: Tensor
+      :param factor: The upsampling factor.
+      :type factor: tuple
+      :param kernel_sizes: The kernel sizes for the convolutional layers.
+      :type kernel_sizes: list
+
+      :returns: The cropped tensor.
+
+      :raises RuntimeError: If the feature map is too small to ensure translation equivariance.
+
+      .. rubric:: Examples
+
+      >>> upsample = Upsample(scale_factor=(2, 2, 2), in_channels=1, out_channels=1)
+      >>> x = torch.randn(1, 1, 64, 64, 64)
+      >>> upsample.crop_to_factor(x, (2, 2, 2), [(3, 3, 3), (3, 3, 3)])
+
+      .. note:: The input tensor should be given as a 5D tensor.
+
+
+
+   .. py:method:: crop(x, shape)
+
+      Center-crop x to match spatial dimensions given by shape.
+
+      :param x: The input tensor.
+      :type x: Tensor
+      :param shape: The target shape.
+      :type shape: tuple
+
+      :returns: The center-cropped tensor.
+
+      :raises RuntimeError: If the tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> upsample = Upsample(scale_factor=(2, 2, 2), in_channels=1, out_channels=1)
+      >>> x = torch.randn(1, 1, 64, 64, 64)
+      >>> upsample.crop(x, (32, 32, 32))
+
+      .. note:: The input tensor should be given as a 5D tensor.
+
+
+
+   .. py:method:: forward(g_out, f_left=None)
+
+      Forward pass of the Upsample module.
+
+      :param g_out: The gating signal tensor.
+      :type g_out: Tensor
+      :param f_left: The input feature tensor.
+      :type f_left: Tensor
+
+      :returns: The output feature tensor.
+
+      :raises RuntimeError: If the tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> upsample = Upsample(scale_factor=(2, 2, 2), in_channels=1, out_channels=1)
+      >>> g_out = torch.randn(1, 1, 64, 64, 64)
+      >>> f_left = torch.randn(1, 1, 32, 32, 32)
+      >>> upsample(g_out, f_left)
+
+      .. note:: The gating signal and input feature tensors should be given as 5D tensors.
+
+
+
+.. py:class:: AttentionBlockModule(F_g, F_l, F_int, dims, upsample_factor=None, batch_norm=True)
+
+
+
+   Attention Block Module:
+
+      The AttentionBlock uses two separate pathways to process 'g' and 'x',
+      combines them, and applies a sigmoid activation to generate an attention map.
+      This map is then used to scale the input features 'x', resulting in an output
+      that focuses on important features as dictated by the gating signal 'g'.
+
+      The attention block takes two inputs: 'g' (gating signal) and 'x' (input features).
+
+              [g] --> W_g --\                 /--> psi --> * --> [output]
+                              \               /
+              [x] --> W_x --> [+] --> relu --
+
+      Where:
+          - W_g and W_x are 1x1 Convolution followed by Batch Normalization
+          - [+] indicates element-wise addition
+          - relu is the Rectified Linear Unit activation function
+          - psi is a sequence of 1x1 Convolution, Batch Normalization, and Sigmoid activation
+          - * indicates element-wise multiplication between the output of psi and input feature 'x'
+          - [output] has the same dimensions as input 'x', selectively emphasized by attention weights
+
+      Attributes:
+          dims:
+              The number of dimensions of the input tensors.
+          kernel_sizes:
+              The kernel sizes for the convolutional layers.
+          upsample_factor:
+              The factor by which to upsample the attention map.
+          W_g:
+              The 1x1 Convolutional layer for the gating signal.
+          W_x:
+              The 1x1 Convolutional layer for the input features.
+          psi:
+              The 1x1 Convolutional layer followed by Sigmoid activation.
+          up:
+              The upsampling layer to match the dimensions of the input features.
+          relu:
+              The Rectified Linear Unit activation function.
+      Methods:
+          calculate_and_apply_padding(smaller_tensor, larger_tensor):
+              Calculate and apply symmetric padding to the smaller tensor to match the dimensions of the larger tensor.
+          forward(g, x):
+              Forward pass of the Attention Block.
+      Note:
+          The AttentionBlockModule is an instance of the ``torch.nn.Module`` class.
+
+
+   .. py:attribute:: dims
+
+
+   .. py:attribute:: kernel_sizes
+
+
+   .. py:attribute:: batch_norm
+
+
+   .. py:attribute:: W_g
+
+
+   .. py:attribute:: W_x
+
+
+   .. py:attribute:: psi
+
+
+   .. py:attribute:: up
+
+
+   .. py:attribute:: relu
+
+
+   .. py:method:: calculate_and_apply_padding(smaller_tensor, larger_tensor)
+
+      Calculate and apply symmetric padding to the smaller tensor to match the dimensions of the larger tensor.
+
+      :param smaller_tensor: The tensor to be padded.
+      :type smaller_tensor: Tensor
+      :param larger_tensor: The tensor whose dimensions the smaller tensor needs to match.
+      :type larger_tensor: Tensor
+
+      :returns: The padded smaller tensor with the same dimensions as the larger tensor.
+      :rtype: Tensor
+
+      :raises RuntimeError: If the tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> larger_tensor = torch.randn(1, 1, 128, 128, 128)
+      >>> smaller_tensor = torch.randn(1, 1, 64, 64, 64)
+      >>> attention_block = AttentionBlockModule(F_g=1, F_l=1, F_int=1, dims=3)
+      >>> padded_tensor = attention_block.calculate_and_apply_padding(smaller_tensor, larger_tensor)
+
+      .. note:: The tensors should have the same dimensions.
+
+
+
+   .. py:method:: forward(g, x)
+
+      Forward pass of the Attention Block.
+
+      :param g: The gating signal tensor.
+      :type g: Tensor
+      :param x: The input feature tensor.
+      :type x: Tensor
+
+      :returns: The output tensor with the same dimensions as the input feature tensor.
+      :rtype: Tensor
+
+      :raises RuntimeError: If the gating signal and input feature tensors have different dimensions.
+
+      .. rubric:: Examples
+
+      >>> g = torch.randn(1, 1, 128, 128, 128)
+      >>> x = torch.randn(1, 1, 128, 128, 128)
+      >>> attention_block = AttentionBlockModule(F_g=1, F_l=1, F_int=1, dims=3)
+      >>> output = attention_block(g, x)
+
+      .. note:: The gating signal and input feature tensors should have the same dimensions.
+
+
+

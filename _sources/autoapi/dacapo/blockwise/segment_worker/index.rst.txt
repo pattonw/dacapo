@@ -1,0 +1,88 @@
+dacapo.blockwise.segment_worker
+===============================
+
+.. py:module:: dacapo.blockwise.segment_worker
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   dacapo.blockwise.segment_worker.logger
+   dacapo.blockwise.segment_worker.fit
+   dacapo.blockwise.segment_worker.read_write_conflict
+   dacapo.blockwise.segment_worker.path
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   dacapo.blockwise.segment_worker.cli
+   dacapo.blockwise.segment_worker.start_worker
+   dacapo.blockwise.segment_worker.start_worker_fn
+   dacapo.blockwise.segment_worker.spawn_worker
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:function:: cli(log_level)
+
+   CLI for running the segment worker.
+
+   :param log_level: The log level to use.
+   :type log_level: str
+
+
+.. py:data:: fit
+   :value: 'shrink'
+
+
+.. py:data:: read_write_conflict
+   :value: True
+
+
+.. py:data:: path
+
+.. py:function:: start_worker(input_container: str | upath.UPath, input_dataset: str, output_container: str | upath.UPath, output_dataset: str, tmpdir: str | upath.UPath, function_path: str | upath.UPath, return_io_loop: bool = False)
+
+.. py:function:: start_worker_fn(input_container: str | upath.UPath, input_dataset: str, output_container: str | upath.UPath, output_dataset: str, tmpdir: str | upath.UPath, function_path: str | upath.UPath, return_io_loop: bool = False)
+
+   Start a worker to run a segment function on a given dataset.
+
+   :param input_container: The input container.
+   :type input_container: str
+   :param input_dataset: The input dataset.
+   :type input_dataset: str
+   :param output_container: The output container.
+   :type output_container: str
+   :param output_dataset: The output dataset.
+   :type output_dataset: str
+   :param tmpdir: The temporary directory.
+   :type tmpdir: str
+   :param function_path: The path to the segment function.
+   :type function_path: str
+   :param return_io_loop: Whether to return the io loop or run it.
+   :type return_io_loop: bool
+
+
+.. py:function:: spawn_worker(input_array_identifier: dacapo.store.array_store.LocalArrayIdentifier, output_array_identifier: dacapo.store.array_store.LocalArrayIdentifier, tmpdir: str, function_path: str)
+
+   Spawn a worker to predict on a given dataset.
+
+   :param model: The model to use for prediction.
+   :type model: Model
+   :param raw_array: The raw data to predict on.
+   :type raw_array: Array
+   :param prediction_array_identifier: The identifier of the prediction array.
+   :type prediction_array_identifier: LocalArrayIdentifier
+
+   :returns: The function to run the worker.
+   :rtype: Callable
+
+

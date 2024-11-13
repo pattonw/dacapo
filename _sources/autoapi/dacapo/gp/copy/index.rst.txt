@@ -1,0 +1,121 @@
+dacapo.gp.copy
+==============
+
+.. py:module:: dacapo.gp.copy
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.gp.copy.CopyMask
+
+
+Module Contents
+---------------
+
+.. py:class:: CopyMask(array_key: gunpowder.ArrayKey, copy_key: gunpowder.ArrayKey, drop_channels: bool = False)
+
+
+
+   A class to copy a mask into a new key with the option to drop channels via max collapse.
+
+   .. attribute:: array_key
+
+      Original key of the array from where the mask will be copied.
+
+      :type: gp.ArrayKey
+
+   .. attribute:: copy_key
+
+      New key where the copied mask will reside.
+
+      :type: gp.ArrayKey
+
+   .. attribute:: drop_channels
+
+      If True, channels will be dropped via a max collapse.
+
+      :type: bool
+
+   .. method:: setup
+
+      Sets up the filter by enabling autoskip and providing the copied key.
+
+   .. method:: prepare
+
+      Prepares the filter by copying the request of copy_key into a dependency.
+
+   .. method:: process
+
+      Processes the batch by copying the mask from the array_key to the copy_key.
+
+   .. note::
+
+      This class is a subclass of gunpowder.BatchFilter and is used to
+      copy a mask into a new key with the option to drop channels via max collapse.
+
+
+   .. py:attribute:: array_key
+
+
+   .. py:attribute:: copy_key
+
+
+   .. py:attribute:: drop_channels
+
+
+   .. py:method:: setup()
+
+      Sets up the filter by enabling autoskip and providing the copied key.
+
+      :raises RuntimeError: If the key is already provided.
+
+      .. rubric:: Examples
+
+      >>> copy_mask.setup()
+
+
+
+   .. py:method:: prepare(request)
+
+      Prepares the filter by copying the request of copy_key into a dependency.
+
+      :param request: The request to prepare.
+
+      :returns: The prepared dependencies.
+      :rtype: deps
+
+      :raises NotImplementedError: If the copy_key is not provided.
+
+      .. rubric:: Examples
+
+      >>> request = gp.BatchRequest()
+      >>> request[self.copy_key] = gp.ArraySpec(roi=gp.Roi((0, 0, 0), (1, 1, 1)))
+      >>> copy_mask.prepare(request)
+
+
+
+   .. py:method:: process(batch, request)
+
+      Processes the batch by copying the mask from the array_key to the copy_key.
+
+      If "drop_channels" attribute is True, it performs max collapse.
+
+      :param batch: The batch to process.
+      :param request: The request for processing.
+
+      :returns: The processed outputs.
+      :rtype: outputs
+
+      :raises KeyError: If the requested key is not in the request.
+
+      .. rubric:: Examples
+
+      >>> request = gp.BatchRequest()
+      >>> request[gp.ArrayKey("ARRAY")] = gp.ArraySpec(roi=gp.Roi((0, 0, 0), (1, 1, 1)))
+      >>> copy_mask.process(batch, request)
+
+
+

@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dacapo.blockwise.relabel_worker &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="dacapo.blockwise.scheduler" href="../scheduler/index.html" />
+    <link rel="prev" title="dacapo.blockwise.predict_worker" href="../predict_worker/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aws.html">AWS EC2 Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../roadmap.html">Road Map</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">dacapo</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../apply/index.html">dacapo.apply</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">dacapo.blockwise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../compute_context/index.html">dacapo.compute_context</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../experiments/index.html">dacapo.experiments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ext/index.html">dacapo.ext</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gp/index.html">dacapo.gp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../options/index.html">dacapo.options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plot/index.html">dacapo.plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict/index.html">dacapo.predict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict_local/index.html">dacapo.predict_local</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../store/index.html">dacapo.store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tmp/index.html">dacapo.tmp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../train/index.html">dacapo.train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../utils/index.html">dacapo.utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validate/index.html">dacapo.validate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">dacapo</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">dacapo.blockwise</a></li>
+      <li class="breadcrumb-item active">dacapo.blockwise.relabel_worker</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/dacapo/blockwise/relabel_worker/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dacapo.blockwise.relabel_worker">
+<span id="dacapo-blockwise-relabel-worker"></span><h1>dacapo.blockwise.relabel_worker<a class="headerlink" href="#module-dacapo.blockwise.relabel_worker" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.fit" title="dacapo.blockwise.relabel_worker.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.read_write_conflict" title="dacapo.blockwise.relabel_worker.read_write_conflict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_write_conflict</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.path" title="dacapo.blockwise.relabel_worker.path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">path</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.cli" title="dacapo.blockwise.relabel_worker.cli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cli</span></code></a>(log_level)</p></td>
+<td><p>CLI for running the relabel worker.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.start_worker" title="dacapo.blockwise.relabel_worker.start_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_worker</span></code></a>(output_container, output_dataset, tmpdir)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.start_worker_fn" title="dacapo.blockwise.relabel_worker.start_worker_fn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_worker_fn</span></code></a>(output_container, output_dataset, tmpdir)</p></td>
+<td><p>Start the relabel worker.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.relabel_in_block" title="dacapo.blockwise.relabel_worker.relabel_in_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">relabel_in_block</span></code></a>(array_out, old_values, new_values, block)</p></td>
+<td><p>Relabel the array in the given block.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.find_components" title="dacapo.blockwise.relabel_worker.find_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_components</span></code></a>(nodes, edges)</p></td>
+<td><p>Find the components.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.read_cross_block_merges" title="dacapo.blockwise.relabel_worker.read_cross_block_merges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_cross_block_merges</span></code></a>(tmpdir)</p></td>
+<td><p>Read the cross block merges.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.blockwise.relabel_worker.spawn_worker" title="dacapo.blockwise.relabel_worker.spawn_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spawn_worker</span></code></a>(output_array_identifier, tmpdir)</p></td>
+<td><p>Spawn a worker to predict on a given dataset.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.cli">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.blockwise.relabel_worker.cli" title="Link to this definition"></a></dt>
+<dd><p>CLI for running the relabel worker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>log_level</strong> (<em>str</em>) – The log level to use.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.fit">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">fit</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'shrink'</span></em><a class="headerlink" href="#dacapo.blockwise.relabel_worker.fit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.read_write_conflict">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">read_write_conflict</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#dacapo.blockwise.relabel_worker.read_write_conflict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.path">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">path</span></span><a class="headerlink" href="#dacapo.blockwise.relabel_worker.path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.start_worker">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">start_worker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_container</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmpdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_io_loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.blockwise.relabel_worker.start_worker" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.start_worker_fn">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">start_worker_fn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_container</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmpdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_io_loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.blockwise.relabel_worker.start_worker_fn" title="Link to this definition"></a></dt>
+<dd><p>Start the relabel worker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_container</strong> (<em>str</em>) – The output container</p></li>
+<li><p><strong>output_dataset</strong> (<em>str</em>) – The output dataset</p></li>
+<li><p><strong>tmpdir</strong> (<em>str</em>) – The temporary directory</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.relabel_in_block">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">relabel_in_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.blockwise.relabel_worker.relabel_in_block" title="Link to this definition"></a></dt>
+<dd><p>Relabel the array in the given block.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array_out</strong> (<em>np.ndarray</em>) – The output array</p></li>
+<li><p><strong>old_values</strong> (<em>np.ndarray</em>) – The old values</p></li>
+<li><p><strong>new_values</strong> (<em>np.ndarray</em>) – The new values</p></li>
+<li><p><strong>block</strong> (<em>daisy.Block</em>) – The block</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.find_components">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">find_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edges</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.blockwise.relabel_worker.find_components" title="Link to this definition"></a></dt>
+<dd><p>Find the components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes</strong> (<em>np.ndarray</em>) – The nodes</p></li>
+<li><p><strong>edges</strong> (<em>np.ndarray</em>) – The edges</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The components</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.read_cross_block_merges">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">read_cross_block_merges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmpdir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.blockwise.relabel_worker.read_cross_block_merges" title="Link to this definition"></a></dt>
+<dd><p>Read the cross block merges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tmpdir</strong> (<em>str</em>) – The temporary directory</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The nodes and edges</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[np.ndarray, np.ndarray]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dacapo.blockwise.relabel_worker.spawn_worker">
+<span class="sig-prename descclassname"><span class="pre">dacapo.blockwise.relabel_worker.</span></span><span class="sig-name descname"><span class="pre">spawn_worker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_array_identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../store/array_store/index.html#dacapo.store.array_store.LocalArrayIdentifier" title="dacapo.store.array_store.LocalArrayIdentifier"><span class="pre">dacapo.store.array_store.LocalArrayIdentifier</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmpdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.blockwise.relabel_worker.spawn_worker" title="Link to this definition"></a></dt>
+<dd><p>Spawn a worker to predict on a given dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_array_identifier</strong> (<a class="reference internal" href="../../store/array_store/index.html#dacapo.store.array_store.LocalArrayIdentifier" title="dacapo.store.array_store.LocalArrayIdentifier"><em>LocalArrayIdentifier</em></a>) – The output array identifier</p></li>
+<li><p><strong>tmpdir</strong> (<em>str</em>) – The temporary directory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The function to run the worker</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../predict_worker/index.html" class="btn btn-neutral float-left" title="dacapo.blockwise.predict_worker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../scheduler/index.html" class="btn btn-neutral float-right" title="dacapo.blockwise.scheduler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

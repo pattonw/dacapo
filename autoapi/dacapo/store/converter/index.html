@@ -1,0 +1,278 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dacapo.store.converter &mdash; DaCapo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="dacapo.store.create_store" href="../create_store/index.html" />
+    <link rel="prev" title="dacapo.store.conversion_hooks" href="../conversion_hooks/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            DaCapo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">DaCapo API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/minimal_tutorial.html">Minimal Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../data.html">Data Formatting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../unet_architectures.html">UNet Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial: A Simple Experiment in Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docker.html">Docker Configuration for JupyterHub-Dacapo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../aws.html">AWS EC2 Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cosem_starter.html">Fine-Tune Cosem Starter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../roadmap.html">Road Map</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">dacapo</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../apply/index.html">dacapo.apply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../blockwise/index.html">dacapo.blockwise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../compute_context/index.html">dacapo.compute_context</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../experiments/index.html">dacapo.experiments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ext/index.html">dacapo.ext</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../gp/index.html">dacapo.gp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../options/index.html">dacapo.options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../plot/index.html">dacapo.plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict/index.html">dacapo.predict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../predict_local/index.html">dacapo.predict_local</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../index.html">dacapo.store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../tmp/index.html">dacapo.tmp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../train/index.html">dacapo.train</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../utils/index.html">dacapo.utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../validate/index.html">dacapo.validate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../cli.html">CLI</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">DaCapo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">dacapo</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">dacapo.store</a></li>
+      <li class="breadcrumb-item active">dacapo.store.converter</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/autoapi/dacapo/store/converter/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-dacapo.store.converter">
+<span id="dacapo-store-converter"></span><h1>dacapo.store.converter<a class="headerlink" href="#module-dacapo.store.converter" title="Link to this heading"></a></h1>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.store.converter.converter" title="dacapo.store.converter.converter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">converter</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#dacapo.store.converter.TypedConverter" title="dacapo.store.converter.TypedConverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedConverter</span></code></a></p></td>
+<td><p>A converter that stores and retrieves type information for selected</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dacapo.store.converter.TypedConverter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dacapo.store.converter.</span></span><span class="sig-name descname"><span class="pre">TypedConverter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstruct_strat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">UnstructureStrategy</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">UnstructureStrategy.AS_DICT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">omit_if_default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forbid_extra_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_overrides</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cattrs._compat.Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">cattrs.gen.AttributeOverride</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstruct_collection_overrides</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cattrs._compat.Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefer_attrib_converters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailed_validation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unstructure_fallback_factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cattrs.dispatch.HookFactory</span><span class="p"><span class="pre">[</span></span><span class="pre">cattrs.dispatch.UnstructureHook</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">lambda</span> <span class="pre">_:</span> <span class="pre">...</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structure_fallback_factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cattrs.dispatch.HookFactory</span><span class="p"><span class="pre">[</span></span><span class="pre">cattrs.dispatch.StructureHook</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">lambda</span> <span class="pre">_:</span> <span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.store.converter.TypedConverter" title="Link to this definition"></a></dt>
+<dd><p>A converter that stores and retrieves type information for selected
+class hierarchies. Used to reconstruct a concrete class from unstructured
+data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dacapo.store.converter.TypedConverter.hooks">
+<span class="sig-name descname"><span class="pre">hooks</span></span><a class="headerlink" href="#dacapo.store.converter.TypedConverter.hooks" title="Link to this definition"></a></dt>
+<dd><p>A dictionary mapping classes to lists of
+hooks that should be applied to them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[Type, List[Hook]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.store.converter.TypedConverter.register_hierarchy">
+<span class="sig-name descname"><span class="pre">register_hierarchy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.store.converter.TypedConverter.register_hierarchy" title="Link to this definition"></a></dt>
+<dd><p>Register a class hierarchy for typed
+structure/unstructure conversion.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.store.converter.TypedConverter.__typed_unstructure">
+<span class="sig-name descname"><span class="pre">__typed_unstructure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.store.converter.TypedConverter.__typed_unstructure" title="Link to this definition"></a></dt>
+<dd><p>Unstructure an object, adding a ‘__type__’ field
+with the class name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dacapo.store.converter.TypedConverter.__typed_structure">
+<span class="sig-name descname"><span class="pre">__typed_structure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dacapo.store.converter.TypedConverter.__typed_structure" title="Link to this definition"></a></dt>
+<dd><p>Structure an object, using the ‘__type__’ field to
+determine the class.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is a subclass of cattr.Converter, and extends it with the
+ability to store and retrieve type information for selected class
+hierarchies. This is useful for reconstructing a concrete class from
+unstructured data.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">register_hierarchy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls_fn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Register a class hierarchy for typed structure/unstructure
+conversion.</p>
+<p>For each class in the hierarchy under (including) <code class="docutils literal notranslate"><span class="pre">cls</span></code>, this will
+store an additional <code class="docutils literal notranslate"><span class="pre">__type__</span></code> attribute (a string) in the object
+dictionary. This <code class="docutils literal notranslate"><span class="pre">__type__</span></code> string will be the concrete class of the
+object, and will be used to structure the dictionary back into an
+object of the correct class.</p>
+<p>For this to work, this function needs to know how to convert a
+<code class="docutils literal notranslate"><span class="pre">__type__</span></code> string back into a class, for which it used the provided
+<code class="docutils literal notranslate"><span class="pre">cls_fn</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cls</strong> (<em>class</em>) – The top-level class of the hierarchy to register.</p></li>
+<li><p><strong>cls_fn</strong> (<em>function</em>) – A function mapping type strings to classes. This can be as
+simple as <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">typ:</span> <span class="pre">eval(typ)</span></code>, if all subclasses of
+<code class="docutils literal notranslate"><span class="pre">cls</span></code> are visible to the module that calls this method.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">cls</span></code> is not a class.</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>If class <code class="docutils literal notranslate"><span class="pre">A</span></code> is the base of class <code class="docutils literal notranslate"><span class="pre">B</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">converter.register_hierarchy(A,</span> <span class="pre">lambda</span> <span class="pre">typ:</span> <span class="pre">eval(typ))</span></code> has been
+called, the dictionary <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">converter.unstructure(x)</span></code> will
+contain a <code class="docutils literal notranslate"><span class="pre">__type__</span></code> field that is <code class="docutils literal notranslate"><span class="pre">'A'</span></code> if <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">A()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">B</span></code> if <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">B()</span></code>.</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">__type__</span></code> field is then used by <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span>
+<span class="pre">converter.structure(y,</span> <span class="pre">A)</span></code> to recreate the concrete type of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is used to register a class hierarchy for typed
+structure/unstructure conversion. For each class in the hierarchy
+under (including) <code class="docutils literal notranslate"><span class="pre">cls</span></code>, this will store an additional
+<code class="docutils literal notranslate"><span class="pre">__type__</span></code> attribute (a string) in the object dictionary. This
+<code class="docutils literal notranslate"><span class="pre">__type__</span></code> string will be the concrete class of the object, and
+will be used to structure the dictionary back into an object of the
+correct class.</p>
+<p>For this to work, this function needs to know how to convert a
+<code class="docutils literal notranslate"><span class="pre">__type__</span></code> string back into a class, for which it used the
+provided <code class="docutils literal notranslate"><span class="pre">cls_fn</span></code>.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="dacapo.store.converter.converter">
+<span class="sig-prename descclassname"><span class="pre">dacapo.store.converter.</span></span><span class="sig-name descname"><span class="pre">converter</span></span><a class="headerlink" href="#dacapo.store.converter.converter" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../conversion_hooks/index.html" class="btn btn-neutral float-left" title="dacapo.store.conversion_hooks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../create_store/index.html" class="btn btn-neutral float-right" title="dacapo.store.create_store" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, William Patton, Jeff Rhoades, Marwan Zouinkhi,  David Ackerman, Caroline Malin-Mayor, Jan Funke.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

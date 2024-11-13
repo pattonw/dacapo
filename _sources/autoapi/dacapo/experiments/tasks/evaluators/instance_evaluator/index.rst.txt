@@ -1,0 +1,192 @@
+dacapo.experiments.tasks.evaluators.instance_evaluator
+======================================================
+
+.. py:module:: dacapo.experiments.tasks.evaluators.instance_evaluator
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.evaluators.instance_evaluator.logger
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.evaluators.instance_evaluator.InstanceEvaluator
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   dacapo.experiments.tasks.evaluators.instance_evaluator.relabel
+   dacapo.experiments.tasks.evaluators.instance_evaluator.voi
+
+
+Module Contents
+---------------
+
+.. py:data:: logger
+
+.. py:function:: relabel(array, return_backwards_map=False, inplace=False)
+
+   Relabel array, such that IDs are consecutive. Excludes 0.
+
+   :param array: The array to relabel.
+   :type array: ndarray
+   :param return_backwards_map: If ``True``, return an ndarray that maps new labels (indices in
+                                the array) to old labels.
+   :type return_backwards_map: ``bool``, optional
+   :param inplace: Perform the replacement in-place on ``array``.
+   :type inplace: ``bool``, optional
+
+   :returns: A tuple ``(relabelled, n)``, where ``relabelled`` is the relabelled
+             array and ``n`` the number of unique labels found.
+             If ``return_backwards_map`` is ``True``, returns ``(relabelled, n,
+             backwards_map)``.
+
+   :raises ValueError: If ``array`` is not of type ``np.ndarray``.
+
+   .. rubric:: Examples
+
+   >>> array = np.array([[1, 2, 0], [0, 2, 1]])
+   >>> relabel(array)
+   (array([[1, 2, 0], [0, 2, 1]]), 2)
+   >>> relabel(array, return_backwards_map=True)
+   (array([[1, 2, 0], [0, 2, 1]]), 2, [0, 1, 2])
+
+   .. note:: This function is used to relabel an array, such that IDs are consecutive. Excludes 0.
+
+
+.. py:class:: InstanceEvaluator
+
+
+
+   A class representing an evaluator for instance segmentation tasks.
+
+   .. attribute:: criteria
+
+      List[str]
+      the evaluation criteria
+
+   .. method:: evaluate(output_array_identifier, evaluation_array)
+
+      
+      Evaluate the output array against the evaluation array.
+
+   .. method:: score
+
+      
+      Return the evaluation scores.
+
+   .. note:: The InstanceEvaluator class is used to evaluate the performance of an instance segmentation task.
+
+
+   .. py:attribute:: criteria
+      :type:  List[str]
+      :value: ['voi_merge', 'voi_split', 'voi']
+
+
+      A list of all criteria for which a model might be "best". i.e. your
+      criteria might be "precision", "recall", and "jaccard". It is unlikely
+      that the best iteration/post processing parameters will be the same
+      for all 3 of these criteria
+
+      :returns:
+
+                List[str]
+                    the evaluation criteria
+
+      :raises NotImplementedError: if the function is not implemented
+
+      .. rubric:: Examples
+
+      >>> evaluator = Evaluator()
+      >>> evaluator.criteria
+      []
+
+      .. note:: This function is used to return the evaluation criteria.
+
+
+   .. py:method:: evaluate(output_array_identifier, evaluation_array)
+
+      Evaluate the output array against the evaluation array.
+
+      :param output_array_identifier: str
+                                      the identifier of the output array
+      :param evaluation_array: Zarr Array
+                               the evaluation array
+
+      :returns:
+
+                InstanceEvaluationScores
+                    the evaluation scores
+
+      :raises ValueError: if the output array identifier is not valid
+
+      .. rubric:: Examples
+
+      >>> instance_evaluator = InstanceEvaluator()
+      >>> output_array_identifier = "output_array"
+      >>> evaluation_array = open_from_identifier("evaluation_array")
+      >>> instance_evaluator.evaluate(output_array_identifier, evaluation_array)
+      InstanceEvaluationScores(voi_merge=0.0, voi_split=0.0)
+
+      .. note:: This function is used to evaluate the output array against the evaluation array.
+
+
+
+   .. py:property:: score
+      :type: dacapo.experiments.tasks.evaluators.instance_evaluation_scores.InstanceEvaluationScores
+
+
+      Return the evaluation scores.
+
+      :returns:
+
+                InstanceEvaluationScores
+                    the evaluation scores
+
+      :raises NotImplementedError: if the function is not implemented
+
+      .. rubric:: Examples
+
+      >>> instance_evaluator = InstanceEvaluator()
+      >>> instance_evaluator.score
+      InstanceEvaluationScores(voi_merge=0.0, voi_split=0.0)
+
+      .. note:: This function is used to return the evaluation scores.
+
+
+.. py:function:: voi(truth, test)
+
+   Calculate the variation of information (VOI) between two segmentations.
+
+   :param truth: ndarray
+                 the ground truth segmentation
+   :param test: ndarray
+                the test segmentation
+
+   :returns:
+
+             dict
+                 the variation of information (VOI) scores
+
+   :raises ValueError: if the truth and test arrays are not of type np.ndarray
+
+   .. rubric:: Examples
+
+   >>> truth = np.array([[1, 1, 0], [0, 2, 2]])
+   >>> test = np.array([[1, 1, 0], [0, 2, 2]])
+   >>> voi(truth, test)
+   {'voi_split': 0.0, 'voi_merge': 0.0}
+
+   .. note:: This function is used to calculate the variation of information (VOI) between two segmentations.
+
+

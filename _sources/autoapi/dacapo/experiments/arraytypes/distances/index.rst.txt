@@ -1,0 +1,71 @@
+dacapo.experiments.arraytypes.distances
+=======================================
+
+.. py:module:: dacapo.experiments.arraytypes.distances
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   dacapo.experiments.arraytypes.distances.DistanceArray
+
+
+Module Contents
+---------------
+
+.. py:class:: DistanceArray
+
+
+
+   An array containing signed distances to the nearest boundary voxel for a particular label class.
+   Distances should be positive outside an object and negative inside an object. The distance should be 0 on the boundary.
+   The class of each voxel can be determined by simply taking the argmin. The distance should be in the range [-max, max].
+
+   .. attribute:: classes
+
+      A mapping from channel to class on which distances were calculated.
+
+      :type: Dict[int, str]
+
+   .. attribute:: max
+
+      The maximum possible distance value of your distances.
+
+      :type: float
+
+   .. method:: interpolatable(self) -> bool
+
+      It is a method that returns True.
+
+   .. note::
+
+      This class is used to create a DistanceArray object which is used to represent an array containing signed distances to the nearest boundary voxel for a particular label class.
+      The class of each voxel can be determined by simply taking the argmin.
+
+
+   .. py:attribute:: classes
+      :type:  Dict[int, str]
+
+
+   .. py:property:: interpolatable
+      :type: bool
+
+
+      Checks if the array is interpolatable. Returns True for this class.
+
+      :returns: True indicating that the data can be interpolated.
+      :rtype: bool
+
+      :raises NotImplementedError: This method is not implemented in this class
+
+      .. rubric:: Examples
+
+      >>> distance_array = DistanceArray(classes={1: "class1"})
+      >>> distance_array.interpolatable
+      True
+
+      .. note:: This method is used to check if the array is interpolatable.
+
+
