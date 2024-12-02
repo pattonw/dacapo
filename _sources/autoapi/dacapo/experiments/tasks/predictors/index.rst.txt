@@ -263,9 +263,13 @@ Package Contents
 
 
    .. py:attribute:: clipmin
+      :value: 0.05
+
 
 
    .. py:attribute:: clipmax
+      :value: 0.95
+
 
 
    .. py:property:: embedding_dims
@@ -422,7 +426,7 @@ Package Contents
 
 
 
-.. py:class:: OneHotPredictor(classes: List[str])
+.. py:class:: OneHotPredictor(classes: List[str], kernel_size: int)
 
 
 
@@ -464,6 +468,9 @@ Package Contents
 
 
    .. py:attribute:: classes
+
+
+   .. py:attribute:: kernel_size
 
 
    .. py:property:: embedding_dims
@@ -850,27 +857,43 @@ Package Contents
 
 
    .. py:attribute:: lsds
+      :value: True
+
 
 
    .. py:attribute:: num_voxels
+      :value: 20
+
 
 
    .. py:attribute:: grow_boundary_iterations
+      :value: 0
+
 
 
    .. py:attribute:: affs_weight_clipmin
+      :value: 0.05
+
 
 
    .. py:attribute:: affs_weight_clipmax
+      :value: 0.95
+
 
 
    .. py:attribute:: lsd_weight_clipmin
+      :value: 0.05
+
 
 
    .. py:attribute:: lsd_weight_clipmax
+      :value: 0.95
+
 
 
    .. py:attribute:: background_as_object
+      :value: False
+
 
 
    .. py:method:: extractor(voxel_size)
@@ -1244,7 +1267,7 @@ Package Contents
 
 
 
-.. py:class:: HotDistancePredictor(channels: List[str], scale_factor: float, mask_distances: bool)
+.. py:class:: HotDistancePredictor(channels: List[str], scale_factor: float, mask_distances: bool, kernel_size: int)
 
 
 
@@ -1323,6 +1346,9 @@ Package Contents
    .. rubric:: Notes
 
    This is a subclass of Predictor.
+
+
+   .. py:attribute:: kernel_size
 
 
    .. py:attribute:: channels
