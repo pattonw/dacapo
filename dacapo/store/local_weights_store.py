@@ -1,4 +1,4 @@
-from dacapo.experiments.datasplits.datasets.dataset import Dataset
+from dacapo_toolbox.datasplits.datasets.dataset import Dataset
 from .weights_store import WeightsStore, Weights
 from dacapo.experiments.run import Run, RunConfig
 

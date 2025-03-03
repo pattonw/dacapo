@@ -13,7 +13,7 @@ options = Options.instance()
 # %%
 options
 # %%
-from dacapo.experiments.tasks import DistanceTaskConfig
+from dacapo_toolbox.tasks import DistanceTaskConfig
 
 task_config = DistanceTaskConfig(
     name="cosem_distance_task_4nm",

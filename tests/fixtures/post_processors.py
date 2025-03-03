@@ -1,4 +1,4 @@
-from dacapo.experiments.tasks.post_processors import (
+from dacapo_toolbox.tasks.post_processors import (
     ArgmaxPostProcessor,
     ThresholdPostProcessor,
 )

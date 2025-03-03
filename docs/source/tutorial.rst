@@ -116,7 +116,7 @@ Now lets create some configs.
 
     .. code-block:: python
 
-      from dacapo.experiments.architectures import CNNectomeUNetConfig
+      from dacapo_toolbox.architectures import CNNectomeUNetConfig
       architecture_config = CNNectomeUNetConfig(
           name="small_unet",
           input_shape=Coordinate(212, 212, 212),
@@ -133,7 +133,7 @@ Now lets create some configs.
 
     .. code-block:: python
 
-      from dacapo.experiments.tasks import AffinitiesTaskConfig
+      from dacapo_toolbox.tasks import AffinitiesTaskConfig
 
       task_config = AffinitiesTaskConfig(
           name="AffinitiesPrediction",
@@ -144,8 +144,8 @@ Now lets create some configs.
 
     .. code-block:: python
 
-        from dacapo.experiments.trainers import GunpowderTrainerConfig
-        from dacapo.experiments.trainers.gp_augments import (
+        from dacapo_toolbox.trainers import GunpowderTrainerConfig
+        from dacapo_toolbox.trainers.gp_augments import (
             SimpleAugmentConfig,
             ElasticAugmentConfig,
             IntensityAugmentConfig,
@@ -268,10 +268,10 @@ provided here:
 
     import dacapo
     import logging
-    from dacapo.experiments.architectures import CNNectomeUNetConfig
-    from dacapo.experiments.tasks import AffinitiesTaskConfig
-    from dacapo.experiments.trainers import GunpowderTrainerConfig
-    from dacapo.experiments.trainers.gp_augments import (
+    from dacapo_toolbox.architectures import CNNectomeUNetConfig
+    from dacapo_toolbox.tasks import AffinitiesTaskConfig
+    from dacapo_toolbox.trainers import GunpowderTrainerConfig
+    from dacapo_toolbox.trainers.gp_augments import (
         SimpleAugmentConfig,
         ElasticAugmentConfig,
         IntensityAugmentConfig,

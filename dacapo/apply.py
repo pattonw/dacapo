@@ -3,10 +3,10 @@ from typing import Optional
 from funlib.geometry import Roi, Coordinate
 from funlib.persistence import open_ds
 import numpy as np
-from dacapo.experiments.datasplits.datasets.dataset import Dataset
+from dacapo_toolbox.datasplits.datasets.dataset import Dataset
 from dacapo.experiments.run import Run
 
-from dacapo.experiments.tasks.post_processors.post_processor_parameters import (
+from dacapo_toolbox.tasks.post_processors.post_processor_parameters import (
     PostProcessorParameters,
 )
 import dacapo.experiments.tasks.post_processors as post_processors
@@ -127,9 +127,9 @@ def apply(
         parameters = run.task.evaluator.get_overall_best_parameters(
             _validation_dataset, criterion
         )
-        assert (
-            parameters is not None
-        ), "Unable to retieve parameters. Parameters must be provided explicitly."
+        assert parameters is not None, (
+            "Unable to retieve parameters. Parameters must be provided explicitly."
+        )
 
     elif isinstance(parameters, str):
         try:
@@ -159,9 +159,9 @@ def apply(
             )
             raise e
 
-    assert isinstance(
-        parameters, PostProcessorParameters
-    ), "Parameters must be parsable to a PostProcessorParameters object."
+    assert isinstance(parameters, PostProcessorParameters), (
+        "Parameters must be parsable to a PostProcessorParameters object."
+    )
 
     # make array identifiers for input, predictions and outputs
     input_array_identifier = LocalArrayIdentifier(Path(input_container), input_dataset)

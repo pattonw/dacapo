@@ -1,4 +1,4 @@
-from dacapo.experiments.tasks.evaluators import BinarySegmentationEvaluator
+from dacapo_toolbox.tasks.evaluators import BinarySegmentationEvaluator
 
 import pytest
 

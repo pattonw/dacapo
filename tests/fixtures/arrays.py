@@ -1,4 +1,4 @@
-from dacapo.experiments.datasplits.datasets.arrays import (
+from dacapo_toolbox.datasplits.datasets.arrays import (
     ZarrArrayConfig,
     BinarizeArrayConfig,
     DummyArrayConfig,

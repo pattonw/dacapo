@@ -1,15 +1,15 @@
 # star imports ensure visibility of concrete classes, so here they are accepted
 # flake8: noqa: F405
-from dacapo.experiments.architectures import *
-from dacapo.experiments.datasplits import *
-from dacapo.experiments.datasplits.datasets import *
-from dacapo.experiments.datasplits.datasets.arrays import *
-from dacapo.experiments.datasplits.datasets.graphstores import *
-from dacapo.experiments.tasks import *
-from dacapo.experiments.tasks.evaluators import *
-from dacapo.experiments.tasks.post_processors import *
-from dacapo.experiments.trainers import *
-from dacapo.experiments.trainers.gp_augments import *
+from dacapo_toolbox.architectures import *
+from dacapo_toolbox.datasplits import *
+from dacapo_toolbox.datasplits.datasets import *
+from dacapo_toolbox.datasplits.datasets.arrays import *
+from dacapo_toolbox.datasplits.datasets.graphstores import *
+from dacapo_toolbox.tasks import *
+from dacapo_toolbox.tasks.evaluators import *
+from dacapo_toolbox.tasks.post_processors import *
+from dacapo_toolbox.trainers import *
+from dacapo_toolbox.trainers.gp_augments import *
 from dacapo.experiments.starts import *
 
 from funlib.geometry import Coordinate, Roi

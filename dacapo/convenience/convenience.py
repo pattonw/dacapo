@@ -9,7 +9,7 @@ from dacapo_toolbox.trainers.gp_augments import (
     NoiseAugmentConfig,
 )
 from dacapo_toolbox.tasks import TaskConfig
-from dacapo_toolbox.model import Model
+from dacapo.experiments.model import Model
 
 from typing import Sequence
 from pathlib import Path

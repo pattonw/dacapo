@@ -184,7 +184,7 @@ plt.show()
 # experiments, but is useful for this tutorial.
 
 # %%
-from dacapo.experiments.datasplits.simple_config import SimpleDataSplitConfig
+from dacapo_toolbox.datasplits.simple_config import SimpleDataSplitConfig
 from funlib.geometry import Coordinate
 
 datasplit_config = SimpleDataSplitConfig(name="cells3d", path="cells3d.zarr")
@@ -212,7 +212,7 @@ config_store.store_datasplit_config(datasplit_config)
 # Each of these tasks is commonly learned and evaluated with specific loss functions and evaluation metrics. Some tasks may also require specific non-linearities or output formats from your model.
 
 # %%
-from dacapo.experiments.tasks import DistanceTaskConfig, AffinitiesTaskConfig
+from dacapo_toolbox.tasks import DistanceTaskConfig, AffinitiesTaskConfig
 
 resolution = 260  # nm
 # an example distance task configuration
@@ -245,7 +245,7 @@ config_store.store_task_config(affs_task_config)
 # convolutional layers do you want?
 
 # %%
-from dacapo.experiments.architectures import CNNectomeUNetConfig
+from dacapo_toolbox.architectures import CNNectomeUNetConfig
 
 # Note we make this UNet 2D by defining kernel_size_down, kernel_size_up, and downsample_factors
 # all with 1s in z meaning no downsampling or convolving in the z direction.
@@ -274,7 +274,7 @@ config_store.store_architecture_config(architecture_config)
 # batch size to train with.
 
 # %%
-from dacapo.experiments.trainers import GunpowderTrainerConfig
+from dacapo_toolbox.trainers import GunpowderTrainerConfig
 
 trainer_config = GunpowderTrainerConfig(
     name="example",

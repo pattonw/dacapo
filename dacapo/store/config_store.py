@@ -3,11 +3,11 @@ from typing import Any, List, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from dacapo.experiments.run_config import RunConfig
-    from dacapo.experiments.tasks.task_config import TaskConfig
-    from dacapo.experiments.architectures.architecture import ArchitectureConfig
-    from dacapo.experiments.datasplits.datasplit_config import DataSplitConfig
-    from dacapo.experiments.datasplits.datasets.arrays.array_config import ArrayConfig
-    from dacapo.experiments.trainers.trainer_config import TrainerConfig
+    from dacapo_toolbox.tasks.task_config import TaskConfig
+    from dacapo_toolbox.architectures.architecture import ArchitectureConfig
+    from dacapo_toolbox.datasplits.datasplit_config import DataSplitConfig
+    from dacapo_toolbox.datasplits.datasets.arrays.array_config import ArrayConfig
+    from dacapo_toolbox.trainers.trainer_config import TrainerConfig
 
 
 class DuplicateNameError(Exception):

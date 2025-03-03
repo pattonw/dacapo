@@ -154,7 +154,7 @@ get_viewer(arrays, headless=False)
 
 # %%
 from pathlib import Path
-from dacapo.experiments.datasplits import DataSplitGenerator
+from dacapo_toolbox.datasplits import DataSplitGenerator
 from funlib.geometry import Coordinate
 
 csv_path = Path(runs_base_dir, "synthetic_example.csv")
@@ -264,7 +264,7 @@ viewer = datasplit._neuroglancer()
 # also require specific non-linearities or output formats from your model.
 
 # %%
-from dacapo.experiments.tasks import DistanceTaskConfig
+from dacapo_toolbox.tasks import DistanceTaskConfig
 
 task_config = DistanceTaskConfig(
     name="example_distance_task",
@@ -281,7 +281,7 @@ task_config = DistanceTaskConfig(
 # The setup of the network you will train. Biomedical image to image translation often utilizes a UNet, but even after choosing a UNet you still need to provide some additional parameters. How much do you want to downsample? How many convolutional layers do you want?
 
 # %%
-from dacapo.experiments.architectures import CNNectomeUNetConfig
+from dacapo_toolbox.architectures import CNNectomeUNetConfig
 
 architecture_config = CNNectomeUNetConfig(
     name="example-mini_unet",
@@ -305,8 +305,8 @@ architecture_config = CNNectomeUNetConfig(
 # How do you want to train? This config defines the training loop and how the other three components work together. What sort of augmentations to apply during training, what learning rate and optimizer to use, what batch size to train with.
 
 # %%
-from dacapo.experiments.trainers import GunpowderTrainerConfig
-from dacapo.experiments.trainers.gp_augments import (
+from dacapo_toolbox.trainers import GunpowderTrainerConfig
+from dacapo_toolbox.trainers.gp_augments import (
     ElasticAugmentConfig,
     GammaAugmentConfig,
     IntensityAugmentConfig,

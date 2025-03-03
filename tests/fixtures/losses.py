@@ -1,4 +1,4 @@
-from dacapo.experiments.tasks.losses import DummyLoss
+from dacapo_toolbox.tasks.losses import DummyLoss
 
 import pytest
 

@@ -1,4 +1,4 @@
-from dacapo.experiments.architectures.architecture import ArchitectureConfig
+from dacapo_toolbox.architectures.architecture import ArchitectureConfig
 
 from funlib.geometry import Coordinate
 

@@ -2,17 +2,17 @@ import numpy as np
 from funlib.persistence import prepare_ds
 from funlib.geometry import Coordinate
 
-from dacapo.experiments.trainers import GunpowderTrainerConfig
-from dacapo.experiments.datasplits import SimpleDataSplitConfig
-from dacapo.experiments.tasks import (
+from dacapo_toolbox.trainers import GunpowderTrainerConfig
+from dacapo_toolbox.datasplits import SimpleDataSplitConfig
+from dacapo_toolbox.tasks import (
     DistanceTaskConfig,
     OneHotTaskConfig,
     AffinitiesTaskConfig,
 )
-from dacapo.experiments.architectures import CNNectomeUNetConfig
+from dacapo_toolbox.architectures import CNNectomeUNetConfig
 
 from pathlib import Path
-
+from typing import Sequence
 
 def build_test_train_config():
     """
@@ -120,6 +120,12 @@ def build_test_architecture_config(
     """
     Build the simplest architecture config given the parameters.
     """
+
+    kernel_size_down: list[list[Sequence[int]]] | None = None
+    kernel_size_up: list[list[Sequence[int]]] | None = None
+    upsample_factors: list[Sequence[int]] = []
+    downsample_factors: list[Sequence[int]] = []
+
     if data_dims == 2:
         input_shape = (8, 8)
         eval_shape_increase = (24, 24)
