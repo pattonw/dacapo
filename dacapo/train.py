@@ -7,7 +7,7 @@ from dacapo.store.create_store import (
 )
 from dacapo.experiments import RunConfig
 from dacapo.validate import validate_run
-from dacapo.experiments.training_iteration_stats import TrainingIterationStats
+from dacapo_toolbox.training_iteration_stats import TrainingIterationStats
 
 import torch
 from tqdm import tqdm

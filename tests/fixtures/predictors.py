@@ -1,4 +1,4 @@
-from dacapo.experiments.tasks.predictors import DistancePredictor, OneHotPredictor
+from dacapo_toolbox.tasks.predictors import DistancePredictor, OneHotPredictor
 
 import pytest
 

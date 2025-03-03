@@ -1,4 +1,4 @@
-from dacapo.experiments.architectures import (
+from dacapo_toolbox.architectures import (
     DummyArchitectureConfig,
     CNNectomeUNetConfig,
 )

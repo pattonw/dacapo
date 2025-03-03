@@ -12,7 +12,7 @@ config_store = ...
 # NOTE: You may need to delete old config stores if you are re-running this cell with modifications to the configs. The config names are unique and will throw an error if you try to store a config with the same name as an existing config. For the `files` backend, you can delete the `runs_base_dir/configs` directory to remove all stored configs.
 
 # %%
-from dacapo.experiments.datasplits import DataSplitGenerator
+from dacapo_toolbox.datasplits import DataSplitGenerator
 from funlib.geometry import Coordinate
 
 # We will be working with cosem data and we want to work with 8nm isotropic input resolution for the raw data and output at 4 nm resolution.
@@ -35,7 +35,7 @@ config_store
 # also require specific non-linearities or output formats from your model.
 
 # %%
-from dacapo.experiments.tasks import DistanceTaskConfig
+from dacapo_toolbox.tasks import DistanceTaskConfig
 
 # Create a distance task config where the clip_distance=tol_distance=10x the output resolution,
 # and scale_factor = 20x the output resolution
@@ -47,7 +47,7 @@ config_store
 # The setup of the network you will train. Biomedical image to image translation often utilizes a UNet, but even after choosing a UNet you still need to provide some additional parameters. How much do you want to downsample? How many convolutional layers do you want?
 
 # %%
-from dacapo.experiments.architectures import CNNectomeUNetConfig
+from dacapo_toolbox.architectures import CNNectomeUNetConfig
 
 architecture_config = CNNectomeUNetConfig(
     name="upsample_unet",
@@ -69,8 +69,8 @@ config_store.store_architecture_config(architecture_config)
 # How do you want to train? This config defines the training loop and how the other three components work together. What sort of augmentations to apply during training, what learning rate and optimizer to use, what batch size to train with.
 
 # %%
-from dacapo.experiments.trainers import GunpowderTrainerConfig
-from dacapo.experiments.trainers.gp_augments import (
+from dacapo_toolbox.trainers import GunpowderTrainerConfig
+from dacapo_toolbox.trainers.gp_augments import (
     ElasticAugmentConfig,
     GammaAugmentConfig,
     IntensityAugmentConfig,

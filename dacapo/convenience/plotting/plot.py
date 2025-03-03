@@ -1,7 +1,7 @@
 import json
 from bokeh.embed.standalone import json_item
 from dacapo.store.create_store import create_config_store, create_stats_store
-from dacapo_toolbox.run import Run
+from dacapo.experiments.run import Run
 
 from bokeh.palettes import Category20 as palette
 import bokeh.layouts

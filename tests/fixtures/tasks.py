@@ -1,4 +1,4 @@
-from dacapo.experiments.tasks import (
+from dacapo_toolbox.tasks import (
     DistanceTaskConfig,
     DummyTaskConfig,
     OneHotTaskConfig,

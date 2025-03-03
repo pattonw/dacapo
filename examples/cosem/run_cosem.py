@@ -6,7 +6,7 @@ from dacapo.store.create_store import create_config_store
 
 config_store = create_config_store()
 # %%
-from dacapo.experiments.datasplits import DataSplitGenerator
+from dacapo_toolbox.datasplits import DataSplitGenerator
 from funlib.geometry import Coordinate
 
 input_resolution = Coordinate(8, 8, 8)
@@ -21,7 +21,7 @@ datasplit = datasplit_config.datasplit_type(datasplit_config)
 viewer = datasplit._neuroglancer()
 config_store.store_datasplit_config(datasplit_config)
 # %%
-from dacapo.experiments.tasks import DistanceTaskConfig
+from dacapo_toolbox.tasks import DistanceTaskConfig
 
 task_config = DistanceTaskConfig(
     name="cosem_distance_task_4nm",
@@ -32,7 +32,7 @@ task_config = DistanceTaskConfig(
 )
 config_store.store_task_config(task_config)
 # %%
-from dacapo.experiments.architectures import CNNectomeUNetConfig
+from dacapo_toolbox.architectures import CNNectomeUNetConfig
 
 architecture_config = CNNectomeUNetConfig(
     name="upsample_unet",
@@ -48,13 +48,13 @@ architecture_config = CNNectomeUNetConfig(
 )
 config_store.store_architecture_config(architecture_config)
 # %%
-from dacapo.experiments.trainers.gp_augments import (
+from dacapo_toolbox.trainers.gp_augments import (
     ElasticAugmentConfig,
     GammaAugmentConfig,
     IntensityAugmentConfig,
     IntensityScaleShiftAugmentConfig,
 )
-from dacapo.experiments.trainers import GunpowderTrainerConfig
+from dacapo_toolbox.trainers import GunpowderTrainerConfig
 
 trainer_config = GunpowderTrainerConfig(
     name="cosem_finetune2",

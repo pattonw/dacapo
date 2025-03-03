@@ -1,5 +1,5 @@
 # %%
-from dacapo.experiments.datasplits import DataSplitGenerator
+from dacapo_toolbox.datasplits import DataSplitGenerator
 from funlib.geometry import Coordinate
 
 input_resolution = Coordinate(8, 8, 8)

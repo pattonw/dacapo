@@ -1,4 +1,4 @@
-from dacapo.experiments.datasplits.datasets.arrays.resampled_array_config import (
+from dacapo_toolbox.datasplits.datasets.arrays.resampled_array_config import (
     ResampledArrayConfig,
 )
 

@@ -1,4 +1,4 @@
-from dacapo.experiments.trainers import DummyTrainerConfig, GunpowderTrainerConfig
+from dacapo_toolbox.trainers import DummyTrainerConfig, GunpowderTrainerConfig
 
 import pytest
 

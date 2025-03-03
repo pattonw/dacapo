@@ -8,8 +8,8 @@ import click
 import logging
 from funlib.geometry import Roi, Coordinate
 from funlib.persistence import Array
-from dacapo.experiments.datasplits.datasets.dataset import Dataset
-from dacapo.experiments.tasks.post_processors.post_processor_parameters import (
+from dacapo_toolbox.datasplits.datasets.dataset import Dataset
+from dacapo_toolbox.tasks.post_processors.post_processor_parameters import (
     PostProcessorParameters,
 )
 from dacapo.blockwise import (

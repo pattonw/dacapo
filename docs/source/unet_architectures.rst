@@ -17,7 +17,7 @@ Here are some examples of UNet configurations:
 
 .. code-block:: python
 
-    from dacapo.experiments.architectures import CNNectomeUNetConfig
+    from dacapo_toolbox.architectures import CNNectomeUNetConfig
     from funlib.geometry import Coordinate
 
     architecture_config = CNNectomeUNetConfig(

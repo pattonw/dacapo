@@ -4,13 +4,13 @@ from funlib.geometry import Coordinate
 
 import torch
 
-from dacapo.experiments.datasplits import SimpleDataSplitConfig
-from dacapo.experiments.tasks import (
+from dacapo_toolbox.datasplits import SimpleDataSplitConfig
+from dacapo_toolbox.tasks import (
     DistanceTaskConfig,
     OneHotTaskConfig,
     AffinitiesTaskConfig,
 )
-from dacapo.experiments.architectures import (
+from dacapo_toolbox.architectures import (
     CNNectomeUNetConfig,
     WrappedArchitectureConfig,
     ArchitectureConfig,
@@ -30,10 +30,8 @@ from pytest_lazy_fixtures import lf
 
 from dacapo.experiments.run_config import RunConfig
 
-import pytest
-
 import sys
-
+from typing import Sequence
 
 def build_test_architecture_config(
     data_dims: int,
@@ -49,38 +47,43 @@ def build_test_architecture_config(
     """
     Build the simplest architecture config given the parameters.
     """
-    if data_dims == 2:
-        input_shape = (32, 32)
-        eval_shape_increase = (8, 8)
-        downsample_factors = [(2, 2)]
-        upsample_factors = [(2, 2)] * int(upsample)
+    kernel_size_down: list[list[Sequence[int]]] | None = None
+    kernel_size_up: list[list[Sequence[int]]] | None = None
+    upsample_factors: list[Sequence[int]] = []
+    downsample_factors: list[Sequence[int]] = []
 
-        kernel_size_down = [[(3, 3)] * 2] * 2
-        kernel_size_up = [[(3, 3)] * 2] * 1
+    if data_dims == 2:
+        input_shape = [32, 32]
+        eval_shape_increase = [8, 8]
+        downsample_factors = [[2, 2]]
+        upsample_factors = [[2, 2]] * int(upsample)
+
+        kernel_size_down = [[[3, 3]] * 2] * 2
+        kernel_size_up = [[[3, 3]] * 2] * 1
         kernel_size_down = None  # the default should work
         kernel_size_up = None  # the default should work
 
     elif data_dims == 3 and architecture_dims == 2:
-        input_shape = (1, 32, 32)
-        eval_shape_increase = (15, 8, 8)
-        downsample_factors = [(1, 2, 2)]
+        input_shape = [1, 32, 32]
+        eval_shape_increase = [15, 8, 8]
+        downsample_factors = [[1, 2, 2]]
 
         # test data upsamples in all dimensions so we have
         # to here too
-        upsample_factors = [(2, 2, 2)] * int(upsample)
+        upsample_factors = [[2, 2, 2]] * int(upsample)
 
         # we have to force the 3D kernels to be 2D
-        kernel_size_down = [[(1, 3, 3)] * 2] * 2
-        kernel_size_up = [[(1, 3, 3)] * 2] * 1
+        kernel_size_down = [[[1, 3, 3]] * 2] * 2
+        kernel_size_up = [[[1, 3, 3]] * 2] * 1
 
     elif data_dims == 3 and architecture_dims == 3:
-        input_shape = (32, 32, 32)
-        eval_shape_increase = (8, 8, 8)
-        downsample_factors = [(2, 2, 2)]
-        upsample_factors = [(2, 2, 2)] * int(upsample)
+        input_shape = [32, 32, 32]
+        eval_shape_increase = [8, 8, 8]
+        downsample_factors = [[2, 2, 2]]
+        upsample_factors = [[2, 2, 2]] * int(upsample)
 
-        kernel_size_down = [[(3, 3, 3)] * 2] * 2
-        kernel_size_up = [[(3, 3, 3)] * 2] * 1
+        kernel_size_down = [[[3, 3, 3]] * 2] * 2
+        kernel_size_up = [[[3, 3, 3]] * 2] * 1
         kernel_size_down = None  # the default should work
         kernel_size_up = None  # the default should work
 
@@ -111,7 +114,7 @@ def build_test_architecture_config(
             fmaps_in=1 + channels,
             fmaps_out=2,
             input_shape=input_shape,
-            scale=Coordinate(upsample_factors[0]) if upsample else None,
+            scale=(upsample_factors[0]) if upsample else None,
         )
     elif source == "bioimage_modelzoo":
         run = RunConfig(
@@ -124,6 +127,8 @@ def build_test_architecture_config(
         return ModelZooConfig(
             model_id=tmp_path / "dacapo_modelzoo_test.zip", name="test_model_zoo"
         )
+    else:
+        raise RuntimeError(f"Unknown source {source}")
 
 
 # TODO: Move unet parameters that don't affect interaction with other modules
