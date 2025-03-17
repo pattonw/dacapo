@@ -67,7 +67,7 @@ class TrainingStats:
         if len(self.iteration_stats) > 0:
             if iteration_stats.iteration <= self.iteration_stats[-1].iteration:
                 logger.error(
-                    f"Expected iteration {self.iteration_stats[-1].iteration + 1}, got {iteration_stats.iteration}. will remove stats after {iteration_stats.iteration-1}"
+                    f"Expected iteration {self.iteration_stats[-1].iteration + 1}, got {iteration_stats.iteration}. will remove stats after {iteration_stats.iteration - 1}"
                 )
                 self.delete_after(iteration_stats.iteration - 1)
 
