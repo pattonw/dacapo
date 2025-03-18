@@ -1,7 +1,6 @@
 import os
 import tempfile
 from dacapo import Options
-from os.path import expanduser
 
 
 from upath import UPath as Path

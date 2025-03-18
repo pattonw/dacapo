@@ -7,7 +7,7 @@ from dacapo.store.create_store import (
 )
 from dacapo.experiments import RunConfig
 from dacapo.validate import validate_run
-from dacapo_toolbox.training_iteration_stats import TrainingIterationStats
+from dacapo.experiments.training_iteration_stats import TrainingIterationStats
 
 import torch
 from tqdm import tqdm
@@ -58,6 +58,8 @@ def train_run(run: RunConfig, validate: bool = True, save_snapshots: bool = Fals
 
     """
     logger.info(f"Starting/resuming training for run {run.name}...")
+
+    assert run.num_iterations is not None, "num_iterations must be set in RunConfig to train"
 
     stats_store = create_stats_store()
     weights_store = create_weights_store()

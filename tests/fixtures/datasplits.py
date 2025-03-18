@@ -31,32 +31,32 @@ def twelve_class_datasplit(tmp_path):
     crop1_raw = ZarrArrayConfig(
         name="crop1_raw",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop1/raw",
+        dataset="volumes/crop1/raw",
     )
     crop1_gt = ZarrArrayConfig(
         name="crop1_gt",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop1/gt",
+        dataset="volumes/crop1/gt",
     )
     crop2_raw = ZarrArrayConfig(
         name="crop2_raw",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop2/raw",
+        dataset="volumes/crop2/raw",
     )
     crop2_gt = ZarrArrayConfig(
         name="crop2_gt",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop2/gt",
+        dataset="volumes/crop2/gt",
     )
     crop3_raw = ZarrArrayConfig(
         name="crop3_raw",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop3/raw",
+        dataset="volumes/crop3/raw",
     )
     crop3_gt = ZarrArrayConfig(
         name="crop3_gt",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop3/gt",
+        dataset="volumes/crop3/gt",
     )
     for raw, gt in zip(
         [crop1_raw, crop2_raw, crop3_raw], [crop1_gt, crop2_gt, crop3_gt]
@@ -106,12 +106,12 @@ def six_class_datasplit(tmp_path):
     crop1_raw = ZarrArrayConfig(
         name="crop1_raw",
         file_name=tmp_path / "six_class.zarr",
-        dataset=f"volumes/crop1/raw",
+        dataset="volumes/crop1/raw",
     )
     crop1_gt = ZarrArrayConfig(
         name="crop1_gt",
         file_name=tmp_path / "six_class.zarr",
-        dataset=f"volumes/crop1/gt",
+        dataset="volumes/crop1/gt",
     )
     crop1_distances = BinarizeArrayConfig(
         "crop1_distances",
@@ -128,12 +128,12 @@ def six_class_datasplit(tmp_path):
     crop2_raw = ZarrArrayConfig(
         name="crop2_raw",
         file_name=tmp_path / "six_class.zarr",
-        dataset=f"volumes/crop2/raw",
+        dataset="volumes/crop2/raw",
     )
     crop2_gt = ZarrArrayConfig(
         name="crop2_gt",
         file_name=tmp_path / "six_class.zarr",
-        dataset=f"volumes/crop2/gt",
+        dataset="volumes/crop2/gt",
     )
     crop2_distances = BinarizeArrayConfig(
         "crop2_distances",
@@ -150,12 +150,12 @@ def six_class_datasplit(tmp_path):
     crop3_raw = ZarrArrayConfig(
         name="crop3_raw",
         file_name=tmp_path / "six_class.zarr",
-        dataset=f"volumes/crop3/raw",
+        dataset="volumes/crop3/raw",
     )
     crop3_gt = ZarrArrayConfig(
         name="crop3_gt",
         file_name=tmp_path / "six_class.zarr",
-        dataset=f"volumes/crop3/gt",
+        dataset="volumes/crop3/gt",
     )
     crop3_distances = BinarizeArrayConfig(
         "crop3_distances",
@@ -223,12 +223,12 @@ def upsample_six_class_datasplit(tmp_path):
     crop1_raw = ZarrArrayConfig(
         name="crop1_raw",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop1/raw",
+        dataset="volumes/crop1/raw",
     )
     crop1_gt = ZarrArrayConfig(
         name="crop1_gt",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop1/gt",
+        dataset="volumes/crop1/gt",
     )
     crop1_distances = BinarizeArrayConfig(
         "crop1_distances",
@@ -245,12 +245,12 @@ def upsample_six_class_datasplit(tmp_path):
     crop2_raw = ZarrArrayConfig(
         name="crop2_raw",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop2/raw",
+        dataset="volumes/crop2/raw",
     )
     crop2_gt = ZarrArrayConfig(
         name="crop2_gt",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop2/gt",
+        dataset="volumes/crop2/gt",
     )
     crop2_distances = BinarizeArrayConfig(
         "crop2_distances",
@@ -267,12 +267,12 @@ def upsample_six_class_datasplit(tmp_path):
     crop3_raw = ZarrArrayConfig(
         name="crop3_raw",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop3/raw",
+        dataset="volumes/crop3/raw",
     )
     crop3_gt = ZarrArrayConfig(
         name="crop3_gt",
         file_name=tmp_path / "twelve_class.zarr",
-        dataset=f"volumes/crop3/gt",
+        dataset="volumes/crop3/gt",
     )
     crop3_distances = BinarizeArrayConfig(
         "crop3_distances",

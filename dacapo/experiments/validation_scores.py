@@ -1,7 +1,7 @@
 from .validation_iteration_scores import ValidationIterationScores
-from .tasks.evaluators import EvaluationScores
-from .tasks.post_processors import PostProcessorParameters
-from .datasplits.datasets import Dataset
+from dacapo_toolbox.tasks.evaluators import EvaluationScores
+from dacapo_toolbox.tasks.post_processors import PostProcessorParameters
+from dacapo_toolbox.datasplits.datasets import DatasetConfig
 
 from typing import List, Tuple
 import attr
@@ -16,9 +16,9 @@ class ValidationScores:
 
     Attributes:
         parameters (List[PostProcessorParameters]): The list of parameters that are being evaluated.
-        datasets (List[Dataset]): The datasets that will be evaluated at each iteration.
+        datasets (List[DatasetConfig]): The datasets that will be evaluated at each iteration.
         evaluation_scores (EvaluationScores): The scores that are collected on each iteration per
-            `PostProcessorParameters` and `Dataset`.
+            `PostProcessorParameters` and `DatasetConfig`.
         scores (List[ValidationIterationScores]): A list of evaluation scores and their associated
             post-processing parameters.
     Methods:
@@ -39,13 +39,13 @@ class ValidationScores:
     parameters: List[PostProcessorParameters] = attr.ib(
         metadata={"help_text": "The list of parameters that are being evaluated"}
     )
-    datasets: List[Dataset] = attr.ib(
+    datasets: List[DatasetConfig] = attr.ib(
         metadata={"help_text": "The datasets that will be evaluated at each iteration"}
     )
     evaluation_scores: EvaluationScores = attr.ib(
         metadata={
             "help_text": "The scores that are collected on each iteration per "
-            "`PostProcessorParameters` and `Dataset`"
+            "`PostProcessorParameters` and `DatasetConfig`"
         }
     )
     scores: List[ValidationIterationScores] = attr.ib(

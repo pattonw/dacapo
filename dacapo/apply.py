@@ -3,14 +3,15 @@ from typing import Optional
 from funlib.geometry import Roi, Coordinate
 from funlib.persistence import open_ds
 import numpy as np
-from dacapo_toolbox.datasplits.datasets.dataset import Dataset
-from dacapo.experiments.run import Run
+from dacapo.experiments.run import RunConfig
 
+from dacapo_toolbox.datasplits.datasets import DatasetConfig
 from dacapo_toolbox.tasks.post_processors.post_processor_parameters import (
     PostProcessorParameters,
 )
-import dacapo.experiments.tasks.post_processors as post_processors
-from dacapo.store.array_store import LocalArrayIdentifier
+import dacapo_toolbox.tasks.post_processors as post_processors
+
+from dacapo_toolbox.tmp import LocalArrayIdentifier
 from dacapo.predict import predict
 from dacapo.store.create_store import (
     create_config_store,
@@ -27,7 +28,7 @@ def apply(
     input_container: Path | str,
     input_dataset: str,
     output_path: Path | str,
-    validation_dataset: Optional[Dataset | str] = None,
+    validation_dataset: Optional[DatasetConfig | str] = None,
     criterion: str = "voi",
     iteration: Optional[int] = None,
     parameters: Optional[PostProcessorParameters | str] = None,
@@ -45,7 +46,7 @@ def apply(
         input_container (Path | str): Path to the input container.
         input_dataset (str): Name of the input dataset.
         output_path (Path | str): Path to the output container.
-        validation_dataset (Optional[Dataset | str], optional): Validation dataset to use for finding the best parameters. Defaults to None.
+        validation_dataset (Optional[DatasetConfig | str], optional): Validation dataset to use for finding the best parameters. Defaults to None.
         criterion (str, optional): Criterion to use for finding the best parameters. Defaults to "voi".
         iteration (Optional[int], optional): Iteration to use. If None, the best iteration is used. Defaults to None.
         parameters (Optional[PostProcessorParameters | str], optional): Post-processor parameters to use. If None, the best parameters are found. Defaults to None.
@@ -93,8 +94,7 @@ def apply(
     # retrieving run
     logger.info(f"Loading run {run_name}")
     config_store = create_config_store()
-    run_config = config_store.retrieve_run_config(run_name)
-    run = Run(run_config)
+    run = config_store.retrieve_run_config(run_name)
 
     # create weights store
     weights_store = create_weights_store()
@@ -107,7 +107,7 @@ def apply(
 
     if parameters is None:
         # find the best parameters
-        _validation_dataset: Dataset
+        _validation_dataset: DatasetConfig
         if isinstance(validation_dataset, str) and run.datasplit.validate is not None:
             val_ds_name = validation_dataset
             _validation_dataset = [
@@ -115,11 +115,11 @@ def apply(
                 for dataset in run.datasplit.validate
                 if dataset.name == val_ds_name
             ][0]
-        elif isinstance(validation_dataset, Dataset):
+        elif isinstance(validation_dataset, DatasetConfig):
             _validation_dataset = validation_dataset
         else:
             raise ValueError(
-                "validation_dataset must be a dataset name or a Dataset object, or parameters must be provided explicitly."
+                "validation_dataset must be a dataset name or a DatasetConfig object, or parameters must be provided explicitly."
             )
         logger.info(
             f"Finding best parameters for validation dataset {_validation_dataset}"
@@ -206,9 +206,9 @@ def apply_run(
     run: RunConfig,
     iteration: int,
     parameters: PostProcessorParameters,
-    input_array_identifier: "LocalArrayIdentifier",
-    prediction_array_identifier: "LocalArrayIdentifier",
-    output_array_identifier: "LocalArrayIdentifier",
+    input_array_identifier: LocalArrayIdentifier,
+    prediction_array_identifier: LocalArrayIdentifier,
+    output_array_identifier: LocalArrayIdentifier,
     roi: Optional[Roi] = None,
     num_workers: int = 12,
     output_dtype: np.dtype | str = np.uint8,  # type: ignore
@@ -218,7 +218,7 @@ def apply_run(
     Apply the model to a dataset. If roi is None, the whole input dataset is used. Assumes model is already loaded.
 
     Args:
-        run (Run): The run object containing the task and post-processor.
+        run (RunConfig): The run object containing the task and post-processor.
         iteration (int): The iteration number.
         parameters (PostProcessorParameters): The post-processor parameters.
         input_array_identifier (LocalArrayIdentifier): The identifier for the input array.
@@ -246,8 +246,10 @@ def apply_run(
     """
     # render prediction dataset
     logger.info(f"Predicting on dataset {prediction_array_identifier}")
+
+    # (Complaining because run.name might be None)
     predict(
-        run.name,
+        run.name,  # type: ignore
         iteration,
         input_container=input_array_identifier.container,
         input_dataset=input_array_identifier.dataset,
@@ -263,9 +265,10 @@ def apply_run(
         f"Post-processing output to dataset {output_array_identifier}",
         output_array_identifier,
     )
-    post_processor = run.task.post_processor
-    post_processor.set_prediction(prediction_array_identifier)
-    post_processor.process(parameters, output_array_identifier, num_workers=num_workers)
+    if run.task is not None:
+        post_processor = run.task.post_processor
+        post_processor.set_prediction(prediction_array_identifier)
+        post_processor.process(parameters, output_array_identifier, num_workers=num_workers)
 
     logger.info("Done")
     return

@@ -1,6 +1,6 @@
-from dacapo_toolbox.datasplits.datasets.dataset import Dataset
+from dacapo_toolbox.datasplits.datasets import DatasetConfig
 from .weights_store import WeightsStore, Weights
-from dacapo.experiments.run import Run, RunConfig
+from dacapo.experiments.run import RunConfig
 
 import torch
 
@@ -255,13 +255,15 @@ class LocalWeightsStore(WeightsStore):
         with best_weights_json.open("w") as f:
             f.write(json.dumps({"iteration": iteration}))
 
-    def retrieve_best(self, run: str, dataset: str | Dataset, criterion: str) -> int:
+    def retrieve_best(
+        self, run: str, dataset: str | DatasetConfig, criterion: str
+    ) -> int:
         """
         Retrieve the best weights for a given run, dataset, and criterion.
 
         Args:
             run (str): The name of the run.
-            dataset (str | Dataset): The name of the dataset or a Dataset object.
+            dataset (str | DatasetConfig): The name of the dataset or a DatasetConfig object.
             criterion (str): The criterion for selecting the best weights.
         Returns:
             int: The iteration number of the best weights.
@@ -286,7 +288,7 @@ class LocalWeightsStore(WeightsStore):
         Load the best weights for a given run and criterion.
 
         Args:
-            run (Run): The run for which to load the weights.
+            run (RunConfig): The run for which to load the weights.
             criterion (str): The criterion for which to load the weights.
         Examples:
             >>> store._load_best(run, "criterion1")
@@ -303,7 +305,7 @@ class LocalWeightsStore(WeightsStore):
             weights = Weights(weights["model"], weights["optimizer"])
         run.model.load_state_dict(weights.model)
 
-    def __get_weights_dir(self, run: Union[str, Run]):
+    def __get_weights_dir(self, run: Union[str, RunConfig]):
         """
         Get the directory path for storing weights checkpoints.
 
@@ -318,6 +320,6 @@ class LocalWeightsStore(WeightsStore):
         Note:
             The directory is created if it does not exist.
         """
-        run = run if isinstance(run, str) else run.name
+        run_name = run if isinstance(run, str) else run.name
 
-        return Path(self.basedir, run, "checkpoints")
+        return Path(self.basedir, run_name, "checkpoints")

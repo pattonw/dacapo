@@ -59,7 +59,8 @@ dependencies = [
         "funlib.persistence @ git+https://github.com/funkelab/funlib.persistence.git@ome-ngff",
         "xarray-multiscale",
         "bioimageio.core[pytorch] >= 0.7",
-        ]
+        "dacapo-toolbox",
+]
 
 # extras
 # https://peps.python.org/pep-0621/#dependencies-optional-dependencies
@@ -206,6 +207,9 @@ module = [
     "empanada.*",
     "IPython.*",
     "cellmap_schemas.*",
+    "matplotlib.*",
+    "bokeh.*",
+    "numcodecs.*",
 ]
 ignore_missing_imports = true
 
@@ -230,3 +234,6 @@ ignore = [
     ".ruff_cache/**/*",
     "tests/**/*",
 ]
+
+[tool.uv.sources]
+dacapo-toolbox = { path = "../dacapo_toolbox" }

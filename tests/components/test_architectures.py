@@ -1,15 +1,7 @@
-import numpy as np
-from funlib.persistence import prepare_ds
 from funlib.geometry import Coordinate
 
 import torch
 
-from dacapo_toolbox.datasplits import SimpleDataSplitConfig
-from dacapo_toolbox.tasks import (
-    DistanceTaskConfig,
-    OneHotTaskConfig,
-    AffinitiesTaskConfig,
-)
 from dacapo_toolbox.architectures import (
     CNNectomeUNetConfig,
     WrappedArchitectureConfig,
@@ -19,19 +11,16 @@ from dacapo_toolbox.architectures import (
 
 from pathlib import Path
 
-from dacapo.experiments import Run
-from dacapo.train import train_run
-from dacapo.validate import validate_run
 
 from bioimageio.spec.model.v0_5 import Author
 
 import pytest
-from pytest_lazy_fixtures import lf
 
 from dacapo.experiments.run_config import RunConfig
 
 import sys
 from typing import Sequence
+
 
 def build_test_architecture_config(
     data_dims: int,
@@ -122,7 +111,9 @@ def build_test_architecture_config(
             name="dacapo_modelzoo_test",
         )
         run.save_bioimage_io_model(
-            tmp_path / "dacapo_modelzoo_test.zip", authors=[Author(name="Test")]
+            tmp_path / "dacapo_modelzoo_test.zip",
+            authors=[Author(name="Test")],
+            in_voxel_size=upsample_factors[0] if len(upsample_factors) > 0 else None,
         )
         return ModelZooConfig(
             model_id=tmp_path / "dacapo_modelzoo_test.zip", name="test_model_zoo"

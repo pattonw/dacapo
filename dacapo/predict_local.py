@@ -1,7 +1,6 @@
-from dacapo.experiments.model import Model
+from dacapo_toolbox.model import Model
 from dacapo.store.local_array_store import LocalArrayIdentifier
-from funlib.persistence import open_ds, prepare_ds, Array
-from dacapo.utils.array_utils import to_ndarray
+from funlib.persistence import open_ds, Array
 from funlib.geometry import Coordinate, Roi
 import numpy as np
 from dacapo.compute_context import create_compute_context
@@ -9,8 +8,6 @@ from typing import Optional
 import logging
 import daisy
 import torch
-import os
-from dacapo.utils.array_utils import to_ndarray, save_ndarray
 from dacapo.tmp import create_from_identifier
 
 logger = logging.getLogger(__name__)
@@ -30,11 +27,15 @@ def predict(
     else:
         raw_array = raw_array_identifier
     input_voxel_size = Coordinate(raw_array.voxel_size)
-    output_voxel_size = model.scale(input_voxel_size)
+    output_voxel_size = model.architecture.scale(input_voxel_size)
 
-    input_shape = Coordinate(model.eval_input_shape)
+    input_shape = Coordinate(
+        model.architecture.input_shape + model.architecture.eval_shape_increase
+    )
     input_size = input_voxel_size * input_shape
-    output_size = output_voxel_size * model.compute_output_shape(input_shape)[1]
+    output_size = (
+        output_voxel_size * model.architecture.compute_output_shape(input_shape)
+    )
 
     context = (input_size - output_size) / 2
 
@@ -75,9 +76,9 @@ def predict(
 
     model_device = str(next(model.parameters()).device).split(":")[0]
 
-    assert model_device == str(
-        device
-    ), f"Model is not on the right device, Model: {model_device}, Compute device: {device}"
+    assert model_device == str(device), (
+        f"Model is not on the right device, Model: {model_device}, Compute device: {device}"
+    )
 
     def predict_fn(block):
         raw_input = raw_array.to_ndarray(block.read_roi)

@@ -8,7 +8,7 @@ import click
 import logging
 from funlib.geometry import Roi, Coordinate
 from funlib.persistence import Array
-from dacapo_toolbox.datasplits.datasets.dataset import Dataset
+from dacapo_toolbox.datasplits.datasets import DatasetConfig
 from dacapo_toolbox.tasks.post_processors.post_processor_parameters import (
     PostProcessorParameters,
 )
@@ -195,7 +195,7 @@ def apply(
     input_container: Path | str,
     input_dataset: str,
     output_path: Path | str,
-    validation_dataset: Optional[Dataset | str] = None,
+    validation_dataset: Optional[DatasetConfig | str] = None,
     criterion: str = "voi",
     iteration: Optional[int] = None,
     parameters: Optional[PostProcessorParameters | str] = None,
@@ -212,7 +212,7 @@ def apply(
         input_container (Path | str): The path to the input container.
         input_dataset (str): The name of the input dataset.
         output_path (Path | str): The path to the output directory.
-        validation_dataset (Dataset | str, optional): The name of the validation dataset. Defaults to None.
+        validation_dataset (DatasetConfig | str, optional): The name of the validation dataset. Defaults to None.
         criterion (str, optional): The criterion to use for applying the run. Defaults to "voi".
         iteration (int, optional): The iteration of the model to use for prediction. Defaults to None.
         parameters (PostProcessorParameters | str, optional): The parameters for the post-processor. Defaults to None.

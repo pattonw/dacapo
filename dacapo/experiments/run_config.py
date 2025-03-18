@@ -4,18 +4,19 @@ import hashlib
 import numpy as np
 
 from funlib.geometry import Coordinate
-from funlib.persistence import prepare_ds, open_ds
+from funlib.persistence import prepare_ds, open_ds, Array
 
 from dacapo.store.array_store import LocalContainerIdentifier
-from dacapo.store.converter import converter
-from .architectures import ArchitectureConfig
-from .datasplits import DataSplitConfig, DataSplit
-from .tasks import TaskConfig, Task
-from .trainers import TrainerConfig, Trainer, GunpowderTrainerConfig
 from .starts import StartConfig
 from .training_stats import TrainingStats
 from .validation_scores import ValidationScores
-from .model import Model
+
+from dacapo_toolbox.converter import converter
+from dacapo_toolbox.architectures import ArchitectureConfig
+from dacapo_toolbox.datasplits import DataSplitConfig
+from dacapo_toolbox.tasks import TaskConfig, Task
+from dacapo_toolbox.trainers import TrainerConfig, Trainer, GunpowderTrainerConfig
+from dacapo_toolbox.model import Model
 
 import sys
 
@@ -45,6 +46,7 @@ from bioimageio.spec.model.v0_5 import (
     IntervalOrRatioDataDescr,
     ParameterizedSize,
     Version,
+    Sha256,
 )
 
 import torch
@@ -179,7 +181,7 @@ class RunConfig:
     _device: torch.device | None = None
     _optimizer: torch.optim.Optimizer | None = None
     _lr_scheduler: torch.optim.lr_scheduler.LRScheduler | None = None
-    _model: torch.nn.Module | None = None
+    _model: Model | None = None
     _datasplit: DataSplitConfig | None = None
     _task: Task | None = None
     _trainer: Trainer | None = None
@@ -188,12 +190,15 @@ class RunConfig:
 
     @property
     def train_until(self) -> int:
+        assert self.num_iterations is not None, (
+            "Number of iterations must be set to train"
+        )
         return self.num_iterations
 
     @property
     def task(self) -> Task | None:
         if self._task is None and self.task_config is not None:
-            self._task = self.task_config.task_type(self.task_config)
+            self._task = self.task_config.task_type(self.task_config)  # type: ignore
         return self._task
 
     @property
@@ -202,18 +207,19 @@ class RunConfig:
 
     @property
     def trainer(self) -> TrainerConfig:
+        assert self.trainer_config is not None, "Trainer must be set to train"
         return self.trainer_config
 
     @property
-    def datasplit(self) -> DataSplit:
+    def datasplit(self) -> DataSplitConfig:
         if self._datasplit is None:
-            self._datasplit = self.datasplit_config.datasplit_type(
-                self.datasplit_config
-            )
+            self._datasplit = self.datasplit_config
+        assert self._datasplit is not None, "Datasplit must be set to train"
         return self._datasplit
 
     @property
     def device(self) -> torch.device:
+        assert self._device is not None, "Device must be set to train"
         return self._device
 
     @property
@@ -227,6 +233,7 @@ class RunConfig:
                 self.start_config.start_type(self.start_config).initialize_weights(
                     self._model, None
                 )
+        assert self._model is not None, "Model must be set to train"
         return self._model
 
     @property
@@ -241,6 +248,9 @@ class RunConfig:
 
     @property
     def lr_scheduler(self) -> torch.optim.lr_scheduler.LRScheduler:
+        assert self.num_iterations is not None, (
+            "Number of iterations must be set to train"
+        )
         if self._lr_scheduler is None:
             self._lr_scheduler = torch.optim.lr_scheduler.LinearLR(
                 self.optimizer,
@@ -348,15 +358,18 @@ class RunConfig:
         # but Run needs to import the weights store to load the weights.
         from dacapo.store.create_store import create_weights_store
 
+        # TODO: asserts for typing
+        assert self.name is not None, "Run name must be set to save the model"
+
         weights_store = create_weights_store()
         if checkpoint == "latest":
             checkpoint = weights_store.latest_iteration(self)
         if checkpoint is not None:
             weights_store.load_weights(self, checkpoint)
 
-        with tempfile.TemporaryDirectory() as tmp:
-            tmp = Path(tmp)
-            input_axes = [
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp = Path(tmp_dir)
+            input_axes: list[BatchAxis | ChannelAxis | SpaceInputAxis] = [
                 BatchAxis(),
                 ChannelAxis(
                     channel_names=[
@@ -366,7 +379,7 @@ class RunConfig:
                 ),
             ]
             input_shape = self.architecture.input_shape
-            in_voxel_size = (
+            np_in_voxel_size = (
                 np.array(in_voxel_size)
                 if in_voxel_size is not None
                 else np.array((1,) * input_shape.dims)
@@ -378,7 +391,7 @@ class RunConfig:
                     size=ParameterizedSize(min=s, step=s),
                     scale=scale,
                 )
-                for i, (s, scale) in enumerate(zip(input_shape, in_voxel_size))
+                for i, (s, scale) in enumerate(zip(input_shape, np_in_voxel_size))
             ]
             data_descr = IntervalOrRatioDataDescr(type="float32")
 
@@ -396,25 +409,28 @@ class RunConfig:
             input_descr = InputTensorDescr(
                 id=TensorId("raw"),
                 axes=input_axes,
-                test_tensor=FileDescr(source=str(input_test_image_path)),
+                test_tensor=FileDescr(source=input_test_image_path),
                 data=data_descr,
             )
 
-            output_shape = self.model.compute_output_shape(input_shape)[1]
-            out_voxel_size = self.model.scale(in_voxel_size)
+            output_shape = self.architecture.compute_output_shape(input_shape)
+            out_voxel_size = self.architecture.scale(Coordinate(np_in_voxel_size))
             context_units = Coordinate(
-                np.array(input_shape) * in_voxel_size
+                np.array(input_shape) * np_in_voxel_size
             ) - Coordinate(np.array(output_shape) * out_voxel_size)
+
+            print(context_units, out_voxel_size, np_in_voxel_size)
             context_out_voxels = Coordinate(np.array(context_units) / out_voxel_size)
 
-            output_axes = [
+            output_axes: list[BatchAxis | ChannelAxis | SpaceOutputAxis] = [
                 BatchAxis(),
                 ChannelAxis(
                     channel_names=(
-                        self.task.channels
+                        [Identifier(c) for c in self.task.channels]
                         if self.task is not None
                         else [
-                            f"c{i}" for i in range(self.architecture.num_out_channels)
+                            Identifier(f"c{i}")
+                            for i in range(self.architecture.num_out_channels)
                         ]
                     )
                 ),
@@ -446,11 +462,11 @@ class RunConfig:
                     else self.architecture_config.name
                 ),
                 axes=output_axes,
-                test_tensor=FileDescr(source=str(output_test_image_path)),
+                test_tensor=FileDescr(source=output_test_image_path),
             )
 
             pytorch_architecture = ArchitectureFromLibraryDescr(
-                callable="from_yaml",
+                callable=Identifier("from_yaml"),
                 kwargs={"config_yaml": converter.unstructure(self)},
                 import_from="dacapo.experiments.run_config",
             )
@@ -462,7 +478,8 @@ class RunConfig:
                     "Saving to bioimageio modelzoo format is not implemented for Python versions < 3.11"
                 )
             with open(weights_path, "rb", buffering=0) as f:
-                weights_hash = hashlib.file_digest(f, "sha256").hexdigest()
+                weights_hash = hashlib.file_digest(f, "sha256").hexdigest()  # TODO: remove this?
+                # weights_hash = Sha256(f)
 
             my_model_descr = ModelDescr(
                 name=self.name,
@@ -503,9 +520,9 @@ class RunConfig:
     def data_loader(self) -> torch.utils.data.DataLoader:
         dataset = self.trainer.iterable_dataset(
             self.datasplit.train,
-            self.model.input_shape,
-            self.model.output_shape,
-            self.task.predictor,
+            self.architecture.input_shape,
+            self.architecture.compute_output_shape(self.architecture.input_shape),
+            self.task.predictor if self.task is not None else None,
         )
         return torch.utils.data.DataLoader(
             dataset,
@@ -623,6 +640,8 @@ class RunConfig:
         return trained_until
 
     def train_step(self, raw: torch.Tensor, target: torch.Tensor, weight: torch.Tensor):
+        assert self.task is not None, "Task must be provided to train the model"
+
         self.optimizer.zero_grad()
 
         predicted = self.model.forward(raw.float().to(self.device))
@@ -660,6 +679,9 @@ class RunConfig:
         gradients = batch_out["gradients"]
 
         in_voxel_size = self.datasplit.train[0].raw.voxel_size
+        assert self.datasplit.train[0].gt is not None, (
+            "GT must be provided to save snapshots"
+        )
         out_voxel_size = self.datasplit.train[0].gt.voxel_size
         ndims = in_voxel_size.dims
         input_shape = Coordinate(raw.shape[-ndims:])
@@ -668,23 +690,30 @@ class RunConfig:
         in_shift = context * 0
         out_shift = context
 
-        (raw,) = [
+        (raw_array,) = [
             np_to_funlib_array(in_array.cpu().numpy(), in_shift, in_voxel_size)
             for in_array in [raw]
         ]
-        (gt, target, weight, mask, prediction, gradients) = [
+        (
+            gt_array,
+            target_array,
+            weight_array,
+            mask_array,
+            prediction_array,
+            gradients_array,
+        ) = [
             np_to_funlib_array(out_array.cpu().numpy(), out_shift, out_voxel_size)
             for out_array in [gt, target, weight, mask, prediction, gradients]
         ]
 
-        snapshot_arrays = {
-            "volumes/raw": raw,
-            "volumes/gt": gt,
-            "volumes/target": target,
-            "volumes/weight": weight,
-            "volumes/mask": mask,
-            "volumes/prediction": prediction,
-            "volumes/gradients": gradients,
+        snapshot_arrays: dict[str, Array] = {
+            "volumes/raw": raw_array,
+            "volumes/gt": gt_array,
+            "volumes/target": target_array,
+            "volumes/weight": weight_array,
+            "volumes/mask": mask_array,
+            "volumes/prediction": prediction_array,
+            "volumes/gradients": gradients_array,
         }
         for k, v in snapshot_arrays.items():
             snapshot_array_identifier = snapshot_container.array_identifier(k)

@@ -1,7 +1,7 @@
 import os
 from upath import UPath as Path
 import shutil
-from ..fixtures import *
+from ..fixtures import *  # noqa
 
 from dacapo.experiments import Run
 from dacapo.store.create_store import create_config_store, create_weights_store

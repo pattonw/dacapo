@@ -1,4 +1,4 @@
-from ..fixtures import *
+from ..fixtures import *  # noqa
 from .helpers import (
     build_test_train_config,
     build_test_data_config,
@@ -17,7 +17,6 @@ import pytest
 
 from dacapo.experiments.run_config import RunConfig
 
-import pytest
 
 
 # TODO: Move unet parameters that don't affect interaction with other modules

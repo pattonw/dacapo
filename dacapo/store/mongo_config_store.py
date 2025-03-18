@@ -1,6 +1,7 @@
 from .config_store import ConfigStore, DuplicateNameError
-from .converter import converter
 from dacapo.experiments import RunConfig
+
+from dacapo_toolbox.converter import converter
 from dacapo_toolbox.architectures import ArchitectureConfig
 from dacapo_toolbox.datasplits import DataSplitConfig
 from dacapo_toolbox.datasplits.datasets import DatasetConfig

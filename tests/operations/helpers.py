@@ -14,6 +14,7 @@ from dacapo_toolbox.architectures import CNNectomeUNetConfig
 from pathlib import Path
 from typing import Sequence
 
+
 def build_test_train_config():
     """
     Builds the simplest possible trainer given the parameters.
@@ -125,6 +126,8 @@ def build_test_architecture_config(
     kernel_size_up: list[list[Sequence[int]]] | None = None
     upsample_factors: list[Sequence[int]] = []
     downsample_factors: list[Sequence[int]] = []
+    input_shape: Sequence[int] = []
+    eval_shape_increase: Sequence[int] = []
 
     if data_dims == 2:
         input_shape = (8, 8)

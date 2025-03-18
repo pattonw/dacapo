@@ -134,9 +134,9 @@ def start_worker_fn(
 
                 segmentation = segment_function(input_array, block, **parameters)
 
-                assert (
-                    segmentation.dtype == np.uint64
-                ), "Instance segmentations returned by segment_function is expected to be uint64"
+                assert segmentation.dtype == np.uint64, (
+                    "Instance segmentations returned by segment_function is expected to be uint64"
+                )
 
                 id_bump = block.block_id[1] * num_voxels_in_block
                 segmentation += id_bump

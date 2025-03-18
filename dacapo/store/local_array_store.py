@@ -196,8 +196,8 @@ class LocalArrayStore(ArrayStore):
         dataset = array_identifier.dataset
 
         assert container.suffix == ".zarr", (
-            f"The container path does not end with '.zarr'. Stopping here to "
-            f"prevent data loss."
+            "The container path does not end with '.zarr'. Stopping here to "
+            "prevent data loss."
         )
         path = Path(container, dataset)
 
