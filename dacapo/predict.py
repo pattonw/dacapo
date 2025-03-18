@@ -76,7 +76,7 @@ def predict(
     if isinstance(compute_context, LocalTorch):
         num_workers = 1
 
-    model = run.model.eval()
+    # model = run.model.eval()
 
     if iteration is not None and not compute_context.distribute_workers:
         # create weights store
@@ -115,14 +115,15 @@ def predict(
         output_roi = output_roi.snap_to_grid(
             raw_array.voxel_size, mode="grow"
         ).intersect(raw_array.roi.grow(-context, -context))
-    _input_roi = output_roi.grow(context, context)  # type: ignore
+
+    input_roi = output_roi.grow(context, context)  # type: ignore
 
     if isinstance(output_dtype, str):
         output_dtype = np.dtype(output_dtype)
 
     logger.info(f"Predicting with input size {input_size}, output size {output_size}")
 
-    logger.info(f"Total input ROI: {_input_roi}, output ROI: {output_roi}")
+    logger.info(f"Total input ROI: {input_roi}, output ROI: {output_roi}")
 
     # prepare prediction dataset
     if raw_array.channel_dims == 0:
@@ -150,7 +151,7 @@ def predict(
     logger.info("Running blockwise prediction with worker_file: ", worker_file)
     success = run_blockwise(
         worker_file=worker_file,
-        total_roi=_input_roi,
+        total_roi=input_roi,
         read_roi=Roi((0, 0, 0), input_size),
         write_roi=Roi(context, output_size),
         num_workers=num_workers,

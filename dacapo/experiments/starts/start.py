@@ -111,7 +111,7 @@ def _set_weights(model, weights, run, criterion, old_head=None, new_head=None):
                     weights.model.pop(key, None)
                 try:
                     model.load_state_dict(weights.model, strict=True)
-                except:
+                except:  # noqa
                     logger.warning(
                         "Unable to load model in strict mode. Loading flexibly."
                     )

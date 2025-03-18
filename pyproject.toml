@@ -231,4 +231,4 @@ ignore = [
 ]
 
 [tool.uv.sources]
-dacapo-toolbox = { path = "../dacapo_toolbox" }
+dacapo-toolbox = { git = "https://github.com/pattonw/dacapo-toolbox" }

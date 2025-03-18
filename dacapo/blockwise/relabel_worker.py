@@ -78,7 +78,6 @@ def start_worker_fn(
     components = find_components(nodes, edges)
 
     def io_loop():
-        client = daisy.Client()
         while True:
             with client.acquire_block() as block:
                 if block is None:

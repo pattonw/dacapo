@@ -89,7 +89,7 @@ class Bsub(ComputeContext):
             basename = str(
                 Path("./daisy_logs", client.task_id, f"worker_{client.worker_id}")
             )
-        except:
+        except:  # noqa
             basename = "./daisy_logs/dacapo"
         return (
             [
