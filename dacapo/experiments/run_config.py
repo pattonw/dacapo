@@ -501,7 +501,7 @@ class RunConfig:
                 weights=WeightsDescr(
                     pytorch_state_dict=PytorchStateDictWeightsDescr(
                         source=weights_path,
-                        sha256=weights_hash,
+                        sha256=weights_hash,  # type: ignore
                         architecture=pytorch_architecture,
                         pytorch_version=Version(torch.__version__),
                     ),
