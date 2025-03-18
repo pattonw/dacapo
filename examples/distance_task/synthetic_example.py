@@ -66,7 +66,7 @@ config_store = create_config_store()
 # %%
 from pathlib import Path
 from dacapo import Options
-from dacapo.utils.view import get_viewer
+from dacapo_toolbox.utils.view import get_viewer
 from examples.synthetic_source_worker import generate_synthetic_dataset
 from funlib.geometry import Coordinate
 from funlib.persistence import open_ds
@@ -396,7 +396,7 @@ for i in range(repetitions):
 from dacapo.train import train_run
 from dacapo.experiments.run import Run
 from dacapo.store.create_store import create_config_store
-from dacapo.utils.view import NeuroglancerRunViewer
+from dacapo_toolbox.utils.view import NeuroglancerRunViewer
 
 config_store = create_config_store()
 run = Run(config_store.retrieve_run_config(run_config.name))

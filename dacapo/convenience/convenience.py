@@ -7,9 +7,10 @@ from dacapo_toolbox.trainers.gp_augments import (
     ElasticAugmentConfig,
     IntensityAugmentConfig,
     NoiseAugmentConfig,
+    AugmentConfig,
 )
 from dacapo_toolbox.tasks import TaskConfig
-from dacapo.experiments.model import Model
+from dacapo_toolbox.model import Model
 
 from typing import Sequence
 from pathlib import Path
@@ -20,18 +21,18 @@ import torch
 from typing import Literal
 
 Augment = Literal["elastic"] | Literal["noise"] | Literal["intensity"]
-augment_map = {
+augment_map: dict[Augment, AugmentConfig | dict[int, AugmentConfig]] = {
     "elastic": {
         2: ElasticAugmentConfig(
-            control_point_spacing=(10, 10),
-            control_point_displacement_sigma=(3.0, 3.0),
+            control_point_spacing=[10, 10],
+            control_point_displacement_sigma=[3.0, 3.0],
             subsample=4,
             uniform_3d_rotation=True,
             rotation_interval=(0, 1),
         ),
         3: ElasticAugmentConfig(
-            control_point_spacing=(10, 10, 10),
-            control_point_displacement_sigma=(3.0, 3.0, 3.0),
+            control_point_spacing=[10, 10, 10],
+            control_point_displacement_sigma=[3.0, 3.0, 3.0],
             subsample=4,
             uniform_3d_rotation=True,
             rotation_interval=(0, 1),
@@ -83,24 +84,29 @@ def dataset_from_zarr(
     mode: Literal["train"] | Literal["val"] = "train",
 ) -> torch.utils.data.IterableDataset:
     dims = len(input_shape)
-    augments = (
-        [augment_map[a] if a != "elastic" else augment_map[a][dims] for a in augments]
+    augment_configs: list[AugmentConfig] = (
+        [
+            augment_map[a][dims]  # type: ignore
+            if isinstance(augment_map[a], dict)
+            else augment_map[a]
+            for a in augments
+        ]
         if augments is not None
         else []
     )
 
     datasplit = SimpleDataSplitConfig(name="simple-dataset", path=zarr_container)
-    pipeline = GunpowderTrainerConfig("gp_trainer", augments=augments)
+    pipeline = GunpowderTrainerConfig("gp_trainer", augments=augment_configs)
 
     if task is not None:
-        task = task_map[task]
-        if isinstance(task, dict):
-            task = task[dims]
-        predictor = task.task_type(task).predictor
+        task_option = task_map[task]
+        if isinstance(task_option, dict):
+            task_option = task_option[dims]
+        predictor = task_option.task_type(task_option).predictor  # type: ignore
     else:
         predictor = None
     return pipeline.iterable_dataset(
-        datasplit.train if mode == "train" else datasplit.validate,
+        datasplit.train if mode == "train" else datasplit.validate,  # type: ignore
         Coordinate(input_shape),
         Coordinate(output_shape),
         predictor=predictor,
@@ -112,14 +118,14 @@ def module(
     task: TaskConfig | None = None,
 ) -> torch.nn.Module:
     if task is not None:
-        predictor: Predictor = task.task_type(task).predictor
+        predictor: Predictor = task.task_type(task).predictor  # type: ignore
         return predictor.create_model(architecture=architecture_config)
     else:
-        return Model(architecture_config, predictor)
+        return Model(architecture_config, task.predictor)  # type: ignore
 
 
 def loss_function(task_config: TaskConfig) -> torch.nn.Module:
-    task = task_config.task_type(task_config)
+    task = task_config.task_type(task_config)  # type: ignore
     return task.loss
 
 
@@ -129,7 +135,7 @@ def optimizer(module) -> torch.optim.Optimizer:
 
 def scheduler(
     optimizer: torch.optim.Optimizer,
-) -> torch.optim.lr_scheduler._LRScheduler:
+) -> torch.optim.lr_scheduler.LRScheduler:
     return torch.optim.lr_scheduler.LinearLR(
         optimizer,
         start_factor=0.01,
@@ -151,6 +157,7 @@ def train_loop(
 ):
     model = model.to(device)
     data_loader = torch.utils.data.DataLoader(
+        dataset=dataset,
         batch_size=batch_size,
         num_workers=num_workers,
         persistent_workers=True if num_workers > 0 else False,

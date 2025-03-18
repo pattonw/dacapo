@@ -229,7 +229,7 @@ def segment_blockwise(
         out_string += f"    {max_retries},\n"
         out_string += f"    {timeout},\n"
         out_string += f"    tmpdir={tmpdir},\n"
-        out_string += f"    output_array_identifier=output_array_identifier,\n"
+        out_string += "    output_array_identifier=output_array_identifier,\n"
         out_string += ")\n"
         out_string += "success = daisy.run_blockwise([task])\n"
         out_string += "if success:\n"

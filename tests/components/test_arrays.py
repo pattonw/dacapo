@@ -1,4 +1,4 @@
-from ..fixtures import *
+from ..fixtures import *  # noqa
 
 from dacapo.store.create_store import create_config_store
 from dacapo.tmp import num_channels_from_array

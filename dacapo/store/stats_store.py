@@ -2,12 +2,11 @@ from abc import ABC, abstractmethod
 from typing import List, TYPE_CHECKING
 
 
-if TYPE_CHECKING:
-    from dacapo_toolbox.training_stats import TrainingStats
-    from dacapo_toolbox.validation_scores import (
-        ValidationIterationScores,
-        ValidationScores,
-    )
+from dacapo.experiments.training_stats import TrainingStats
+from dacapo.experiments.validation_scores import (
+    ValidationIterationScores,
+    ValidationScores,
+)
 
 
 class StatsStore(ABC):

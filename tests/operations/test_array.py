@@ -1,5 +1,4 @@
-import os
-from ..fixtures import *
+from ..fixtures import *  # noqa
 
 import pytest
 from pytest_lazy_fixtures import lf

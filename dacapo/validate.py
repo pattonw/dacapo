@@ -2,7 +2,7 @@ from .predict_local import predict
 from funlib.persistence import Array
 
 from .experiments import RunConfig, ValidationIterationScores
-from .experiments.datasplits.datasets import Dataset
+from dacapo_toolbox.datasplits.datasets import DatasetConfig
 from dacapo.tmp import create_from_identifier, num_channels_from_array
 
 from .store.create_store import (
@@ -54,7 +54,7 @@ def validate(run_name: str, iteration: int = 0, datasets_config=None):
 
 
 def validate_run(
-    run: RunConfig, iteration: int, datasets_config: list[Dataset] | None = None
+    run: RunConfig, iteration: int, datasets_config: list[DatasetConfig] | None = None
 ):
     """Validate an already loaded run at the given iteration. This does not
     load the weights of that iteration, it is assumed that the model is already
@@ -77,14 +77,16 @@ def validate_run(
     iteration_scores = []
 
     # get post processor and evaluator
+    assert run.task is not None, "Task must be set to validate"
     post_processor = run.task.post_processor
     evaluator = run.task.evaluator
 
     input_voxel_size = run.datasplit.train[0].raw.voxel_size
-    output_voxel_size = run.model.scale(input_voxel_size)
+    output_voxel_size = run.architecture.scale(input_voxel_size)
 
     # Initialize the evaluator with the best scores seen so far
     # evaluator.set_best(run.validation_scores)
+    datasets: list[DatasetConfig]
     if datasets_config is None:
         datasets = run.datasplit.validate
     else:
@@ -92,28 +94,12 @@ def validate_run(
             raise ValueError(
                 f"Evaluator must have a channels attribute to validate with custom datasets, evaluator: {run.task.evaluator} is not supported yet."
             )
-        from dacapo_toolbox.datasplits import DataSplitGenerator
-
-        datasplit_config = (
-            DataSplitGenerator(
-                "",
-                datasets_config,
-                input_voxel_size,
-                output_voxel_size,
-                targets=run.task.evaluator.channels,
-            )
-            .compute()
-            .validate_configs
-        )
-        datasets: list[Dataset] = [
-            validate_config.dataset_type(validate_config)
-            for validate_config in datasplit_config
-        ]
+        datasets = datasets_config
 
     for validation_dataset in datasets:
-        assert (
-            validation_dataset.gt is not None
-        ), "We do not yet support validating on datasets without ground truth"
+        assert validation_dataset.gt is not None, (
+            "We do not yet support validating on datasets without ground truth"
+        )
         logger.info(
             "Validating run %s on dataset %s", run.name, validation_dataset.name
         )
@@ -132,9 +118,11 @@ def validate_run(
         ):
             logger.info("Copying validation inputs!")
 
-            input_shape = run.model.eval_input_shape
+            input_shape = (
+                run.architecture.input_shape + run.architecture.eval_shape_increase
+            )
             input_size = input_voxel_size * input_shape
-            output_shape = run.model.compute_output_shape(input_shape)[1]
+            output_shape = run.architecture.compute_output_shape(input_shape)
             output_size = output_voxel_size * output_shape
             context = (input_size - output_size) / 2
             output_roi = validation_dataset.gt.roi
@@ -172,7 +160,7 @@ def validate_run(
             logger.info("validation inputs already copied!")
 
         prediction_array_identifier = array_store.validation_prediction_array(
-            run.name, iteration, validation_dataset
+            run.name, iteration, validation_dataset.name
         )
         predict(
             run.model,
@@ -187,10 +175,10 @@ def validate_run(
 
         for parameters in post_processor.enumerate_parameters():
             output_array_identifier = array_store.validation_output_array(
-                run.name, iteration, parameters, validation_dataset
+                run.name, iteration, parameters, validation_dataset.name
             )
 
-            post_processed_array = post_processor.process(
+            _post_processed_array = post_processor.process(
                 parameters, output_array_identifier
             )
 

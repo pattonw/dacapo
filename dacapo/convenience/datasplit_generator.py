@@ -1,4 +1,3 @@
-from dacapo_toolbox.tasks import TaskConfig
 from dacapo_toolbox.datasplits.datasets.arrays import ArrayConfig
 from upath import UPath as Path
 from typing import List, Union, Optional, Sequence
@@ -175,7 +174,7 @@ def get_right_resolution_array_config(
     zarr_array = zarr_config.array()
     while (
         all([z < t for (z, t) in zip(zarr_array.voxel_size, target_resolution)])
-        and Path(container, Path(dataset, f"s{level+1}")).exists()
+        and Path(container, Path(dataset, f"s{level + 1}")).exists()
     ):
         level += 1
         zarr_config = ZarrArrayConfig(
@@ -848,7 +847,7 @@ class DataSplitGenerator:
 
         if not (raw_container / raw_dataset).exists():
             raise FileNotFoundError(
-                f"Raw path {raw_container/raw_dataset} does not exist."
+                f"Raw path {raw_container / raw_dataset} does not exist."
             )
 
         # print(
@@ -884,7 +883,7 @@ class DataSplitGenerator:
         for current_class_dataset, current_class_name in zip(classes_datasets, classes):
             if not (gt_path / current_class_dataset).exists():
                 raise FileNotFoundError(
-                    f"GT path {gt_path/current_class_dataset} does not exist."
+                    f"GT path {gt_path / current_class_dataset} does not exist."
                 )
             if is_zarr_group(gt_path, current_class_dataset):
                 gt_config = get_right_resolution_array_config(
@@ -932,7 +931,7 @@ class DataSplitGenerator:
             else:
                 if len(organelle_arrays) == 0:
                     raise ValueError(
-                        f"No target classes found, please specify targets to generate the negative classes."
+                        "No target classes found, please specify targets to generate the negative classes."
                     )
                 # generate negative class
                 if len(organelle_arrays) > 1:

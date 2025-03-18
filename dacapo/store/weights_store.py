@@ -1,4 +1,4 @@
-from dacapo.experiments.run import Run
+from dacapo.experiments.run import RunConfig
 
 import torch
 
@@ -51,42 +51,44 @@ class WeightsStore(ABC):
         retrieve_best(run, dataset, criterion): Retrieve the best weights for the given run, dataset, and criterion.
     """
 
-    def load_weights(self, run: Run, iteration: int) -> None:
+    def load_weights(self, run: RunConfig, iteration: int) -> None:
         """
         Load this iterations weights into the given run.
         Args:
-            run (Run): The run to load the weights into.
+            run (RunConfig): The run to load the weights into.
             iteration (int): The iteration to load the weights from.
         Raises:
             ValueError: If the iteration is not available.
         Examples:
             >>> store = WeightsStore()
-            >>> run = Run()
+            >>> run = RunConfig()
             >>> iteration = 0
             >>> store.load_weights(run, iteration)
         """
+        assert run.name is not None, "Run name must be set to load weights"
         weights = self.retrieve_weights(run.name, iteration)
         run.model.load_state_dict(weights.model)
         run.optimizer.load_state_dict(weights.optimizer)
 
-    def load_best(self, run: Run, dataset: str, criterion: str) -> None:
+    def load_best(self, run: RunConfig, dataset: str, criterion: str) -> None:
         """
-        Load the best weights for this Run,dataset,criterion into Run.model
+        Load the best weights for this RunConfig,dataset,criterion into RunConfig.model
 
         Args:
-            run (Run): The run to load the weights into.
+            run (RunConfig): The run to load the weights into.
             dataset (str): The dataset to load the weights from.
             criterion (str): The criterion to load the weights from.
         Raises:
             ValueError: If the best iteration is not available.
         Examples:
             >>> store = WeightsStore()
-            >>> run = Run()
+            >>> run = RunConfig()
             >>> dataset = 'mnist'
             >>> criterion = 'accuracy'
             >>> store.load_best(run, dataset, criterion)
 
         """
+        assert run.name is not None, "Run name must be set to load best weights"
         best_iteration = self.retrieve_best(run.name, dataset, criterion)
         self.load_weights(run, best_iteration)
 
@@ -110,18 +112,18 @@ class WeightsStore(ABC):
         pass
 
     @abstractmethod
-    def store_weights(self, run: Run, iteration: int) -> None:
+    def store_weights(self, run: RunConfig, iteration: int) -> None:
         """
         Store the network weights of the given run.
 
         Args:
-            run (Run): The run to store the weights of.
+            run (RunConfig): The run to store the weights of.
             iteration (int): The iteration to store the weights for.
         Raises:
             ValueError: If the iteration is already stored.
         Examples:
             >>> store = WeightsStore()
-            >>> run = Run()
+            >>> run = RunConfig()
             >>> iteration = 0
             >>> store.store_weights(run, iteration)
         """

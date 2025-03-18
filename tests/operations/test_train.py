@@ -1,6 +1,6 @@
 import numpy as np
 from dacapo.store.create_store import create_stats_store
-from ..fixtures import *
+from ..fixtures import *  # noqa
 
 from dacapo.experiments import RunConfig
 from dacapo.store.create_store import create_config_store, create_weights_store
@@ -9,7 +9,6 @@ from dacapo.train import train_run
 import pytest
 from pytest_lazy_fixtures import lf
 
-import pytest
 
 
 # skip the test for the Apple Paravirtual device

@@ -1,8 +1,10 @@
 from .stats_store import StatsStore
-from .converter import converter
+
 from dacapo.experiments import TrainingStats, TrainingIterationStats
 from dacapo.experiments import ValidationScores, ValidationIterationScores
 from typing import List
+
+from dacapo_toolbox.converter import converter
 
 import logging
 import pickle

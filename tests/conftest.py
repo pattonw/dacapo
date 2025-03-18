@@ -22,7 +22,7 @@ def runs_base_dir(tmpdir):
     os.environ["DACAPO_OPTIONS_FILE"] = f"{options_file}"
 
     with open(options_file, "w") as f:
-        options_file.write(yaml.safe_dump({"runs_base_dir": f"{tmpdir}"}))
+        f.write(yaml.safe_dump({"runs_base_dir": f"{tmpdir}"}))
 
     assert Options.config_file() == options_file
     assert Options.instance().runs_base_dir == tmpdir

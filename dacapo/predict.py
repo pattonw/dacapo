@@ -1,9 +1,9 @@
 from upath import UPath as Path
 from dacapo.blockwise import run_blockwise
 import dacapo.blockwise
-from dacapo.experiments import Run
+from dacapo.experiments import RunConfig
 from dacapo.store.create_store import create_config_store, create_weights_store
-from dacapo.store.local_array_store import LocalArrayIdentifier
+from dacapo_toolbox.tmp import LocalArrayIdentifier
 
 from dacapo.compute_context import create_compute_context, LocalTorch
 from dacapo.tmp import open_from_identifier, create_from_identifier
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 def predict(
-    run_name: str | Run,
+    run_name: str | RunConfig,
     iteration: int | None,
     input_container: Path | str,
     input_dataset: str,
@@ -31,7 +31,7 @@ def predict(
     """Predict with a trained model.
 
     Args:
-        run_name (str or Run): The name of the run to predict with or the Run object.
+        run_name (str or RunConfig): The name of the run to predict with or the RunConfig object.
         iteration (int or None): The training iteration of the model to use for prediction.
         input_container (Path | str): The container of the input array.
         input_dataset (str): The dataset name of the input array.
@@ -47,13 +47,13 @@ def predict(
 
     """
     # retrieving run
-    if isinstance(run_name, Run):
+    if isinstance(run_name, RunConfig):
         run = run_name
-        run_name = run.name
+        # (Complaining because run.name might be None)
+        run_name = run.name  # type: ignore
     else:
         config_store = create_config_store()
-        run_config = config_store.retrieve_run_config(run_name)
-        run = Run(run_config)
+        run = config_store.retrieve_run_config(run_name)
 
     # get arrays
     input_array_identifier = LocalArrayIdentifier(Path(input_container), input_dataset)
@@ -88,11 +88,11 @@ def predict(
         )
 
     input_voxel_size = Coordinate(raw_array.voxel_size)
-    output_voxel_size = model.scale(input_voxel_size)
-    input_shape = Coordinate(model.eval_input_shape)
+    output_voxel_size = run.architecture.scale(input_voxel_size)
+    input_shape = Coordinate(run.architecture.input_shape + run.architecture.eval_shape_increase)
     input_size = input_voxel_size * input_shape
-    output_size = output_voxel_size * model.compute_output_shape(input_shape)[1]
-    num_out_channels = model.num_out_channels
+    output_size = output_voxel_size * run.architecture.compute_output_shape(input_shape)
+    num_out_channels: int = run.architecture.num_out_channels
     # del model
 
     # calculate input and output rois
@@ -135,12 +135,12 @@ def predict(
     else:
         raise ValueError("out_roi must be a roi")
     create_from_identifier(
-        output_array_identifier,
-        axis_names,
-        out_roi,
-        num_out_channels,
-        output_voxel_size,
-        output_dtype,
+        array_identifier=output_array_identifier,
+        axis_names=axis_names,
+        roi=out_roi,
+        num_channels=num_out_channels,
+        voxel_size=output_voxel_size,
+        dtype=output_dtype,
         overwrite=overwrite,
         write_size=output_size,
     )
