@@ -113,7 +113,7 @@ def build_test_architecture_config(
         run.save_bioimage_io_model(
             tmp_path / "dacapo_modelzoo_test.zip",
             authors=[Author(name="Test")],
-            in_voxel_size=upsample_factors[0] if len(upsample_factors) > 0 else None,
+            in_voxel_size=Coordinate(upsample_factors[0]) if len(upsample_factors) > 0 else None,
         )
         return ModelZooConfig(
             model_id=tmp_path / "dacapo_modelzoo_test.zip", name="test_model_zoo"
