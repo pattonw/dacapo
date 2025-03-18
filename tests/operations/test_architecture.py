@@ -25,7 +25,7 @@ def test_stored_architecture(
     config_store = create_config_store()
     try:
         config_store.store_architecture_config(architecture_config)
-    except:
+    except:  # noqa
         config_store.delete_architecture_config(architecture_config.name)
         config_store.store_architecture_config(architecture_config)
 

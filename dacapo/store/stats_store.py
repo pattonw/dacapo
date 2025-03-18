@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, TYPE_CHECKING
+from typing import List
 
 
 from dacapo.experiments.training_stats import TrainingStats

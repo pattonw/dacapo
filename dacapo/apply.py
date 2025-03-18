@@ -144,7 +144,7 @@ def apply(
                     post_processor_kwargs[key] = int(value)  # type: ignore
                 elif value.replace(".", "", 1).isdigit():
                     post_processor_kwargs[key] = float(value)  # type: ignore
-        except:
+        except:  # noqa
             raise ValueError(
                 f"Could not parse parameters string {parameters}. Must be of the form 'post_processor_name(arg1=val1, arg2=val2, ...)'"
             )

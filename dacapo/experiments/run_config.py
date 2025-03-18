@@ -46,7 +46,6 @@ from bioimageio.spec.model.v0_5 import (
     IntervalOrRatioDataDescr,
     ParameterizedSize,
     Version,
-    Sha256,
 )
 
 import torch

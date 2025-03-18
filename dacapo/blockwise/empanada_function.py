@@ -502,7 +502,7 @@ def tracker_consensus(
     Reference:
         - doi: 10.1016/j.cels.2022.12.006
     """
-    labels = model_config["labels"]
+    # labels = model_config["labels"]
     thing_list = model_config["thing_list"]
     class_names = model_config["class_names"]
 

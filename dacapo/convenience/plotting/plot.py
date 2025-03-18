@@ -274,11 +274,11 @@ def bokeh_plot_runs(
                 )
 
         if run.validation_score_name and run.validation_scores.validated_until() > 0:
-            validation_score_data = run.validation_scores.to_xarray().sel(
-                criteria=run.validation_score_name
-            )
+            # validation_score_data = run.validation_scores.to_xarray().sel(
+            #     criteria=run.validation_score_name
+            # )
             for dataset in run.validation_scores.datasets:
-                dataset_data = validation_score_data.sel(datasets=dataset)
+                # dataset_data = validation_score_data.sel(datasets=dataset)
                 include_validation_figure = True
                 x = [score.iteration for score in run.validation_scores.scores]
                 source_dict = {

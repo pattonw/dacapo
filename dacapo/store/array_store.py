@@ -8,6 +8,8 @@ import json
 from upath import UPath as Path
 from typing import Optional, Tuple
 
+from dacapo.tmp import open_from_identifier
+
 
 @attr.s
 class LocalArrayIdentifier:

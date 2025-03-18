@@ -788,7 +788,7 @@ class DataSplitGenerator:
                 gt_config,
                 mask_config,
             ) = self.__generate_semantic_seg_dataset_crop(dataset)
-            if type(self.class_name) == list:
+            if isinstance(self.class_name, list):
                 classes = self.classes_separator_character.join(self.class_name)
             else:
                 classes = self.class_name
