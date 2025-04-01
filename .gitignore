@@ -33,3 +33,5 @@ daisy_logs/
 *.private
 
 user_experiments/*
+wandb
+mlruns
