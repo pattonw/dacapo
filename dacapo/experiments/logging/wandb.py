@@ -22,7 +22,7 @@ class WandBLogger(LoggingBackend):
         return self.runs[run.name]
 
     def log_training_iteration(self, run: RunConfig, training_stats: dict[str, float]):
-        run = self.run(run.name)
+        run = self.run(run)
         run.log(training_stats)
 
     def retrieve_training_stats(self, run: RunConfig):
@@ -31,7 +31,7 @@ class WandBLogger(LoggingBackend):
     def log_validation_iteration_scores(
         self, run: RunConfig, iteration: int, validation_scores: ValidationIterationScores
     ):
-        run = self.run(run.name)
+        run = self.run(run)
         run.log({"iteration": iteration, **validation_scores.to_dict()})
 
     def retrieve_validation_iteration_scores(self, run: RunConfig):
