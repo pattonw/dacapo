@@ -99,6 +99,14 @@ pretrained = [
     "empanada-napari",
     "cellmap-models",
     ]
+stats = [
+    "tensorboard",
+    "mlflow",
+    "wandb",
+    "comet-ml",
+    "sacred",
+    "bokeh",
+]
 all = ["dacapo-ml[test,dev,docs,examples,pretrained]"]
 
 [project.urls]

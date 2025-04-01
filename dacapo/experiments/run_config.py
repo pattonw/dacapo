@@ -477,7 +477,9 @@ class RunConfig:
                     "Saving to bioimageio modelzoo format is not implemented for Python versions < 3.11"
                 )
             with open(weights_path, "rb", buffering=0) as f:
-                weights_hash = hashlib.file_digest(f, "sha256").hexdigest()  # TODO: remove this?
+                weights_hash = hashlib.file_digest(
+                    f, "sha256"
+                ).hexdigest()  # TODO: remove this?
                 # weights_hash = Sha256(f)
 
             my_model_descr = ModelDescr(
@@ -561,82 +563,21 @@ class RunConfig:
             torch.cuda.empty_cache()
 
     def resume_training(self, stats_store, weights_store) -> int:
-        # Parse existing stats
-        self.training_stats = stats_store.retrieve_training_stats(self.name)
-        self.validation_scores.scores = (
-            stats_store.retrieve_validation_iteration_scores(self.name)
-        )
-
-        # how far have we trained and validated?
-        trained_until = self.training_stats.trained_until()
-        validated_until = self.validation_scores.validated_until()
-
-        # remove validation past existing training stats
-        if validated_until > trained_until:
-            logger.info(
-                f"Trained until {trained_until}, but validated until {validated_until}! "
-                "Deleting extra validation stats"
-            )
-            self.validation_scores.delete_after(trained_until)
-
-        # logger.info current training state
-        logger.info(f"Current state: trained {trained_until}/{self.num_iterations}")
-
         # read weights of the latest iteration
         latest_weights_iteration = weights_store.latest_iteration(self)
-        latest_weights_iteration = (
-            0 if latest_weights_iteration is None else latest_weights_iteration
-        )
-        weights = None
 
-        # check if existing weights are consistent with existing training stats
-        if trained_until > 0:
-            # no weights are stored, training stats are inconsistent, delete them
-            if latest_weights_iteration is None:
-                logger.warning(
-                    f"Run {self.name} was previously trained until {trained_until}, but no weights are "
-                    "stored. Will restart training from scratch."
-                )
+        if latest_weights_iteration is not None:
+            weights = weights_store.retrieve_weights(
+                self, iteration=latest_weights_iteration
+            )
+        else:
+            weights = None
 
-                trained_until = 0
-                self.training_stats.delete_after(0)
-                self.validation_scores.delete_after(0)
+        if weights is not None:
+            self.model.load_state_dict(weights.model)
+            self.optimizer.load_state_dict(weights.optimizer)
 
-            # weights are stored, but not enough so some stats are inconsistent, delete the inconsistent ones
-            elif latest_weights_iteration < trained_until:
-                logger.warning(
-                    f"Run {self.name} was previously trained until {trained_until}, but the latest "
-                    f"weights are stored for iteration {latest_weights_iteration}. Will resume training "
-                    f"from {latest_weights_iteration}."
-                )
-
-                trained_until = latest_weights_iteration
-                self.training_stats.delete_after(trained_until)
-                self.validation_scores.delete_after(trained_until)
-                weights = weights_store.retrieve_weights(self, iteration=trained_until)
-
-            # perfectly in sync. We can continue training
-            elif latest_weights_iteration == trained_until:
-                logger.info(f"Resuming training from iteration {trained_until}")
-
-                weights = weights_store.retrieve_weights(self, iteration=trained_until)
-
-            # weights are stored past the stored training stats, log this inconsistency
-            # but keep training
-            elif latest_weights_iteration > trained_until:
-                weights = weights_store.retrieve_weights(
-                    self, iteration=latest_weights_iteration
-                )
-                logger.error(
-                    f"Found weights for iteration {latest_weights_iteration}, but "
-                    f"self {self.name} was only trained until {trained_until}. "
-                )
-
-            # load the weights that we want to resume training from
-            if weights is not None:
-                self.model.load_state_dict(weights.model)
-                self.optimizer.load_state_dict(weights.optimizer)
-        return trained_until
+        return latest_weights_iteration if latest_weights_iteration is not None else 0
 
     def train_step(self, raw: torch.Tensor, target: torch.Tensor, weight: torch.Tensor):
         assert self.task is not None, "Task must be provided to train the model"

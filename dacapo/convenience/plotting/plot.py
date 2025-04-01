@@ -71,7 +71,7 @@ def smooth_values(a, n, stride=1):
 
 
 def get_runs_info(
-    run_config_names: List[str],
+    run_config_names: List[str | RunConfig],
     validation_score_names: List[str],
     plot_losses: List[bool],
 ) -> List[RunInfo]:
@@ -96,19 +96,22 @@ def get_runs_info(
     for run_config_name, validation_score_name, plot_loss in zip(
         run_config_names, validation_score_names, plot_losses
     ):
-        run_config = config_store.retrieve_run_config(run_config_name)
+        if not isinstance(run_config_name, RunConfig):
+            run_config = config_store.retrieve_run_config(run_config_name)
+        else:
+            run_config = run_config_name
         validation_scores = RunConfig.get_validation_scores(run_config)
         validation_scores.scores = stats_store.retrieve_validation_iteration_scores(
-            run_config_name
+            run_config.name
         )
         run = RunInfo(
-            run_config_name,
+            run_config.name,
             run_config.task_config.name,
             run_config.architecture_config.name,
             run_config.trainer_config.name,
             run_config.datasplit_config.name,
             (
-                stats_store.retrieve_training_stats(run_config_name)
+                stats_store.retrieve_training_stats(run_config.name)
                 if plot_loss
                 else None
             ),

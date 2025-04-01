@@ -9,11 +9,16 @@ from dacapo.experiments import RunConfig
 from dacapo.validate import validate_run
 from dacapo.experiments.training_iteration_stats import TrainingIterationStats
 
+from dacapo.experiments import ValidationIterationScores
+
 import torch
 from tqdm import tqdm
 
 import logging
 import time
+
+import numpy as np
+from itertools import product
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +52,13 @@ def train(run_name: str, validate=True):
     return train_run(run_config, validate)
 
 
-def train_run(run: RunConfig, validate: bool = True, save_snapshots: bool = False):
+def train_run(
+    run: RunConfig,
+    validate: bool = True,
+    save_snapshots: bool = False,
+    log_train_stats_callback=None,
+    log_validation_scores_callback=None,
+):
     """
     Train a run
 
@@ -59,7 +70,32 @@ def train_run(run: RunConfig, validate: bool = True, save_snapshots: bool = Fals
     """
     logger.info(f"Starting/resuming training for run {run.name}...")
 
-    assert run.num_iterations is not None, "num_iterations must be set in RunConfig to train"
+    if log_train_stats_callback is None:
+        assert log_validation_scores_callback is None
+
+        def log_train_stats_callback(run: RunConfig, train_stats: dict[str, float]):
+            iteration_stats = TrainingIterationStats(
+                loss=train_stats["loss"],
+                iteration=train_stats["iteration"],
+                time=time.time(),
+            )
+            run.training_stats.add_iteration_stats(iteration_stats)
+            if train_stats["iteration"] % run.validation_interval == 0:
+                stats_store = create_stats_store()
+                stats_store.store_training_stats(run.name, run.training_stats)
+
+        def log_validation_scores_callback(
+            run: RunConfig, iteration, iteration_scores: ValidationIterationScores
+        ):
+            run.validation_scores.add_iteration_scores(iteration_scores)
+            stats_store = create_stats_store()
+            stats_store.store_validation_iteration_scores(
+                run.name, run.validation_scores
+            )
+
+    assert run.num_iterations is not None, (
+        "num_iterations must be set in RunConfig to train"
+    )
 
     stats_store = create_stats_store()
     weights_store = create_weights_store()
@@ -91,18 +127,9 @@ def train_run(run: RunConfig, validate: bool = True, save_snapshots: bool = Fals
             postfix={"loss": None},
         )
     ):
-        if i >= run.num_iterations:
-            break
-
-        t_train_step = time.time()
         loss, batch_out = run.train_step(batch["raw"], batch["target"], batch["weight"])
 
-        iteration_stats = TrainingIterationStats(
-            loss=loss,
-            iteration=i,
-            time=time.time() - t_train_step,
-        )
-        run.training_stats.add_iteration_stats(iteration_stats)
+        log_train_stats_callback(run, {"iteration": i, "loss": loss})
 
         bar.set_postfix({"loss": loss})
 
@@ -131,15 +158,15 @@ def train_run(run: RunConfig, validate: bool = True, save_snapshots: bool = Fals
                 pass
 
             # Store checkpoint and training stats
-            stats_store.store_training_stats(run.name, run.training_stats)
             weights_store.store_weights(run, i + 1)
 
             if validate:
                 # VALIDATE
-                validate_run(
+                validation_iteration_scores = validate_run(
                     run,
                     i + 1,
                 )
-                stats_store.store_validation_iteration_scores(
-                    run.name, run.validation_scores
-                )
+                log_validation_scores_callback(run, i + 1, validation_iteration_scores)
+
+        if i >= run.num_iterations - 1:
+            break

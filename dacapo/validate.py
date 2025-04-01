@@ -55,7 +55,7 @@ def validate(run_name: str, iteration: int = 0, datasets_config=None):
 
 def validate_run(
     run: RunConfig, iteration: int, datasets_config: list[DatasetConfig] | None = None
-):
+) -> ValidationIterationScores:
     """Validate an already loaded run at the given iteration. This does not
     load the weights of that iteration, it is assumed that the model is already
     loaded correctly. Returns the best parameters and scores for this
@@ -262,8 +262,14 @@ def validate_run(
         iteration_scores.append(dataset_iteration_scores)
         # array_store.remove(prediction_array_identifier)
 
-    run.validation_scores.add_iteration_scores(
-        ValidationIterationScores(iteration, iteration_scores)
+    return ValidationIterationScores(
+        iteration,
+        iteration_scores,
+        [ds.name for ds in run.validation_scores.datasets],
+        [ps.id for ps in run.validation_scores.parameters],
+        run.validation_scores.criteria,
     )
+
+    run.validation_scores.add_iteration_scores()
     stats_store = create_stats_store()
     stats_store.store_validation_iteration_scores(run.name, run.validation_scores)

@@ -1,6 +1,8 @@
 from typing import List
 import attr
 
+import numpy as np
+from itertools import product
 
 @attr.s
 class ValidationIterationScores:
@@ -28,3 +30,20 @@ class ValidationIterationScores:
             "parameters, and evaluation criterion."
         }
     )
+    datasets: list[str] = attr.ib()
+    parameters: list[str] = attr.ib()
+    criteria: list[str] = attr.ib()
+
+    def to_dict(self) -> dict[str, float]:
+        ds, ps, cs = (
+            self.datasets,
+            self.parameters,
+            self.criteria,
+        )
+        scores_array = np.array(self.scores).reshape(
+            (len(ds), len(ps), len(cs))
+        )
+        scores_dict = {}
+        for i, j, k in product(range(len(ds)), range(len(ps)), range(len(cs))):
+            scores_dict[f"{ds[i]}-{ps[j]}-{cs[k]}"] = scores_array[i, j, k]
+        return scores_dict
