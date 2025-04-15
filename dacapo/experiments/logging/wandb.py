@@ -29,7 +29,10 @@ class WandBLogger(LoggingBackend):
         raise NotImplementedError("wandb retrieval isn't implemented yet.")
 
     def log_validation_iteration_scores(
-        self, run: RunConfig, iteration: int, validation_scores: ValidationIterationScores
+        self,
+        run: RunConfig,
+        iteration: int,
+        validation_scores: ValidationIterationScores,
     ):
         run = self.run(run)
         run.log({"iteration": iteration, **validation_scores.to_dict()})

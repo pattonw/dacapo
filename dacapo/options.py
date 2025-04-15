@@ -60,6 +60,12 @@ class DaCapoConfig:
             "help_text": "The name of the MongoDB database to use for storing configurations and statistics."
         },
     )
+    logger: Optional[str] = attr.ib(
+        default=None,
+        metadata={
+            "help_text": "The logger to use for logging. Options include 'wandb', 'tensorboard', 'dacapo-stats' or 'none'. If ommitted or left blank, then the 'dacapo-stats' logger will be used."
+        },
+    )
 
     def serialize(self):
         """

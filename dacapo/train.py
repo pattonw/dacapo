@@ -10,6 +10,9 @@ from dacapo.validate import validate_run
 from dacapo.experiments.training_iteration_stats import TrainingIterationStats
 
 from dacapo.experiments import ValidationIterationScores
+from dacapo.experiments.logging.tensorboard import TensorboardLogger
+from dacapo.experiments.logging.wandb import WandBLogger
+from dacapo.options import Options
 
 import torch
 from tqdm import tqdm
@@ -69,29 +72,44 @@ def train_run(
 
     """
     logger.info(f"Starting/resuming training for run {run.name}...")
+    options = Options.instance()
 
     if log_train_stats_callback is None:
         assert log_validation_scores_callback is None
 
-        def log_train_stats_callback(run: RunConfig, train_stats: dict[str, float]):
-            iteration_stats = TrainingIterationStats(
-                loss=train_stats["loss"],
-                iteration=train_stats["iteration"],
-                time=time.time(),
-            )
-            run.training_stats.add_iteration_stats(iteration_stats)
-            if train_stats["iteration"] % run.validation_interval == 0:
-                stats_store = create_stats_store()
-                stats_store.store_training_stats(run.name, run.training_stats)
+        logger_mode = options.logger
 
-        def log_validation_scores_callback(
-            run: RunConfig, iteration, iteration_scores: ValidationIterationScores
-        ):
-            run.validation_scores.add_iteration_scores(iteration_scores)
-            stats_store = create_stats_store()
-            stats_store.store_validation_iteration_scores(
-                run.name, run.validation_scores
-            )
+        if logger_mode is None or logger_mode == "dacapo-stats":
+
+            def log_train_stats_callback(run: RunConfig, train_stats: dict[str, float]):
+                iteration_stats = TrainingIterationStats(
+                    loss=train_stats["loss"],
+                    iteration=train_stats["iteration"],
+                    time=time.time(),
+                )
+                run.training_stats.add_iteration_stats(iteration_stats)
+                if train_stats["iteration"] % run.validation_interval == 0:
+                    stats_store = create_stats_store()
+                    stats_store.store_training_stats(run.name, run.training_stats)
+
+            def log_validation_scores_callback(
+                run: RunConfig, iteration, iteration_scores: ValidationIterationScores
+            ):
+                run.validation_scores.add_iteration_scores(iteration_scores)
+                stats_store = create_stats_store()
+                stats_store.store_validation_iteration_scores(
+                    run.name, run.validation_scores
+                )
+        elif logger_mode == "tensorboard":
+            logger = TensorboardLogger()
+            log_train_stats_callback = logger.log_training_iteration
+            log_validation_scores_callback = logger.log_validation_iteration_scores
+        elif logger_mode == "wandb":
+            logger = WandBLogger()
+            log_train_stats_callback = logger.log_training_iteration
+            log_validation_scores_callback = logger.log_validation_iteration_scores
+        else:
+            raise ValueError(f"Unknown logger type: {logger_mode}")
 
     assert run.num_iterations is not None, (
         "num_iterations must be set in RunConfig to train"
