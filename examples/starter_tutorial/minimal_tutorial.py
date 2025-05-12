@@ -278,10 +278,6 @@ from dacapo.experiments.trainers import GunpowderTrainerConfig
 
 trainer_config = GunpowderTrainerConfig(
     name="example",
-    batch_size=10,
-    learning_rate=0.0001,
-    num_data_fetchers=1,
-    snapshot_interval=1000,
     min_masked=0.05,
     clip_raw=False,
 )
@@ -308,6 +304,7 @@ run_config = RunConfig(
     num_iterations=iterations,
     validation_interval=validation_interval,
     repetition=0,
+    snapshot_interval=1000,
 )
 config_store.store_run_config(run_config)
 
@@ -407,30 +404,31 @@ label_cmap = ListedColormap(colors)
 run_path = config_store.path.parent / run_config.name
 
 # BROWSER = False
-num_snapshots = run_config.num_iterations // run_config.trainer_config.snapshot_interval
+if run.snapshot_interval is not None:
+    num_snapshots = run_config.num_iterations // run_config.snapshot_interval
 
-if num_snapshots > 0:
-    fig, ax = plt.subplots(num_snapshots, 3, figsize=(10, 2 * num_snapshots))
+    if num_snapshots > 0:
+        fig, ax = plt.subplots(num_snapshots, 3, figsize=(10, 2 * num_snapshots))
 
-    # Set column titles
-    column_titles = ["Raw", "Target", "Prediction"]
-    for col in range(3):
-        ax[0, col].set_title(column_titles[col])
+        # Set column titles
+        column_titles = ["Raw", "Target", "Prediction"]
+        for col in range(3):
+            ax[0, col].set_title(column_titles[col])
 
-    for snapshot in range(num_snapshots):
-        snapshot_it = snapshot * run_config.trainer_config.snapshot_interval
-        # break
-        raw = zarr.open(f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/raw")[:]
-        target = zarr.open(f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/target")[0]
-        prediction = zarr.open(
-            f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/prediction"
-        )[0]
-        c = (raw.shape[2] - target.shape[1]) // 2
-        ax[snapshot, 0].imshow(raw[1, raw.shape[0] // 2, c:-c, c:-c])
-        ax[snapshot, 1].imshow(target[target.shape[0] // 2])
-        ax[snapshot, 2].imshow(prediction[prediction.shape[0] // 2])
-        ax[snapshot, 0].set_ylabel(f"Snapshot {snapshot_it}")
-    plt.show()
+        for snapshot in range(num_snapshots):
+            snapshot_it = snapshot * run_config.snapshot_interval
+            # break
+            raw = zarr.open(f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/raw")[:]
+            target = zarr.open(f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/target")[0]
+            prediction = zarr.open(
+                f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/prediction"
+            )[0]
+            c = (raw.shape[2] - target.shape[1]) // 2
+            ax[snapshot, 0].imshow(raw[1, raw.shape[0] // 2, c:-c, c:-c])
+            ax[snapshot, 1].imshow(target[target.shape[0] // 2])
+            ax[snapshot, 2].imshow(prediction[prediction.shape[0] // 2])
+            ax[snapshot, 0].set_ylabel(f"Snapshot {snapshot_it}")
+        plt.show()
 
 # # %%
 # Visualize validations
