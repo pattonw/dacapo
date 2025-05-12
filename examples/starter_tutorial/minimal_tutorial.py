@@ -419,7 +419,9 @@ if run.snapshot_interval is not None:
             snapshot_it = snapshot * run_config.snapshot_interval
             # break
             raw = zarr.open(f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/raw")[:]
-            target = zarr.open(f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/target")[0]
+            target = zarr.open(
+                f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/target"
+            )[0]
             prediction = zarr.open(
                 f"{run_path}/snapshot.zarr/{snapshot_it}/volumes/prediction"
             )[0]
